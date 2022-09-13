@@ -2,6 +2,8 @@
 
 An open source, MIT licensed number tracking tool built with a custom PHP MVC backend framework and [TACE](https://www.agraddy.com/introducing-tace) for front end development. It allows you to track your important business, marketing, professional, and personal  numbers in one place. If you would like to use the hosted version, it is available at [NumbersQ - Number Tracker](https://www.numbersq.com).
 
+![NumbersQ Screenshot](https://raw.githubusercontent.com/dashboardq/numbersq/main/public/assets/images/share_1200x630.png)
+
 ## Who
 NumbersQ is created by [Anthony Graddy](https://www.agraddy.com) as a part of the [12 Startups in 12 Months (Open Source Edition) challenge](https://www.agraddy.com/12-startups-in-12-months-open-source-edition). This is the 1st startup of the challenge. You can find all the details on how to install this tool on your own server below in the [How](#how) section.
 
@@ -111,6 +113,7 @@ The main points are in bold. The other text is additional context if the bold te
   * If you want to really dive in deep, **learn [Vim](https://www.vim.org/)**. It is a text editor available on every operating system for free. It has a very steep learning curve, but once you understand it, you will never want to use anything else.
   * If anybody tells you to learn **Emacs, don't do it**, they are trying to play a prank on you. (yes, this line is a joke, but it was written with Vim) (Vim is not responsible for this lame joke and will not affect your humor) (now I'm going to have to explain the joke because if you are 10 years old, you won't understand - Vim and Emacs have been around for decades. Both editors have built up a loyal following, so much so that when one or the other is brought up online, it often results in people spending hours of their life arguing about which one is better, it also causes them to spend way too much time writing about this in README files, but thankfully it can be written quickly if you use Vim).
     * Vim is Charityware (meaning it is free but the creator asks that you donate to a charity they are associated with so if you can - **go donate money to the [International Child Care Fund charity](https://iccf-holland.org/)**).
+
 2\. **Install an SFTP program.**
   * For years I used to enthusiastically recommended that people should **install [FileZilla Client](https://filezilla-project.org/download.php?type=client)** if they needed an SFTP program but I am no longer enthusiastic about the recommendation. It tries to install additional software if you are not paying attention during installation. **Do not install additional software, only install the basic client.**
     * I highly recommend that you **read this article first** to make sure you don't end up with additional junk on your system: [How to Safely Download and Cleanly Install FileZilla FTP Software (with no additional junk)](https://medium.com/web-design-web-developer-magazine/how-to-safely-download-and-cleanly-install-filezilla-ftp-software-with-no-additional-junk-10b27a2d270d).
@@ -119,12 +122,14 @@ The main points are in bold. The other text is additional context if the bold te
     * [Cyberduck](https://cyberduck.io/) - Available on Linux, Mac, and Windows. Can connect to more services but may not be as easy to use.
     * [WinSCP](https://winscp.net/eng/index.php) - Available on Windows. I have not used it, but it seems to be very similar to FileZilla.
   * I'm not aware of a solid, cross platform open source SFTP progam that I feel comfortable recommending. If you know of one I'm missing, let me know.
+
 3\. **Create a [Cloudways account](https://www.cloudways.com/en/?id=1100140).** 
   * Go to the pricing page. 
   * Make sure "DigitalOcean is selected (DigitalOcean is the default).
   * Change the Slider from "Premium" to "Standard" (Premium is the default)
   * Pick the cheapest plan, it should say "$10" (at least it does at the time of writing this document). It has the option to "Start Free."
   * It will take you to a sign up page. If you need help figuring out the sign up page, let me know.
+
 4\. **Set up the server.**
   * When setting up the server, Cloudways is going to ask what application you want to install. **Choose "Laravel" for the app** (at the time of this writing, the option was Laravel 8.26.1 which will change in the future). We are not going to use Laravel, but NumbersQ has a similar application structure.
   * It is going to ask you for some additional information for your application. Feel free to use whatever you want, but I would recommend that you **use the info below to set up the app**:
@@ -134,11 +139,13 @@ The main points are in bold. The other text is additional context if the bold te
   * It will ask you for the location of the server. I would recommend that you **pick a location near you for the server location**.
   * Once you've entered everything, **press "Launch Server."**
   * It may take a little time to set up, so go outside and run around or something.
+
 5\. **Understand the server details.**
   * Once the server and application are set up, you should be able to **click on the "www" icon** to open up the details about the Laravel application.
   * You should now be on a page where you can **look at the "Application Management" section** and be on the "Access Details" page.
   * You will see a default URL that Cloudways provides you. Setting up a custom domain is outside the scope of the installation instructions, but it is very easy - please refer to Cloudways documentation if you want to use a custom domain: [How Do I Take My Website Live from Cloudways?](https://support.cloudways.com/en/articles/4805075-how-do-i-take-my-website-live-from-cloudways)
   * When you **click on the Application URL**, it should be a web page that says welcome to Laravel.
+
 6\. **Gather server information for access and your app settings**
   * For each of the items below, save this information for later use. You can save it to a text file or just write it down on a piece of paper. Some of the information should be private, so make sure you don't share it with others.
   * **Find the URL** for your app. This will be located at the following location in your Cloudways admin panel: Applications > [App Name You Created] > Access Details: APPLICATION URL
@@ -151,15 +158,19 @@ The main points are in bold. The other text is additional context if the bold te
     * **Public IP**
     * **Username**
     * **Password**
+
 7\. **Download the source code for NumbersQ**
   * Go to this link, it should automatically start the download process: [NumbersQ Zip](https://github.com/dashboardq/numbersq/archive/refs/heads/main.zip).
+
 8\. **Unzip the numbersq-main.zip file you just downloaded**
   * If you are not sure how to unzip a file, try right clicking the file and look for an option to unzip. If that is not available, try searching for instructions to unzip a file online. Different computer operating systems have different ways to unzip a file.
+
 9\. **Create and open the setting file**
   * Usually you would edit this file on the server itself, but I want to make this guide as simple as possible.
   * Copy the `.example.env.php` file to `.env.php` 
   * Open the `.env.php` file using your text editor.
   * Note that the file is considered a "hidden file" because it starts with a period. If you cannot see the example files or the new `.env.php` file, you may need to update your directory viewer settings to show hidden files.
+
 10\. **Modify the values in the .env.php file**
   * Using the information you saved in step 6, modify the file as needed:
     * `APP_ENV` - this should be set to `prod` if strangers will have access. If you are just testing on your own, you can leave this set to `dev` to see any errors.
@@ -173,18 +184,22 @@ The main points are in bold. The other text is additional context if the bold te
       * In order to send emails using your Cloudways server, you need to set up a 3rd party email sender. You can learn more at the [Cloudways Custom SMTP Instructions](https://support.cloudways.com/en/articles/5130857-how-to-activate-the-custom-smtp-add-on) documentation.
     * `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `GITHUB_USER_AGENT` - These are optional and only needed if you are planning to track Github numbers.
     * `SCREENSHOTONE_API_KEY` - This is optional and only needed if you are tracking IndieHacker numbers.
+
 11\. **Download the keys file.**
   * The data in the database is encrypted. In order to encrypt the data, unique encryption keys are needed. NumbersQ has a built in key file encryption generation system.
   * Go to the following  URL and download the file by following the instructions listed there: [https://www.numbersq.com/generate-keys-file](https://www.numbersq.com/generate-keys-file)
+
 12\. **Connect to Cloudways using SFTP.**
   * Using your SFTP program and the Cloudways master credentials you saved in step 6, you want to connect to your Cloudways server.
   * If you are using FileZilla, Cloudways has some instructions on how to connect to the server located here: [Guide to Connecting to Your Application Using SSH/SFTP](https://support.cloudways.com/en/articles/5119485-guide-to-connecting-to-your-application-using-ssh-sftp#h_274b4a0b69)
     * The link should take you directly to the FileZilla section. You can ignore any of the details about SSH and Putty.
   * Once you are logged in with your master credentials, you will need to navigate to the application directory. If you are using FileZilla, this means on the right side, you want to go to: applications > [Your Application Code Name - this usually matches your DB Name] > public_html
   * Once you are in the public_html directory, you should see the default Laravel code and directories.
+
 13\. **Using SFTP, delete any of the default Laravel code that was generated by Cloudways.**
   * You should be in the public_html directory, and there should be files and directories with names like: `README.md`, `app`, `artisan`, `bootstrap`, `composer.json`, `composer.lock`, `config`, `database`, `package.json`, `phpunit.xml`, `public`, `resources`, `routes`, `server.php`, `storage`, `tests`, `vendor`, `webpack.mix.js`
   * **Except for `public`, select each of the items and delete them** (if you can - some may not delete due to permissions). You delete by right clicking a file or directory and selecting "Delete" from the menu.
+
 14\. **Using SFTP, upload NumbersQ to your Cloudways server.**
   * You should be in the public_html directory.
   * **Make sure you can see hidden files**, if you are using FileZilla turn on this option: Server > Force showing hidden files
@@ -192,15 +207,18 @@ The main points are in bold. The other text is additional context if the bold te
     * On the left side, navigate to the directory where you unzipped the numbersq-main.zip file containing the NumbersQ code including the `.env.php` file you edited in step 10.
     * On the right side, you should be in the Cloudways public_html directory.
   * Upload all the files from the left side to the right side by selecting them all and dragging them to the right side.
+
 15\. **Open the URL with your browser** that Cloudways gave you in the access details section of the Cloudways portal or if you are using a custom domain, use that.
   * When you first open the page, NumbersQ needs to set up the database tables. If you have `DB_INSTALL` set to `true` from step 10, then the first time you load the page, the database tables will be set up.
   * After setting up the database tables, it should then show you the home page of NumbersQ.
+
 16\. **Set up the cron job**
   * If you are not familiar with cron, it is basically a way to run a task at certain intervals on the server. We want the system to check for new numbers at different intervals so we need to set up cron.
   * When you are on the "Access Details" page in the Cloudways admin panel mentioned above, look for the left side navigation link for "Cron Job Management" - **Go to the Cron Job Management page**. 
   * **Go to the ADVANCED tab**.
   * In the text field for Advanced, **enter:** `* * * * * cd public_html && php ao track > /dev/null 2>&1`
   * **Click the SAVE CHANGES button**.
+
 17\. **Create an account on the login page** 
   * Visit the URL again in your browser for the new NumbersQ site.
   * Go to the login page and register a new user. 
