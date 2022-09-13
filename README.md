@@ -23,7 +23,7 @@ NumbersQ is available now but it has been recently released and should be consid
 
 ## Where
 
-NumbersQ is open source and can be installed on any server that supports modern PHP frameworks. The PHP used is very basic and should work with web hosts that support PHP 7.3 and above. If you are not using encryption to store data in the database, it probably works with older versions of PHP but I'm not testing or guaranteeing anything for older versions of PHP.
+NumbersQ is open source and can be installed on any server that supports modern PHP frameworks. The PHP used is very basic and should work with web hosts that support PHP 7.3 and above. If you are not using encryption to store data in the database, it will probably work with older versions of PHP, but I'm not testing or guaranteeing anything for older versions of PHP.
 
 ## Why
 
