@@ -1,0 +1,119 @@
+.cards {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    position: relative;
+    background: #ffffff;
+    box-shadow: 0 1px 2px 0 #00000011;
+    border: 1px solid #e0e5ec;
+    border-radius: 3px;
+    text-align: center;
+    width: 200px;
+    height: 380px;
+    padding: 24px 14px;
+    margin-bottom: 24px;
+
+    width: 260px;
+    height: 520px;
+}
+
+.card.highlight:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-top: 3px solid var(--blue);
+    border-radius: 3px;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.card h3 {
+    font-size: 56px;
+    font-weight: normal;
+    margin-bottom: 16px;
+    color: #495057;
+}
+
+.card li {
+    margin-bottom: 16px;
+}
+.card li:before {
+    /* check */
+    content: '\f12b';
+    font-family: 'Feather';
+    font-weight: bold;
+    color: #5eba00;
+
+    display: inline-block;
+    margin-right: 6px;
+}
+
+main .card a {
+    position: absolute;
+    display: block;
+    bottom: 24px;
+    width: calc(100% - 28px);
+    border: 1px solid #e0e5ec;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 12px 0;
+    box-shadow: 0 1px 1px 0 #00000011;
+    border-radius: 3px;
+
+    /*
+    */
+    transition: background-color 0.15s ease-in-out;
+}
+
+main .card a:hover {
+    background: #f2f2f2;
+    opacity: 0.9;
+}
+
+.card.highlight a {
+    background: var(--blue);
+    color: #ffffff;
+}
+.card.highlight a:hover {
+    background: #1665AB;
+}
+
+@media(max-width: 960px) {
+    .pricing main h1 {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .pricing main .cards {
+        display: block;
+    }
+    .pricing main .cards:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .pricing main .card {
+        float: left;
+        margin-right: 12px;
+    }
+}
+@media(max-width: 420px) {
+    .pricing main .card {
+        width: calc(100% - 28px);
+    }
+}

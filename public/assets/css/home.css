@@ -1,0 +1,385 @@
+.welcome {
+    color: #ffffff;
+}
+.welcome:before {
+    content: '';
+    background: #1c7ed6 url(/assets/images/mountains.svg) no-repeat;
+    background: url(/assets/images/mountains.svg) no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    opacity: 0.1;
+}
+.welcome:after {
+    content: '';
+    background: var(--blue);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -20;
+}
+
+.welcome .container {
+    padding: 100px 0;
+}
+
+.welcome h1 {
+    margin: 0;
+    font-size: 44px;
+}
+
+.welcome p {
+    margin-top: 32px;
+    margin-bottom: 38px;
+    font-size: 24px;
+}
+
+.preview_box {
+    padding: 0 60px;
+    width: 300px;
+    margin: 0 auto;
+}
+.preview {
+    position: relative;
+    text-align: center;
+}
+.preview .phone {
+    display: block;
+    width: 300px;
+}
+
+.preview .screenshot {
+    display: block;
+    position: absolute;
+    top: 56px;
+    left: 22px;
+    width: 256px;
+    border-radius: 5px;
+    height: 445px;
+    border: 1px solid gray;
+
+    object-fit: cover;
+    object-position: 0 0;
+}
+
+.details {
+    padding: var(--page-padding);
+    padding-top: 24px;
+    padding-bottom: 64px;
+    text-align: center;
+}
+
+.details > h2 {
+    margin-bottom: 48px;
+}
+
+.numbers {
+    width: 100%;
+    margin-top: -6px;
+}
+
+
+
+.questions {
+    width: 100%;
+    text-align: left;
+}
+
+.question {
+    position: relative;
+    margin-bottom: 48px;
+
+    min-height: 140px;
+    margin-bottom: 0
+}
+
+.question h3 {
+    margin-bottom: 6px;
+    font-size: 20px;
+}
+
+.question p {
+    margin: 0;
+    color: #9aa0ac;
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+/* https://github.com/rfbezerra/feather/blob/master/fonts/Feather-preview.html */
+.question:before {
+        position: absolute;
+        top: 0;
+        left: -50px;
+
+        font-family: 'Feather';
+        font-size: 32px;
+}
+.question.advertising:before {
+    /* target */
+    content: '\f1ec';
+    /* crosshair */
+    content: '\f153';
+}
+.question.revenue:before {
+    /* trending-up */
+    content: '\f1f8';
+}
+.question.shipping:before {
+    /* trending-up */
+    content: '\f1fa';
+}
+.question.churn:before {
+    /* refresh-cw */
+    content: '\f1c8';
+}
+.question.visitors:before {
+    /* users */
+    content: '\f209';
+}
+.question.communication:before {
+    /* phone-call */
+    content: '\f1b7';
+}
+.question.problems:before {
+    /* alert-triangle */
+    content: '\f104';
+}
+.question.reports:before {
+    /* file-text */
+    content: '\f16c';
+}
+.question.speed:before {
+    /* server */
+    content: '\f1d2';
+}
+.question.conversions:before {
+    /* percent */
+    content: '\f1b5';
+}
+.question.overtime:before {
+    /* dollar-sign */
+    content: '\f15a';
+    /* clock */
+    content: '\f139';
+}
+.question.idea:before {
+    /* send */
+    content: '\f1d1';
+    /* star */
+    content: '\f1e5';
+    /* activity */
+    content: '\f100';
+}
+
+
+.number:nth-child(2),
+.number:nth-child(8),
+.number:nth-child(10),
+.number:nth-child(16),
+.number:nth-child(18),
+.number:nth-child(24),
+.number:nth-child(26),
+.number:nth-child(32),
+.number:nth-child(34)
+{
+    background: #fffa32;
+}
+
+.number:nth-child(4),
+.number:nth-child(6),
+.number:nth-child(12),
+.number:nth-child(14),
+.number:nth-child(20),
+.number:nth-child(22),
+.number:nth-child(28),
+.number:nth-child(30),
+.number:nth-child(36)
+{
+    background: var(--blue);
+}
+.number:nth-child(4) *,
+.number:nth-child(6) *,
+.number:nth-child(12) *,
+.number:nth-child(14) *,
+.number:nth-child(20) *,
+.number:nth-child(22) *,
+.number:nth-child(28) *,
+.number:nth-child(30) *,
+.number:nth-child(36) *
+{
+    color: #ffffff;
+}
+
+
+.testimonials {
+    padding: var(--page-padding);
+    padding-top: 64px;
+    padding-bottom: 64px;
+    background: var(--gray);
+    text-align: center;
+}
+
+.testimonials img {
+    width: 100px;
+    border: 1px solid #ebebeb;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.testimonials .bio {
+    display: flex;
+    max-width: 300px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.testimonials p {
+    max-width: 640px;
+    font-size: 24px;
+    font-style: italic;
+    line-height: 34px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.services {
+    padding: var(--page-padding);
+    padding-top: 24px;
+    padding-bottom: 24px;
+    text-align: center;
+}
+
+.services h2 {
+    max-width: 640px;
+    margin: 64px auto;
+}
+
+.services ul {
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -12px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.services li {
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+    flex-grow: 1;
+    flex: 1 1 0px;
+}
+
+
+
+.logo:before {
+    content: '';
+    display: block;
+    width: 55px;
+    height: 55px;
+    background-size: 55px 55px;
+    margin-right: 12px;
+    vertical-align: middle;
+    margin-bottom: 12px;
+    margin: 12px auto;
+}
+
+.logo.amazon:before { background: url(/assets/images/logos/amazon.png) no-repeat; background-size: 55px 55px; }
+.logo.braintree:before { background: url(/assets/images/logos/braintree.png) no-repeat; background-size: 55px 55px; }
+.logo.constant_contact:before { background: url(/assets/images/logos/constant_contact.png) no-repeat; background-size: 55px 55px; }
+.logo.ebay:before { background: url(/assets/images/logos/ebay.png) no-repeat; background-size: 55px 55px; }
+.logo.facebook:before { background: url(/assets/images/logos/facebook.png) no-repeat; background-size: 55px 55px; }
+.logo.github:before { background: url(/assets/images/logos/github.png) no-repeat; background-size: 55px 55px; }
+.logo.gmail:before { background: url(/assets/images/logos/gmail.png) no-repeat; background-size: 55px 55px; }
+.logo.google_ads:before { background: url(/assets/images/logos/google_ads.png) no-repeat; background-size: 55px 55px; }
+.logo.google_analytics:before { background: url(/assets/images/logos/google_analytics.png) no-repeat; background-size: 55px 55px; }
+.logo.google_calendar:before { background: url(/assets/images/logos/google_calendar.png) no-repeat; background-size: 55px 55px; }
+.logo.google_forms:before { background: url(/assets/images/logos/google_forms.png) no-repeat; background-size: 55px 55px; }
+.logo.google_sheets:before { background: url(/assets/images/logos/google_sheets.png) no-repeat; background-size: 55px 55px; }
+.logo.gravity_forms:before { background: url(/assets/images/logos/gravity_forms.svg) no-repeat; background-size: 55px 55px; }
+.logo.mailchimp:before { background: url(/assets/images/logos/mailchimp.png) no-repeat; background-size: 55px 55px; }
+.logo.mailgun:before { background: url(/assets/images/logos/mailgun.png) no-repeat; background-size: 55px 55px; }
+.logo.mysql:before { background: url(/assets/images/logos/mysql.png) no-repeat; background-size: 55px 55px; }
+.logo.ninja_forms:before { background: url(/assets/images/logos/ninja_forms.png) no-repeat; background-size: 55px 55px; }
+.logo.paypal:before { background: url(/assets/images/logos/paypal.png) no-repeat; background-size: 55px 55px; }
+.logo.quick_books:before { background: url(/assets/images/logos/quick_books.png) no-repeat; background-size: 55px 55px; }
+.logo.sendgrid:before { background: url(/assets/images/logos/sendgrid.png) no-repeat; background-size: 55px 55px; }
+.logo.shopify:before { background: url(/assets/images/logos/shopify.png) no-repeat; background-size: 55px 55px; }
+.logo.slack:before { background: url(/assets/images/logos/slack.png) no-repeat; background-size: 55px 55px; }
+.logo.stripe:before { background: url(/assets/images/logos/stripe.png) no-repeat; background-size: 55px 55px; }
+.logo.twilio:before { background: url(/assets/images/logos/twilio.png) no-repeat; background-size: 55px 55px; }
+.logo.twitter:before { background: url(/assets/images/logos/twitter.png) no-repeat; background-size: 55px 55px; }
+.logo.woocommerce:before { background: url(/assets/images/logos/woocommerce.png) no-repeat; background-size: 55px 55px; }
+.logo.wordpress:before { background: url(/assets/images/logos/wordpress.png) no-repeat; background-size: 55px 55px; }
+.logo.youtube:before { background: url(/assets/images/logos/youtube.png) no-repeat; background-size: 55px 55px; }
+
+
+.ready {
+    padding: var(--page-padding);
+    padding-top: 24px;
+    padding-bottom: 24px;
+    background: #f8fafc;
+    text-align: center;
+}
+
+.ready p {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    color: #9aa0ac;
+    font-size: 18px;
+}
+
+@media(max-width: 1280px) {
+    .numbers {
+        display: block;
+    }
+
+    .number {
+        width: 102px;
+        margin: 6px auto 0;
+    }
+
+    .questions {
+        padding-right: 6px;
+        padding-right: 64px;
+    }
+
+    .question {
+        min-height: 420px;
+    }
+}
+@media(max-width: 780px) {
+    .welcome .container {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 0;
+    }
+
+    .preview_box {
+        padding: 0;
+    }
+
+}
+@media(max-width: 720px) {
+    .question:before {
+        display: none;
+    }
+    .questions {
+        padding-right: 6px;
+    }
+
+}
+@media(max-width: 420px) {
+    .details {
+        padding: 12px 0;
+    }
+}

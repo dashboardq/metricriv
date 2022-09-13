@@ -1,0 +1,545 @@
+/*
+ * This design based on the MIT licensed Tabler: https://tabler.io/
+ * All code is custom.
+ */
+
+:root {
+    --blue: #1c7ed6;
+    --blue-off: #1665AB;
+    --gray: #f8fafc;
+    --gray-off: #f8f9fa;
+    --green: #5eba00;
+    --red: #cd201f;
+    --yellow: #fffa32;
+    --yellow-off: #eeea32;
+    --white: #ffffff;
+    --white-off: #f2f2f2;
+    --page-padding: 16px 12px;
+    --font-color-main: #343541;
+    --font-color-light: #5c5c66;
+    --border-color-gray: #00000033;
+    --page-size: 1200px;
+}
+@media(max-width: 960px) {
+    :root {
+        --page-padding: 12px 12px;
+    }
+}
+
+@font-face {
+    font-family: 'Feather';
+    src: url('../fonts/feather.woff2') format('woff2');
+}
+
+body {
+    color: var(--font-color-main);
+}
+
+cite {
+    color: var(--font-color-light);
+}
+
+header {
+    padding: var(--page-padding);
+    position: relative;
+    border-bottom: 1px solid var(--border-color-gray);
+    z-index: 100;
+}
+
+.container {
+    max-width: var(--page-size);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+header .container {
+    align-items: center;
+}
+
+footer {
+    padding: var(--page-padding);
+    position: relative;
+}
+
+footer .container {
+    align-items: center;
+}
+
+
+header h1:before {
+    content: '#';
+    display: inline-block;
+    text-align: center;
+    background: var(--blue);
+    width: 35px;
+    height: 35px;
+    color: #ffffff;
+    border-radius: 6px;
+    margin-right: 6px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    padding: 0 12px;
+    opacity: 0.8;
+}
+nav li:first-child a {
+    padding-left: 0;
+}
+
+main h1,
+main h2,
+main p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 1.25em;
+}
+main h2 {
+    line-height: 1.5em;
+}
+
+section {
+    position: relative;
+    padding: var(--page-padding);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td {
+    text-align: center;
+    padding: .25rem;
+}
+tfoot th {
+    padding: .25rem;
+}
+tr:nth-child(odd) td {
+    background: #f5f7fb;
+}
+td form {
+    display: inline-block;
+}
+
+.numbers {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0 0 -6px -6px;
+
+    padding: 0 6px;
+    padding: 0 9px;
+}
+
+.number {
+    background: #ffffff;
+    box-shadow: 0 1px 2px 0 #00000011;
+    border: 1px solid #e0e5ec;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    text-align: center;
+    min-width: 102px;
+    margin-top: 6px;
+    margin-left: 6px;
+
+    padding: 30px;
+}
+
+.number h2 {
+    margin: 0;
+    font-size: 32px;
+    color: #495057;
+}
+
+.number label {
+    color: #9aa0ac;
+    margin-top: 6px;
+}
+
+
+
+/* Buttons */
+input[type=submit].button,
+button.button,
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: var(--white);
+    color: var(--font-color-main);
+    border-radius: 2px;
+    font-weight: 500;
+    transition: .3s opacity, .3s background;
+}
+input[type=submit].button:hover,
+button.button:hover,
+.button:hover {
+    background: var(--white-off);
+    opacity: 0.9;
+}
+
+.button.-emphasize {
+    background: var(--yellow);
+}
+.button.-emphasize:hover {
+    background: var(--yellow-off);
+}
+
+input[type=submit].button_invert,
+button.button_invert,
+.button_invert {
+    background: var(--blue);
+    color: #ffffff;
+}
+
+input[type=submit].button_invert:hover,
+button.button_invert:hover,
+.button_invert:hover {
+    background: var(--blue-off);
+}
+
+.notice {
+    position: relative;        
+    padding: .75rem 1.25rem;   
+    margin-bottom: 1rem;       
+    border-radius: .25rem;     
+    border: 1px solid transparent;
+
+    color: #383d41;            
+    background-color: #e2e3e5; 
+    border-color: #d6d8db;     
+}       
+.notice p {         
+    margin-top: 0;
+}
+.notice p:last-child {         
+    margin-bottom: 0;
+}
+.notice.error {
+    color: #721c24;            
+    background-color: #f8d7da; 
+    border-color: #f5c6cb;     
+}   
+
+.notice.success {             
+    color: #155724;            
+    background-color: #d4edda; 
+    border-color: #c3e6cb;     
+}   
+.notice {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+
+.desc {
+    font-size: .9rem;
+    opacity: .75;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.25rem;
+}
+
+.selections span,
+.selections a {
+    display: block;
+    padding: 8px;
+}
+.selections a:hover {
+    background: #f5f7fb;
+}
+.selections a:after {
+    content: ' >';
+    position: absolute;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+.center {
+    text-align: center;
+}
+.left {
+    text-align: left;
+}
+.right {
+    text-align: right;
+}
+
+.page_requests main th:first-child,
+.page_requests main td:first-child {
+    width: 5%;
+}
+/*
+*/
+
+/* BOF header.app */
+header.app nav {
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+header.app nav:after {
+    content: '\f19c';
+    font-family: 'Feather';
+    font-size: 24px;
+    font-weight: bold;
+        padding: 10px;
+        margin-right: -10px;
+}
+header.app nav ul {
+    display: none;
+}
+
+header.app nav.active ul {
+    display: block;
+    position: absolute;
+    top: 25px;
+    right: 0px;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 12px 0;
+    filter: drop-shadow(0 4px 8px #00000033);
+    min-width: 120px;
+
+    min-width: 220px;
+    top: 32px;
+    right: -6px;
+}
+
+header.app nav.active ul:first-child {
+    right: 180px;
+    min-width: 170px;
+}
+header.app nav.active ul {
+    min-width: 190px;
+}
+
+header.app nav.active ul:last-child:before {
+    content: '\00d7';
+    position: absolute;
+    display: block;
+    top: -30px;
+    right: 0px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background: #ffffff;
+    font-size: 32px;
+
+    font-size: 42px;
+    top: -40px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+}
+
+header.app nav.active a {
+    display: block;
+    margin: 12px 0;
+    padding: 0 24px;
+    padding: 12px 24px;
+    width: calc(100% - 48px);
+
+    margin: 24px 0;
+    margin: 0 0;
+    text-align: center;
+}
+/* EOF header.app */
+
+.box {
+    max-width: var(--page-size);
+    margin: 0 auto;
+}
+
+.box .full {
+    flex-basis: 100%;
+}
+.box .full .notice {
+    max-width: initial;
+}
+
+.page_login main > .box {
+    display: flex;
+    justify-content: space-around;
+flex-wrap: wrap
+}
+
+.page_login main > .box .card {
+    box-sizing: border-box;
+    width: 400px;
+    background: #ffffff;
+    border-bottom: 1px solid #e0e5ec;
+    padding: 1rem;
+}
+
+.page_forgot-password main > .box h2,
+.page_reset-password main > .box h2,
+.page_login main > .box h2 {
+    margin-top: 0;
+}
+
+@media(max-width: 960px) {
+    header nav {
+        position: relative;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    header nav:after {
+        content: '\f19c';
+        font-family: 'Feather';
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+        margin-right: -10px;
+    }
+    header nav ul {
+        display: none;
+    }
+
+    header nav.active ul {
+        display: block;
+        position: absolute;
+        top: 25px;
+        right: 0px;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 12px 0;
+        filter: drop-shadow(0 4px 8px #00000033);
+        min-width: 120px;
+
+        min-width: 220px;
+        top: 32px;
+        right: -6px;
+    }
+
+    header.app nav.active ul:first-child {
+        right: 180px;
+        min-width: 170px;
+    }
+    header.app nav.active ul {
+        min-width: 190px;
+    }
+
+    header nav.active ul:last-child:before {
+        content: '\00d7';
+        position: absolute;
+        display: block;
+        top: -30px;
+        right: 0px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        background: #ffffff;
+        font-size: 32px;
+
+        font-size: 42px;
+        top: -40px;
+        right: 0px;
+        width: 40px;
+        height: 40px;
+    }
+
+    header nav.active a {
+        display: block;
+        margin: 12px 0;
+        padding: 0 24px;
+        width: calc(100% - 48px);
+
+        margin: 24px 0;
+        text-align: center;
+    }
+
+    header.btn h1 a {
+        font-size: 28px;
+    }
+    header.btn .button {
+        padding: 12px 4px;
+        border-radius: 5px;
+    }
+
+    footer .container {
+        align-items: flex-start;
+    }
+    footer nav ul {
+        display: block;
+    }
+    footer nav li {
+        margin-bottom: 1em;
+    }
+
+    /* BOF Make Table Vertical */
+	thead {
+		display: none;
+	}
+	tfoot tr,
+	tbody tr {
+		display: block;
+		margin-bottom: 1rem;
+		background: #f5f7fb;
+		padding: 1rem .5rem;
+		border-radius: 2px;
+	}
+	tfoot th,
+	tbody th {
+		position: relative;
+		display: block;
+		width: 50%;
+		height: 100%;
+		padding-left: 50%;
+		margin-bottom: 1rem;
+	}                          
+	tfoot th:before,
+	tbody th:before {          
+		content: attr(data-label);      
+		display: inline-block; 
+		width: 50%;
+		height: 100%;
+		float: left;
+		margin-left: -90%;     
+	}   
+	tfoot th:after,
+	tbody th:after {
+		content: '';
+		display: table;        
+		clear: both;           
+	}   
+	td {
+		position: relative;    
+		display: block;
+		width: 50%;
+		height: 100%;
+		padding-left: 50%;
+		margin-bottom: 1rem;
+	}   
+    td:before {
+        content: attr(data-label);
+        display: inline-block;
+        display: block;
+        width: 50%;
+        height: 100%;
+        float: left;
+        margin-left: -90%;
+    }
+    td:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    tfoot th:empty {
+        display: none;
+    }
+    .page_requests main th:first-child,
+    .page_requests main td:first-child {
+        width: 50%;
+    }
+	/* EOF Make Table Vertical */
+}

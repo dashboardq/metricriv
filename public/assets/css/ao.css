@@ -1,0 +1,252 @@
+* {
+    margin-top: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    color: #343541;
+}
+
+.box {
+    position: relative;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 1200px;
+}
+
+header .box,
+footer .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+header h2,
+footer p {
+    margin: 0;
+}
+header ul,
+footer ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+header li,
+footer li {
+    margin: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+main a {
+    text-decoration: underline;
+}
+
+label {
+    display: block;
+}
+form > div {
+    margin-bottom: 1rem;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.base > header > .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.base > footer > .box {
+    display: flex;
+    justify-content: space-between;
+
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.base > footer ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.base > footer li {
+    margin-bottom: 1rem;
+}
+
+input[type=submit],
+button,
+.button {
+    background-color: transparent; 
+    color: inherit; 
+    border-width: 0; 
+    padding: 0; 
+    cursor: pointer;
+
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: #1c7ed6;
+    color: #ffffff;
+    border-radius: 2px;
+    font-weight: 500;
+    transition: .3s opacity, .3s background;
+
+    text-decoration: none;
+}
+input[type=submit]:hover,
+button:hover,
+.button:hover {
+    background: #1665AB;;
+    opacity: 0.9;
+}
+
+textarea,
+input[type=text],
+input[type=password] {
+    padding: .4rem .6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    color: #495057;
+    max-width: calc(100% - 24px);
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+[aria-label=Close] {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    background: #d6d6d6;
+    padding: .25rem;
+    width: 30px;
+    color: inherit;
+}
+[aria-label=Close]:hover {
+    background: #d6d6d6;
+}
+
+
+/* BOF Notices */
+.notice {
+    position: relative;        
+    padding: .75rem 1.25rem;   
+    margin-bottom: 1rem;       
+    border-radius: .25rem;     
+    border: 1px solid transparent;
+
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}       
+.notice.error {
+    color: #721c24;            
+    background-color: #f8d7da; 
+    border-color: #f5c6cb;     
+}   
+
+.notice.success {             
+    color: #155724;            
+    background-color: #d4edda; 
+    border-color: #c3e6cb;     
+}   
+.notice p:last-child {         
+    margin-bottom: 0;
+}
+/* EOF Notices */
+
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #00000033;
+
+    justify-content: center;
+    align-items: center;
+}
+.overlay.show {
+    display: flex;
+}
+.overlay:not(.processing) > div {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    border-radius: 3px;
+    min-width: 280px;
+}
+.overlay:not(.processing) > div h2 {
+    padding-right: 40px;
+}
+
+.overlay > .loading {
+    position: relative;
+}
+.overlay > .loading span {
+    display: block;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+
+    animation: bounce 1.4s infinite ease-in-out both;
+    animation-delay: -0.16s;
+}
+.overlay > .loading:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -28px;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+
+    animation: bounce 1.4s infinite ease-in-out both;
+    animation-delay: -0.32s;
+}
+.overlay > .loading:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 28px;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+@keyframes bounce {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    } 40% { 
+        transform: scale(1.0);
+    }
+}

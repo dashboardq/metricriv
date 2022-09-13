@@ -1,0 +1,125 @@
+main form {
+    border: 1px solid #e9ecef;
+    background: var(--gray-off); 
+    padding: 16px;
+    border-radius: 3px;
+    max-width: 600px;
+}
+
+main form > div {
+    margin-bottom: 16px;
+}
+main form > div:last-child {
+    margin-bottom: 0;
+}
+
+main form > div.messages {
+    margin-bottom: 0;
+}
+
+.messages.success {
+    border-radius: 3px;
+    border: 1px solid var(--green);
+    padding: 16px;
+    padding-bottom: 0;
+    background: var(--gray-off); 
+}
+
+.messages.errors {
+    border-radius: 3px;
+    border: 1px solid var(--red);
+    padding: 16px;
+    padding-bottom: 0;
+    margin-bottom: 16px;
+    color: var(--red);
+}
+
+.messages p {
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+form input.error,
+form textarea.error {
+    border: 1px solid var(--red);
+}
+
+form label {
+    display: block;
+    color: #495057;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+textarea,
+input[type=text],
+input[type=password] {
+    padding: 6px 12px;
+    border: 1px solid #e0e5ec;
+    border-radius: 3px;
+    color: #495057;
+    max-width: calc(100% - 24px);
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+    padding: 12px;
+}
+
+textarea.-short {
+    height: 54px;
+}
+
+.description {
+    margin: 0;
+    margin-bottom: 6px;
+    color: #9aa0ac;
+}
+
+label.checkbox {
+    display: inline-block;
+    position: relative;
+    padding-left: 24px;
+    margin-left: -17px;
+}
+input[type="checkbox"] {
+    opacity: 0.00000001;
+}
+input[type="checkbox"] + label.checkbox:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #e0e5ec;
+    border-radius: 3px;
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
+}
+input[type="checkbox"]:checked + label.checkbox:before {
+    background: #467fcf;
+    border-color: #467fcf;
+}
+input[type="checkbox"]:checked + label.checkbox:after {
+    /* check */
+    content: '\f12b';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Feather';
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 15px;
+}
+input[type="checkbox"]:focus + label.checkbox:before {
+    box-shadow: 0 0 0 2px rgba(70, 127, 207, 0.25);
+}
+
+form > div.error input[type=text] {
+    border: 1px solid red;
+}
+
+.notice {
+    max-width: 592px;
+}

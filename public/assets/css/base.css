@@ -1,0 +1,104 @@
+/*
+ * This design based on the MIT licensed Tabler: https://tabler.io/
+ * All code is custom.
+ */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0; 
+}
+
+p {
+    margin: 0;
+}
+
+ul, ol, dd {
+    margin: 0; 
+    padding: 0; 
+    list-style: none;
+}
+
+a {
+    color: inherit; 
+    text-decoration: none;
+}
+
+input[type=submit],
+button {
+    background-color: transparent; 
+    color: inherit; 
+    border-width: 0; 
+    padding: 0; 
+    cursor: pointer;
+}
+
+cite {
+    font-style: normal;
+    color: #5c5c66;
+}
+
+fieldset {
+    border-width: 0; 
+    padding: 0; 
+    margin: 0;
+}
+
+main a:not(.button) {
+    text-decoration: underline;
+}
+
+/* Gradient left to right */
+.loading {
+    display: none;
+    margin-bottom: -5px;
+    margin-left: 20px;
+    position: relative;
+    background: linear-gradient(to right, #6d6d6dff 10%, #6d6d6d00 40%);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: load 1.4s infinite linear;
+}
+.loading.show {
+    display: inline-block;
+}
+.ajax_loading .loading {
+    display: inline-block;
+}
+
+/* Top left corner darker */
+.loading:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #6d6d6d;
+    border-radius: 100% 0 0 0;
+    width: 50%;
+    height: 50%;
+}
+/* Hole in the middle */
+.loading:after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    background: #ffffff;
+    border-radius: 50%;
+    width: 70%;
+    height: 70%;
+}
+.loading.-fieldset:after {
+    background: #f8f9fa; 
+}
+@keyframes load {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
