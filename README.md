@@ -61,7 +61,8 @@ mysql> CREATE DATABASE numbersq;
 mysql> exit;
 
 # Set up the environment config values (enter the appropriate MySQL data)
-# If you are developing, use "dev" for the "APP_ENV" environment variable, if you are putting this on a publicly available website, use the "prod" value.
+# If you are developing, use "dev" for the "APP_ENV" environment variable, 
+# if you are putting this on a publicly available website, use the "prod" value.
 cp .example.env.php .env.php
 vim .env.php
 
@@ -85,7 +86,8 @@ php -S localhost:8080
 # Visit the site in your browser:
 # http://localhost:8080
 
-# You should be seeing the NumbersQ home page when you visit it in your browser. On the login page, you should be able to register an account.
+# You should be seeing the NumbersQ home page when you visit it in your browser. 
+# On the login page, you should be able to register an account.
 ```
 
 ### No Experience
