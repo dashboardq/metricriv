@@ -44,7 +44,7 @@ Required tools:
 * MySQL
 * Git
 
-Not required tools:
+Not required:
 * There are no dependencies so composer is not needed for this install.
 
 ```
