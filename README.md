@@ -278,7 +278,7 @@ All of these additions are added using the web framework's plugin system. I have
 
 ### Can you explain how ScreenshotOne is used?
 
-Some sites do not provide an API or make it easy to load information. [ScreenshotOne - Reliable Screenshot API](https://screenshotone.com/) is a service that provides automated screenshots. I was able to work with the creator of the service, [Dmytro Krasun](https://twitter.com/dmytrokrasun), to get some additional functionality added where ScreenshotOne will return data instead of a screenshot.
+Some sites do not provide an API or make it easy to load information. [ScreenshotOne - Reliable Screenshot API](https://screenshotone.com/) is a service that provides automated screenshots. I was able to work with the creator of the service, [Dmytro Krasun](https://dmytrokrasun.com/), to get some additional functionality added where ScreenshotOne will return data instead of a screenshot.
 
 There are a number of services that provide similar functionality but the price is often very expensive. I like working with other independent developers and Dmytro is someone I really appreciate and respect in the Indie Hacker community.
 
