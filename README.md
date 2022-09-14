@@ -64,6 +64,9 @@ mysql> exit;
 # If you are developing, use "dev" for the "APP_ENV" environment variable, 
 # if you are putting this on a publicly available website, use the "prod" value.
 cp .example.env.php .env.php
+
+# Edit the .env.php file.
+# Make sure you update: APP_HOST, APP_SITE, DB_NAME, DB_USER, and DB_PASS
 vim .env.php
 
 # Generate the encryption keys
