@@ -52,7 +52,7 @@ Not required:
 cd ~
 
 # Clone the repo
-git clone git@github.com:dashboardq/numbersq.git numbersq
+git clone https://github.com/dashboardq/numbersq.git numbersq
 cd numbersq
 
 # Set up MySQL database
