@@ -81,6 +81,7 @@ crontab -e
 php ao track
 
 # Serve the site locally
+cd public
 php -S localhost:8080
 
 # Visit the site in your browser:
@@ -92,7 +93,7 @@ php -S localhost:8080
 
 ### No Experience
 
-I'm going to be giving steps on how to install NumbersQ using [Cloudways](https://www.cloudways.com/en/?id=1100140) so I guess that 10 year old is going to need to find a credit card (this is an affiliate link). The reason I am using Cloudways as an example is because they have a simple, easy to use platform that makes setting up an affordable VPS very simple. Unfortunately, they only support PHP so for any other hosting needs, you will need to use a different host.
+I'm going to be listing out steps on how to install NumbersQ using [Cloudways](https://www.cloudways.com/en/?id=1100140) so I guess that 10 year old is going to need to find a credit card (the Cloudways link is an affiliate link). The reason I am using Cloudways as an example is because they have a simple, easy to use platform that makes setting up an affordable VPS very simple. Unfortunately, they only support PHP so for any other hosting needs, you will need to use a different host.
 
 I'm going to start off with some introduction text written for intermediate users. Don't worry if the introduction doesn't make sense to you. The most important part to understand is step 1. If the steps themselves don't make sense, please let me know.
 

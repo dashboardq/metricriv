@@ -7,7 +7,9 @@ class Plugins {
     public $instances = [];
 
     public function __construct() {
-        $this->plugs = require ao()->env('AO_BASE_DIR') . DIRECTORY_SEPARATOR . '.plug.php';
+        if(is_file(ao()->env('AO_BASE_DIR') . DIRECTORY_SEPARATOR . '.plug.php')) {
+            $this->plugs = require ao()->env('AO_BASE_DIR') . DIRECTORY_SEPARATOR . '.plug.php';
+        }
     }
 
     public function init() {
