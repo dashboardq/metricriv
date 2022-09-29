@@ -227,9 +227,9 @@ class Mavoc {
         $func = $this->hook('ao_response_init', $func);
         call_user_func($func);
 
-        $this->hook('ao_request_available', $this->request);
-        $this->hook('ao_response_available', $this->response);
-        $this->hook('ao_session_available', $this->session);
+        $this->request = $this->hook('ao_request_available', $this->request);
+        $this->response = $this->hook('ao_response_available', $this->response);
+        $this->session = $this->hook('ao_session_available', $this->session);
 
         $this->email = new Email();
         $this->email = $this->hook('ao_email', $this->email);

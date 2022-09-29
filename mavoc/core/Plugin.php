@@ -70,14 +70,17 @@ class Plugin {
 
     public function requestAvailable($req) {
         $this->req = $req;
+        return $req;
     }
 
     public function responseAvailable($res) {
         $this->res = $res;
+        return $res;
     }
 
     public function sessionAvailable($ses) {
         $this->ses = $ses;
+        return $ses;
     }
 
     public function view($view, $args = []) {
