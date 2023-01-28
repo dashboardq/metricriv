@@ -151,6 +151,16 @@ if(!function_exists('now')) {
     }
 }
 
+if(!function_exists('num')) {
+    // Works like number_format() but allows you to pass in strings that already have a comma.
+    function num($num, $decimals = 0, $decimal_separator = ".", $thousands_separator = ",") {
+        // Make sure the comma is removed before running through number_format
+        $output = str_replace(',', '', $num);
+        $output = number_format($output, $decimals, $decimal_separator, $thousands_separator);
+        return $output;
+    }
+}
+
 if(!function_exists('_out')) {
     function _out($input, $color = null) {   
         $output = $input;

@@ -65,7 +65,24 @@ class Boot {
             require '..' . DIRECTORY_SEPARATOR . '.boot_end.php';
         }
 
-        $ao = new Mavoc($this->envs);
-        $ao->init();
+        try {
+            $ao = new Mavoc($this->envs);
+            $ao->init();
+        } catch(\Throwable $e) {
+            $app_name = $this->envs['APP_NAME'];
+            $title = 'Error';
+            $view = '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'alt' . DIRECTORY_SEPARATOR . '500.php';
+            if(is_file($view)) {
+                include $view;
+            } else {
+                $htm = '';
+                $htm .= '<h1>' . htmlspecialchars($title) . '</h1>';
+                $htm .= '<p>';
+                $htm .= 'There appears to be a problem with the server. If this problem persists, please contact support.';
+                $htm .= '</p>';
+                echo $htm;
+            }
+            exit;
+        }
     }
 }

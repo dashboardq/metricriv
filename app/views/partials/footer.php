@@ -16,6 +16,4 @@
         </form>
         <?php endif; ?>
 
-<?php if(in_array(ao()->env('APP_ENV'), ['prod', 'production'])): ?>
-    <?php ao()->hook('prod_analytics', ''); ?>
-<?php endif; ?>
+        <?php echo ao()->env('APP_ANALYTICS'); ?>

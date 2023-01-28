@@ -9,7 +9,7 @@
             <h1><?php esc($title); ?></h1>
             <section class="page">
 				<?php $res->html->messages(); ?>
-                <p>There was a problem accessing the requested page.</p> 
+                <p>There was a problem accessing the requested page. The page does not appear to exist.</p> 
             </section>
         </main>
 		<?php $res->partial('footer'); ?>

@@ -68,7 +68,7 @@ class TwitterService {
     public static function totalFollowersParse($body) {
         preg_match_all('|.*"followers".*?"profile-stat-num">([^<]*)</span>.*|s', $body, $matches);
         if(isset($matches[1][0])) {
-            return number_format($matches[1][0]);
+            return num($matches[1][0]);
         } else {
             return -1;
         }
@@ -144,7 +144,7 @@ class TwitterService {
     public static function totalTweetsParse($body) {
         preg_match_all('|.*"posts".*?"profile-stat-num">([^<]*)</span>.*|s', $body, $matches);
         if(isset($matches[1][0])) {
-            return number_format($matches[1][0]);
+            return num($matches[1][0]);
         } else {
             return -1;
         }

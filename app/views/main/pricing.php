@@ -2,7 +2,7 @@
 <html>
     <head>                     
         <?php $res->partial('head'); ?>
-        <link href="/assets/css/pricing.css?cache-date=2022-08-17" rel="stylesheet">
+        <link href="/assets/css/pricing.css?cache-date=2022-12-30" rel="stylesheet">
     </head>
     <body class="<?php $res->pathClass(); ?>">
         <?php $res->partial('header'); ?>
@@ -25,7 +25,7 @@
                     </li>
                     <li class="card highlight">
                         <h2>Basic</h2>
-                        <h3>$12/mo</h3>
+                        <h3>$5/mo</h3>
                         <ul>
                             <li>Up to <strong>100</strong> public numbers</li>
                             <li>Up to <strong>100</strong> private numbers</li>
@@ -39,7 +39,7 @@
                     </li>
                     <li class="card">
                         <h2>Intermediate</h2>
-                        <h3>$48/mo</h3>
+                        <h3>$12/mo</h3>
                         <ul>
                             <li>Up to <strong>500</strong> public numbers</li>
                             <li>Up to <strong>500</strong> private numbers</li>
@@ -55,7 +55,7 @@
                     </li>
                     <li class="card">
                         <h2>Advanced</h2>
-                        <h3>$98/mo</h3>
+                        <h3>$24/mo</h3>
                         <ul>
                             <li>Up to <strong>1,000</strong> public numbers</li>
                             <li>Up to <strong>1,000</strong> private numbers</li>

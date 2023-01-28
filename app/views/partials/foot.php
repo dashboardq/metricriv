@@ -13,7 +13,3 @@
         <?php if($user): ?>
         <form id="logout" action="/logout" method="POST" class="hidden"></form>
         <?php endif; ?>
-
-        <?php if(ao()->env('APP_ENV') == 'prod'): ?>
-        <?php /* Place analytic scripts here. */ ?>
-        <?php endif; ?>

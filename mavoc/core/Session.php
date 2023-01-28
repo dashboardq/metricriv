@@ -89,13 +89,7 @@ class Session {
                     $this->next_flash[$type][$field] = [];
                 }
 
-                if(is_array($message)) {
-                    foreach($value as $msg) {
-                        $this->next_flash[$type][$field][] = $msg;
-                    }
-                } else {
-                    $this->next_flash[$type][$field][] = $value;
-                }
+                $this->next_flash[$type][$field][] = $value;
             }
 
         }
