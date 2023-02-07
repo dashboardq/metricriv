@@ -131,8 +131,17 @@ class Tracking extends Model {
             $dt->modify('+1 hour');
         }
 
+        $this->data['values']['number'] = -1;
+        $this->data['values']['color'] = 'red';
+
+        $this->data['encrypted'] = 0;
         $this->data['status'] = 'failed';
         $this->data['next_check_at'] = $dt;
+
+        $this->data['data'] = $this->data['values'];
+        $this->data['name'] = $this->data['title'];
+        $this->data['method'] = $this->data['function'];
+        $this->data['encrypted'] = 0;
         $this->save();
     }
 

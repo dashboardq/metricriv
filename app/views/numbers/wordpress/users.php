@@ -24,12 +24,6 @@
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">
-					<?php $res->html->text('Number Display Name', 'name', $number->data['short_name']); ?>
-
-					<?php $res->html->radios('Update Number Interval', 'interval', $intervals); ?>
-
-                    <hr>
-
                     <?php 
                         $periods = [];
                         $periods[] = ['label' => 'All', 'value' => 'all'];
@@ -78,6 +72,12 @@
                         <?php $res->html->selectRaw('weeks_range', $increments); ?> Weeks
                         <?php $res->html->selectRaw('days_range', $increments); ?> Days
                     </div>
+
+                    <hr>
+
+					<?php $res->html->text('Number Display Name', 'name', $number->data['short_name']); ?>
+
+					<?php $res->html->radios('Update Number Interval', 'interval', $intervals); ?>
 
 					<?php $res->html->submit('Start Tracking', 'button button_invert'); ?>
 				</form>

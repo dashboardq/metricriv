@@ -25,6 +25,8 @@ return [
     'APP_PRIVACY_UPDATED' => 'July 15, 2022',
     'APP_TERMS_UPDATED' => 'July 15, 2022',
 
+    'APP_ANALYTICS' => '<script></script>',
+
     // The 'list' option is only used for simple, non-database sites.
     'APP_LOGIN_TYPE' => 'db', // Options: list, db
     // If 'list' is chosen, these users will be available for login. The number is the user_id.

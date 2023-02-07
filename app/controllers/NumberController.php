@@ -183,6 +183,15 @@ class NumberController {
             $number_slug = 'main';
         }
 
+
+        $name = 'period';
+        $other = false;
+        if(isset($res->session->flash['fields'][$name])) {
+            $other = ($res->session->flash['fields'][$name] == 'other');
+        } elseif(isset($res->fields[$name])) {
+            $other = ($res->fields[$name] == 'other');
+        }
+
         $available_intervals = ['1 hour' => true, '5 minutes' => true];
         $intervals = [];
         $list = explode(',', $restriction['allowed_intervals']);
@@ -222,7 +231,7 @@ class NumberController {
             array_pop($parts);
         }
         $back = implode('/', $parts);
-        $res->view('numbers/' . $category_slug . '/' . $number_slug, compact('back', 'extras', 'intervals', 'number'));
+        $res->view('numbers/' . $category_slug . '/' . $number_slug, compact('back', 'extras', 'intervals', 'number', 'other'));
     }
 
     public function addTrackingPost($req, $res) {

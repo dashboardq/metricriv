@@ -387,6 +387,13 @@ flex-wrap: wrap
     margin-top: 0;
 }
 
+.page_other .other {
+    display: none;
+}
+.page_other.page_other_active .other {
+    display: block;
+}
+
 @media(max-width: 960px) {
     header nav {
         position: relative;

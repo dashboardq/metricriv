@@ -8,7 +8,12 @@ use app\services\TrackingService;
 
 class ConsoleController {
     public function track($in, $out) {
-        $trackings = ao()->db->query('SELECT id FROM trackings WHERE next_check_at IS NOT NULL AND next_check_at <= ?', now());
+        if(isset($in->params[0])) {
+            $tracking_id = $in->params[0];
+            $trackings = ao()->db->query('SELECT id FROM trackings WHERE next_check_at IS NOT NULL AND next_check_at <= ? AND id = ?', now(), $tracking_id);
+        } else {
+            $trackings = ao()->db->query('SELECT id FROM trackings WHERE next_check_at IS NOT NULL AND next_check_at <= ?', now());
+        }
 
         foreach($trackings as $data) {
             TrackingService::update($data['id']);

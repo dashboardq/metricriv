@@ -55,14 +55,13 @@
 
 
 
-
         ### BOF: CHOOSE ONE OF THE CONNECTION TYPES BELOW AND THEN DELETE THE REST
 
         // Basic connection
         $rest = new REST();
         $url = '###https://api.example.com/api/v1/users/' . $val['###username'];
         $body = $rest->get($url);
-        $result = self::{{method}}Parse($body);
+        $result = self::parseBody($body);
 
         if($result == -1) {
             $res->error('There was a problem accessing the data. Please confirm all the information is entered correctly. If you continue to have issues, please contact support.');
@@ -76,7 +75,7 @@
         $rest = new REST($connection->data['values']['api_key']);
         $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $val['###username'];
         $body = $rest->get($url);
-        $result = self::{{method}}Parse($body);
+        $result = self::parseBody($body);
         if($result == -1) {
             $res->error('There was a problem accessing the API. Please confirm that your API Key and other info were entered correctly. If you continue to have issues, please contact support.');
         }
@@ -94,7 +93,7 @@
         $rest = new REST($headers);
         $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $val['###username'];
         $body = $rest->get($url);
-        $result = self::{{method}}Parse($body);
+        $result = self::parseBody($body);
         if($result == -1) {
             $res->error('There was a problem accessing the API. Please confirm that your API Key and other info were entered correctly. If you continue to have issues, please contact support.');
         }
@@ -109,7 +108,7 @@
         $rest = new REST($connection->data['values']['api_key']);
         $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $val['###username'] . '&period=custom&date=2000-01-01,' . $future_date . '&filter=filter';
         $body = $rest->get($url);
-        $result = self::{{method}}Parse($body);
+        $result = self::parseBody($body);
         if($result == -1) {
             $res->error('There was a problem accessing the API. Please confirm that your API Key and other info were entered correctly. If you continue to have issues, please contact support.');
         }
@@ -127,7 +126,7 @@
         $rest = new REST($headers);
         $url = '###https://api.example.com/notifications?per_page=1';
         list($headers, $body) = $rest->get($url, [], 'headers,array');
-        $result = self::{{method}}Parse($headers, $body);
+        $result = self::parseBody($headers, $body);
         if($result == -1) {
             $res->error('There was a problem accessing the API. If you continue to have issues, please contact support.');
         }
@@ -153,7 +152,7 @@
         //$args['connection_id'] = $connection->id;
         $args['name'] = $val['name'];
         $args['status'] = 'initial';
-        $args['method'] = json_encode(['app\services\trackings\{{class}}Service', '{{method}}Update']);
+        $args['method'] = json_encode(['app\services\trackings\{{class_slug}}\{{class}}Service', '{{method}}Update']);
         $args['check_interval'] = $val['interval'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
@@ -164,7 +163,7 @@
 
         $res->success('You have successfully added a new number to track.', '/numbers');
     }
-    public static function {{method}}Parse($body) {
+    public static function parseBody($body) {
         if(isset($body->value)) {
             return number_format($body->value);
         } else {
@@ -193,7 +192,7 @@
             $rest = new REST();
             $url = 'https://###api.example.com/api/v1/users/' . $tracking->data['values']['###username'];
             $body = $rest->get($url);
-            $result = self::{{method}}Parse($body);
+            $result = self::parseBody($body);
         }
 
         if($result == -1) {
@@ -215,7 +214,7 @@
             $rest = new REST($connection->data['values']['api_key']);
             $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $tracking->data['values']['###username'];
             $body = $rest->get($url);
-            $result = self::{{method}}Parse($body);
+            $result = self::parseBody($body);
         }
 
         if($result == -1) {
@@ -240,7 +239,7 @@
             $rest = new REST($headers);
             $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $tracking->data['values']['###username'];
             $body = $rest->get($url);
-            $result = self::{{method}}Parse($body);
+            $result = self::parseBody($body);
         }
 
         if($result == -1) {
@@ -262,7 +261,7 @@
             $rest = new REST($connection->data['values']['api_key']);
             $url = '###https://api.example.com/api/v1/endpoint/info?username=' . $tracking->data['values']['###username'] . '&period=custom&date=2000-01-01,' . $future_date . '&filter=filter';
             $body = $rest->get($url);
-            $result = self::{{method}}Parse($body);
+            $result = self::parseBody($body);
         }
 
         if($result == -1) {
@@ -291,7 +290,7 @@
             $rest = new REST($headers);
             $url = 'https://api.github.com/notifications?per_page=1';
             list($headers, $body) = $rest->get($url, [], 'headers,array');
-            $result = self::{{method}}Parse($headers, $body);
+            $result = self::parseBody($headers, $body);
         }
 
         if($result == -1) {

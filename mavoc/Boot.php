@@ -69,6 +69,8 @@ class Boot {
             $ao = new Mavoc($this->envs);
             $ao->init();
         } catch(\Throwable $e) {
+            http_response_code(500);
+
             $app_name = $this->envs['APP_NAME'];
             $title = 'Error';
             $view = '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'alt' . DIRECTORY_SEPARATOR . '500.php';
@@ -80,6 +82,19 @@ class Boot {
                 $htm .= '<p>';
                 $htm .= 'There appears to be a problem with the server. If this problem persists, please contact support.';
                 $htm .= '</p>';
+                if(!in_array($this->envs['APP_ENV'], ['prod', 'production'])) {
+                    $htm .= '<p>';
+                    $htm .= $e->getMessage();
+                    $htm .= ' in ';
+                    $htm .= $e->getFile();
+                    $htm .= ' on line ';
+                    $htm .= $e->getLine();
+                    $htm .= '</p>';
+
+                    $htm .= '<p>';
+                    $htm .= $e->getTraceAsString();
+                    $htm .= '</p>';
+                }
                 echo $htm;
             }
             exit;

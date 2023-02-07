@@ -55,6 +55,8 @@ Route::post('number/add/{collection_id}/{category_slug}/{number_slug}', ['Number
 Route::get('number/add/{collection_id}/{category_slug}/{number_slug}/{connection_id}', ['NumberController', 'addTracking'], 'private');
 Route::post('number/add/{collection_id}/{category_slug}/{number_slug}/{connection_id}', ['NumberController', 'addTrackingPost'], 'private');
 
+Route::get('settings', ['SettingController', 'index'], 'private');
+Route::post('settings', ['SettingController', 'update'], 'private');
 
 
 Route::get('usernames', ['UsernameController', 'list'], 'private');

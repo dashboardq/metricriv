@@ -30,10 +30,33 @@ class TrackingService {
         $file = ao()->dir('app/services/trackings') . DIRECTORY_SEPARATOR . $file_name;
         $file = ao()->hook('app_tracking_service_file', $file);
 
+
+
+        $subclass_name = classify($category->data['slug']) . classify($number->data['slug']) . 'Service';
+        $subclass_name = ao()->hook('app_tracking_service_subclass_name', $subclass_name);
+
+        $subclass = '\app\services\trackings\\' . $category->data['slug'] . '\\'. $subclass_name;
+        $subclass = ao()->hook('app_tracking_subservice_class', $subclass);
+        
+        $subfile_name = $subclass_name .'.php';
+        $subfile_name = ao()->hook('app_tracking_service_subfile_name', $subfile_name);
+
+        $subfile = ao()->dir('app/services/trackings/' . $category->data['slug']) . DIRECTORY_SEPARATOR . $subfile_name;
+        $subfile = ao()->hook('app_tracking_service_file', $subfile);
+
+
         $method = methodify($number->data['slug']);
         $method = ao()->hook('app_tracking_service_method', $method);
 
-        if(is_file($file)) {
+        if(is_file($subfile)) {
+            include_once $subfile;
+            if(is_callable([$subclass, $method])) {
+                call_user_func([$subclass, $method], $req, $res);
+            } else {
+                $method = 'main';
+                call_user_func([$subclass, $method], $req, $res);
+            }
+        } elseif(is_file($file)) {
             include_once $file;
             if(is_callable([$class, $method])) {
                 call_user_func([$class, $method], $req, $res);

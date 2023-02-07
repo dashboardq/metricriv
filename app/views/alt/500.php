@@ -23,6 +23,10 @@
             <h1>Error</h1>
             <section class="page">
                 <p>There appears to be a problem with the server. If this problem persists, please contact support.</p> 
+                <?php if(!in_array($this->envs['APP_ENV'], ['prod', 'production'])): ?>
+                <p><?php echo htmlspecialchars($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine()); ?></p>
+                <p><?php echo htmlspecialchars($e->getTraceAsString()); ?></p>
+                <?php endif; ?>
             </section>
         </main>
         <footer>
