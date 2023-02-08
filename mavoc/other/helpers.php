@@ -11,6 +11,7 @@ if(!function_exists('classify')) {
     function classify($input) {
         $words = preg_replace('/[\s,-_]+/', ' ', strtolower($input));
         $words = ucwords($words);
+        $words = ao()->hook('ao_helpers_classify_words', $words);
         $output = str_replace(' ', '', $words);
         return $output;
     }

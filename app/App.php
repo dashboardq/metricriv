@@ -20,6 +20,8 @@ class App {
 
         ao()->filter('ao_response_partial_args', [$this, 'headerApp']);
         ao()->filter('ao_response_partial_args', [$this, 'cacheDate']);
+
+        ao()->filter('ao_helpers_classify_words', [$this, 'classify']);
     }
 
     public function cacheDate($vars, $view) {
@@ -28,6 +30,19 @@ class App {
         }
 
         return $vars;
+    }
+
+    public function classify($words) {
+        $parts = explode(' ', $words);
+        foreach($parts as $i => $word) {
+            if($word == 'Numbersq') {
+                $parts[$i] = 'NumbersQ';
+            }
+        }
+
+        $words = implode(' ', $parts);
+
+        return $words;
     }
 
     public function getDates($user_id, $range_string, $ago_string) {

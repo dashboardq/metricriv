@@ -126,7 +126,7 @@ class ConsoleGenController {
         }
 
         foreach($new as $file) {
-            call_user_func($file['method'], $in, $out, $file, $category_slug, $numbers);
+            call_user_func($file['method'], $in, $out, $file, $category, $numbers);
         }
 
         $out->log('');
