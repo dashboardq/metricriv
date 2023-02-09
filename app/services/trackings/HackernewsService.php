@@ -16,8 +16,9 @@ use DateTime;
 
 class HackernewsService {
     public static function totalKarma($req, $res) {
-        $restriction = Restriction::by('user_id', $req->user_id);
-        $intervals = explode(',', $restriction->data['allowed_intervals']);
+        $intervals = ['1 hour', '5 minutes', 'static'];
+        $intervals = ao()->hook('app_intervals', $intervals);
+
         $val = $req->val('data', [
             'username' => ['required'],
             'name' => ['required'],

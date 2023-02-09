@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Add A Connection</title>
+        <title>Add A Number</title>
 
         <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
         <link href="/assets/css/normalize.css" rel="stylesheet">
@@ -15,27 +15,19 @@
         <link href="/assets/css/page.css" rel="stylesheet">
         <link href="/assets/css/form.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="page_other <?php echo ($other) ? 'page_other_active' : ''; ?>">
         <?php $res->partial('header_app'); ?>
         <main>
-            <h1>Add A Connection</h1>
+            <h1>Add A Number</h1>
 
             <section class="page">
                 <p class="desc"><a href="<?php esc($back); ?>">&lt; Back</a></p>
-                <p>Please connect your account with {{cat_name}} below.</p>
                 <?php $res->html->messages(); ?>
 
-                <?php if(count($radios)): ?>
 				<form method="POST">
-					<?php $res->html->radios('Choose Connection To Use', 'connection_id', $radios); ?>
-					<?php $res->html->submit('Continue', 'button button_invert'); ?>
-				</form>
-                <br>
-                <?php endif; ?>
+					<?php $res->html->text('Header Text', 'header', $number->data['short_name']); ?>
 
-				<form action="/oauth/{{cat_slug}}/start" method="POST">
-					<?php $res->html->hidden('path', $req->path); ?>
-					<?php $res->html->submit('Create New {{cat_name}} Connection', 'button button_invert'); ?>
+					<?php $res->html->submit('Add Header', 'button button_invert'); ?>
 				</form>
 
             </section>

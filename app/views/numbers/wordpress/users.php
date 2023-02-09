@@ -21,6 +21,7 @@
             <h1>Add A Number</h1>
 
             <section class="page">
+                <p class="desc"><a href="<?php esc($back); ?>">&lt; Back</a></p>
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">

@@ -21,6 +21,7 @@
             <h1>Add A Connection</h1>
 
             <section class="page">
+                <p class="desc"><a href="<?php esc($back); ?>">&lt; Back</a></p>
                 <p>Please connect your account with {{cat_name}} below by entering your API key.</p>
                 <?php $res->html->messages(); ?>
 

@@ -24,10 +24,18 @@
         <main>
 			<section class="numbers">
                 <?php foreach($list as $item): ?>
+                <?php if(isset($item->data['values']['type']) && $item->data['values']['type'] == 'hide'): ?>
+                <?php break; ?>
+                <?php elseif(isset($item->data['values']['type']) && $item->data['values']['type'] == 'header'): ?>
+                <h2><?php esc($item->data['values']['header']); ?></h2>
+                <?php elseif(isset($item->data['values']['type']) && $item->data['values']['type'] == 'newline'): ?>
+                <div class="newline"></div>
+                <?php else: ?>
                 <div class="number">
                     <h2><?php esc($item->data['values']['number']); ?></h2>
                     <label><?php esc($item->data['title']); ?></label>
                 </div>
+                <?php endif; ?>
                 <?php endforeach; ?>
             </section>
         </main>

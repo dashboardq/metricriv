@@ -138,6 +138,15 @@ td form {
     padding: 0 9px;
 }
 
+.numbers > h2 {
+    width: 100%;
+    margin-bottom: 0;
+    padding: 6px 8px;
+}
+.numbers > .newline {
+    width: 100%;
+}
+
 .number {
     background: #ffffff;
     box-shadow: 0 1px 2px 0 #00000011;

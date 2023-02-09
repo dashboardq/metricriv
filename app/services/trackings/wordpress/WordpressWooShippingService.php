@@ -15,7 +15,7 @@ use mavoc\core\REST;
 use DateTime;
 
 class WordpressWooShippingService {
-        public static function wooShipping($req, $res) {
+    public static function wooShipping($req, $res) {
         $intervals = ['1 hour', '5 minutes', 'static'];
         $intervals = ao()->hook('app_intervals', $intervals);
 
