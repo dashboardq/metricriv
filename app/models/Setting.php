@@ -24,7 +24,7 @@ class Setting extends Model {
         ],
     ];
 
-    public static function get($user_id = 0, $key = null, $value = null) {
+    public static function get($user_id = 0, $key = null) {
         $output = null;
 
         if(is_array($key)) {

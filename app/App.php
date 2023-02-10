@@ -49,7 +49,7 @@ class App {
         $output = []; 
 
         $timezone = Setting::get($user_id, 'timezone');
-        $week_day = Setting::get($user_id, 'week_day');
+        $week_start = Setting::get($user_id, 'week_start');
 
         // Right now only accepting y, m, w, d (others included for future use)
         $types = [];
@@ -101,10 +101,10 @@ class App {
             $dt->setDate($dt->format('Y'), $dt->format('m'), 1);
             $start = $dt->format('Y-m-d');
         } elseif($largest_range_type == 'w') {
-            if($dt->format('l') == $week_day) {
+            if($dt->format('l') == $week_start) {
                 $start = $dt->format('Y-m-d');
             } else {
-                $dt->modify('previous ' . $week_day);
+                $dt->modify('previous ' . $week_start);
                 $start = $dt->format('Y-m-d');
             }   
         } elseif($largest_range_type == 'd') {

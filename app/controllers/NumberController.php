@@ -50,8 +50,11 @@ class NumberController {
     }
 
     public function addCategory($req, $res) {
-        $list = Category::all('data');
+        $val = $req->val('params', [
+            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+        ], '/number/add');
 
+        $list = Category::all('data');
 
         $restriction = Restriction::fullAccess($req->user_id, 'data');
         $restriction = ao()->hook('app_add_restriction', $restriction, $req, $res);
@@ -66,6 +69,7 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
+            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
         ], '/number/add');
 
 
@@ -134,6 +138,7 @@ class NumberController {
 
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
+            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
         ], '/number/add');
 
         $restriction = Restriction::fullAccess($req->user_id, 'data');
@@ -149,6 +154,7 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
+            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
         ], '/number/add');
 
         // Validate user owns connection if there is a connection

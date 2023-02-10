@@ -171,11 +171,15 @@ class Validators {
         return $output;
     }
 
+    // Changing from passing: 'in' => [$array]
+    // To simply: 'in' => $array
+    // This may cause some problems so be on the look out for issues.
     public function in($input, $field) {
         $args = func_get_args();
         $input = $args[0];
         $field = $args[1];
         $list = $args[2];
+        ////$list = array_slice($args, 2);
         $value = $input[$field];
 
         // Separating it out like this so hooks can be added later.

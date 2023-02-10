@@ -35,7 +35,7 @@ class TrackingService {
         $subclass_name = classify($category->data['slug']) . classify($number->data['slug']) . 'Service';
         $subclass_name = ao()->hook('app_tracking_service_subclass_name', $subclass_name);
 
-        $subclass = '\app\services\trackings\\' . $category->data['slug'] . '\\'. $subclass_name;
+        $subclass = '\app\services\trackings\\' . underscorify($category->data['slug']) . '\\'. $subclass_name;
         $subclass = ao()->hook('app_tracking_subservice_class', $subclass);
         
         $subfile_name = $subclass_name .'.php';
@@ -70,18 +70,20 @@ class TrackingService {
         $res->error('There was a problem processing the request. Please contact support.');
     }
 
-    public static function update($tracking_id, $manual_result = null) {
+    public static function update($tracking_id, $manual_result = null, $force = false) {
         $tracking = Tracking::find($tracking_id);
 
         $proceed = false;
-        if($tracking->data['status'] == 'initial') {
+        if($force && in_array($tracking->data['status'], ['active', 'failed'])) {
+            $proceed = true;
+        } elseif($tracking->data['status'] == 'initial') {
             $proceed = true;
         } elseif(in_array($tracking->data['status'], ['active', 'failed']) && $tracking->data['next_check_at'] <= now()) {
             $proceed = true;
         }
 
         // TODO: Add error handling.
-        if($proceed) {
+        if($proceed && $tracking->data['function']) {
             //echo '<pre>'; print_r($tracking);die;
             $class_method = json_decode($tracking->data['function']);
             $class_method = ao()->hook('app_tracking_service_update_class_method', $class_method);
@@ -89,13 +91,21 @@ class TrackingService {
             $class = $class_method[0];
             $class = ao()->hook('app_tracking_service_update_class', $class);
 
+            $real_file = '';
+            if(isset($tracking->data['values']['file'])) {
+                $real_file = ao()->dir($tracking->data['values']['file']);
+                $real_file = ao()->hook('app_tracking_service_update_real_file', $real_file);
+            }
             $file = ao()->dir($class) . '.php';
             $file = ao()->hook('app_tracking_service_update_file', $file);
 
             $method = $class_method[1];
             $method = ao()->hook('app_tracking_service_update_method', $method);
 
-            if(is_file($file)) {
+            if($real_file && is_file($real_file)) {
+                include_once $real_file;
+                call_user_func([$class, $method], $tracking, $manual_result);
+            } elseif(is_file($file)) {
                 include_once $file;
                 call_user_func([$class, $method], $tracking, $manual_result);
             }
