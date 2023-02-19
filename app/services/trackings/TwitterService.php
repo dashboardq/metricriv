@@ -22,7 +22,7 @@ class TwitterService {
             'username' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -63,7 +63,7 @@ class TwitterService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function totalFollowersParse($body) {
         preg_match_all('|.*"followers".*?"profile-stat-num">([^<]*)</span>.*|s', $body, $matches);
@@ -100,7 +100,7 @@ class TwitterService {
             'username' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -139,7 +139,7 @@ class TwitterService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function totalTweetsParse($body) {
         preg_match_all('|.*"posts".*?"profile-stat-num">([^<]*)</span>.*|s', $body, $matches);

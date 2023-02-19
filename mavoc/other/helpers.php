@@ -220,6 +220,7 @@ if(!function_exists('upperfy')) {
     }   
 }
 
+// If outputing to HTML, you probably want to use url() which will also escape the content.
 if(!function_exists('_uri')) {
     function _uri($input) {
         $output = '';
@@ -235,12 +236,36 @@ if(!function_exists('uri')) {
     }
 }
 
+if(!function_exists('_url')) {
+    function _url($input) {
+        $output = '';
+        $output .= ao()->env('APP_SITE');
+        $output .= '/';
+        $output .= trim($input, '/');
+
+        $output = _esc($output);
+        return $output;
+    }
+}
+if(!function_exists('url')) {
+    function url($input) {
+        echo _url($input);
+    }
+}
+
 
 if(!function_exists('wordify')) {
     function wordify($input) {
         $words = preg_replace('/[\s,-_]+/', ' ', strtolower($input));
         $words = ucwords($words);
-        $output = $words;
+
+        // Make Id fully uppercase (probably a better way to do this, but this works for now)
+        $parts = explode(' ', $words);
+        foreach(array_keys($parts, 'Id') as $i) {
+            $parts[$i] = 'ID';
+        }
+        $output = implode(' ', $parts);
+
         return $output;
     }
 }

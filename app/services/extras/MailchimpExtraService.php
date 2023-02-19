@@ -25,7 +25,7 @@ class MailchimpExtraService {
         $body = $rest->get($url);
 
         if(!isset($body->lists) || count($body->lists) == 0) {
-            $res->error('The API Key that was entered does not have any associated Mailchimp lists. If you have not created any lists, you will need to create a list on Mailchimp. If a list exists and the problems continues, please contact support.', '/numbers');
+            $res->error('The API Key that was entered does not have any associated Mailchimp lists. If you have not created any lists, you will need to create a list on Mailchimp. If a list exists and the problems continues, please contact support.', ao()->env('APP_PRIVATE_HOME'));
         }
 
         foreach($body->lists as $list) {

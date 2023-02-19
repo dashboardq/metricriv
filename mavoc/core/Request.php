@@ -18,6 +18,7 @@ class Request {
     // https://en.wikipedia.org/wiki/HTTP_referer
     public $referrer = '';
     public $referer = ''; 
+    public $uri = ''; 
 
     public $res; 
     public $session; 
@@ -35,8 +36,10 @@ class Request {
 
         if(isset($_SERVER['REQUEST_URI'])) {
             $this->path = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            $this->uri = $_SERVER['REQUEST_URI'];
         } else {
             $this->path = '';
+            $this->uri = '';
         }
 
         if(isset($_SERVER['HTTP_REFERER'])) {

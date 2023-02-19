@@ -403,6 +403,17 @@ flex-wrap: wrap
     display: block;
 }
 
+.button.sort_drag {
+    display: inline-block;
+    cursor: move;
+}
+.button.sort_up {
+    display: none;
+}
+.button.sort_down {
+    display: none;
+}
+
 @media(max-width: 960px) {
     header nav {
         position: relative;
@@ -558,4 +569,27 @@ flex-wrap: wrap
         width: 50%;
     }
 	/* EOF Make Table Vertical */
+
+    .button.sort_drag {
+        display: none;
+    }
+    .button.sort_up {
+        display: inline-block;
+    }
+    .button.sort_down {
+        display: inline-block;
+    }
+
+    td:last-child {
+        margin-bottom: 0;
+    }
+    input[type=submit].button,
+    button.button,
+    .button {
+        margin-bottom: 1rem;
+    }
+
+    main [data-label=URL] a:not(.button) {
+        line-break: anywhere;
+    }
 }

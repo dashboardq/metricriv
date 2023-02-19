@@ -9,7 +9,7 @@ use DateTime;
 
 class Tracking extends Model {
     public static $table = 'trackings';
-    public static $order = ['id' => 'asc'];
+    public static $order = ['priority' => 'desc'];
 
     // Only need to set when the model has dynamic data.
     // Make sure to update when migration changes columns.
@@ -53,7 +53,7 @@ class Tracking extends Model {
         $data['number'] = Number::find($data['number_id'])->data;
         $data['category'] = Category::find($data['number']['category_id'])->data;
         $data['collection'] = Collection::find($data['collection_id'])->data;
-        if($data['connection_id']) {
+        if(isset($data['connection_id']) && $data['connection_id']) {
             $data['connection'] = Connection::find($data['connection_id'])->data;
         }
         $updated_at = new DateTime($data['updated_at'] ?? '');
@@ -74,12 +74,20 @@ class Tracking extends Model {
                 // title, values, and function are not saved to the database
                 $data['title'] = $data['name'];
                 $data['values'] = $data['data'];
-                $data['function'] = $data['method'];
+                if(isset($data['method'])) {
+                    $data['function'] = $data['method'];
+                } else {
+                    $data['function'] = '';
+                }
 
                 $json_data = [];
                 $json_data['name'] = $data['name'];
                 $json_data['data'] = $data['data'];
-                $json_data['method'] = $data['method'];
+                if(isset($data['method'])) {
+                    $json_data['method'] = $data['method'];
+                } else {
+                    $json_data['method'] = '';
+                }
 
                 $data['name'] = '';
                 $data['method'] = '';

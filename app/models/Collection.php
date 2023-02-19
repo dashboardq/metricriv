@@ -39,7 +39,9 @@ class Collection extends Model {
 
     public function process($data) {
         $username = Username::find($data['username_id']);
-        $data['title'] = $username->data['name'] . ' ' . $data['name'];
+        $data['title'] = $username->data['name'] . ' - ' . $data['name'];
+        $data['slug_suffix'] = preg_replace('/^\/[^\/]+\/?/', '', $data['slug']);
+        $data['visibility'] = (isset($data['private']) && $data['private']) ? 'Private' : 'Public';
         //$updated_at = new \DateTime($data['updated_at'] ?? '');
         //$data['updated'] = $updated_at->format('M j, Y H:i');
 

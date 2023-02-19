@@ -9,7 +9,7 @@
                     </ul>
                     <ul>
                         <?php ao()->hook('app_header_app_nav_first_child'); ?>
-                        <li><a href="/numbers">Numbers</a></li>
+                        <li><a href="/collections">Collections</a></li>
                         <li><a href="/number/add">Add Number</a></li>
                         <li><a href="/connections">Connections</a></li>
                         <li><a href="/settings">Settings</a></li>

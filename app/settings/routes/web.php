@@ -44,6 +44,8 @@ Route::post('connection/edit/{id}', ['ConnectionController', 'update'], 'private
 
 Route::get('numbers', ['NumberController', 'list'], 'private');
 Route::post('number/delete/{id}', ['NumberController', 'delete'], 'private');
+Route::get('number/edit/{id}', ['NumberController', 'edit'], 'private');
+Route::post('number/edit/{id}', ['NumberController', 'update'], 'private');
 Route::get('number/add', ['NumberController', 'add'], 'private');
 Route::post('number/add', ['NumberController', 'addPost'], 'private');
 Route::get('number/add/{collection_id}', ['NumberController', 'addCategory'], 'private');
@@ -54,6 +56,16 @@ Route::post('number/add/{collection_id}/{category_slug}/{number_slug}', ['Number
 
 Route::get('number/add/{collection_id}/{category_slug}/{number_slug}/{connection_id}', ['NumberController', 'addTracking'], 'private');
 Route::post('number/add/{collection_id}/{category_slug}/{number_slug}/{connection_id}', ['NumberController', 'addTrackingPost'], 'private');
+
+Route::post('ajax/collection/sort/{id}', ['AjaxController', 'collectionSort'], 'private');
+
+Route::get('collections', ['CollectionsController', 'list'], 'private');
+Route::get('collection/view/{id}', ['CollectionsController', 'view'], 'private');
+Route::get('collection/add', ['CollectionsController', 'add'], 'private');
+Route::post('collection/add', ['CollectionsController', 'create'], 'private');
+Route::get('collection/edit/{id}', ['CollectionsController', 'edit'], 'private');
+Route::post('collection/edit/{id}', ['CollectionsController', 'update'], 'private');
+Route::post('collection/delete/{id}', ['CollectionsController', 'delete'], 'private');
 
 Route::get('settings', ['SettingController', 'index'], 'private');
 Route::post('settings', ['SettingController', 'update'], 'private');
@@ -79,7 +91,9 @@ Route::post('reset-password', ['AuthController', 'resetPasswordPost'], 'public')
 
 Route::get('generate-keys-file', ['DevController', 'keys']);
 
+Route::get('test', ['TestController', 'test']);
+
 // Private numbers are handled by the controller.
-Route::get('{username}/{collection}', ['CollectionController', 'list']);
-Route::get('{username}', ['CollectionController', 'list']);
+Route::get('{username}/{collection}', ['TrackingsController', 'list']);
+Route::get('{username}', ['TrackingsController', 'list']);
 

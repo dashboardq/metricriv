@@ -26,14 +26,14 @@ class NumbersQCalculationsMathOperationService {
         $formats = NumbersQCalculationsExtraService::formats();
 
         $val = $req->val('data', [
-            'number_1' => ['required', ['in' => [$trackings]]],
-            'number_2' => ['required', ['in' => [$trackings]]],
-            'operation' => ['required', ['in' => [$operations]]],
-            'decimal' => ['required', ['in' => [$decimals]]],
-            'format' => ['required', ['in' => [$formats]]],
+            'number_1' => ['required', ['in' => $trackings]],
+            'number_2' => ['required', ['in' => $trackings]],
+            'operation' => ['required', ['in' => $operations]],
+            'decimal' => ['required', ['in' => $decimals]],
+            'format' => ['required', ['in' => $formats]],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -74,7 +74,7 @@ class NumbersQCalculationsMathOperationService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function parseCalculation($tracking_id_1, $tracking_id_2, $operation, $format, $decimal) {
         $value = -1;
@@ -92,8 +92,23 @@ class NumbersQCalculationsMathOperationService {
         $tracking_2 = Tracking::find($tracking_id_2);
 
         // Strip values of non-numerical characters
-        $value_1 = preg_replace('/[^0-9.]*/', '', $tracking_1->data['values']['number']);
-        $value_2 = preg_replace('/[^0-9.]*/', '', $tracking_2->data['values']['number']);
+        if($tracking_1 && isset($tracking_1->data['values']['number'])) {
+            $value_1 = filter_var($tracking_1->data['values']['number'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        } else {
+            // One of the values is missing a number.
+            return -1;
+        }
+
+        if($tracking_2 && isset($tracking_2->data['values']['number'])) {
+            $value_2 = filter_var($tracking_2->data['values']['number'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        } else {
+            // One of the values is missing a number.
+            return -1;
+        }
+
+        if($value_1 == -1 || $value_2 == -1) {
+            return -1;
+        }
 
         // Perform the calculation
         if($operation == '+') {

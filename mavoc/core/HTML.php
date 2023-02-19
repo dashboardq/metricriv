@@ -67,6 +67,26 @@ class HTML {
         echo $output;
     }
 
+    public function _link($url, $name = '', $class = '') {
+        if($name == '') {
+            $name = $url;
+        }
+
+        $output = '';
+        $output .= '<a href="' . _url($url) . '" ';
+        $output .= 'class="' . $class . '" ';
+        $output .= '> ';
+        $output .= _esc($name);
+        $output .= '</a>';
+        $output .= "\n";
+
+        return $output;
+    }
+    public function link($url, $name = '', $class = '') {
+        $output = $this->_link($url, $name, $class);
+        echo $output;
+    }
+
     public function _messages() {
         $output = '';
         if(isset($this->session->flash['error'])) {
@@ -185,6 +205,11 @@ class HTML {
             && $value == $this->session->flash['fields'][$name]
         ) {
             $checked = 'checked ';
+        } elseif(
+            isset($this->res->fields[$name])
+            && $value == $this->res->fields[$name]
+        ) {
+            $checked = 'checked ';
         }
 
         $output = '';
@@ -208,6 +233,42 @@ class HTML {
         $output = $this->_radio($label, $name, $value, $class, $extra);
         echo $output;
     }
+    public function _radioRaw($name, $value = '', $class = '', $extra = '') {
+        if($value === '') {
+            $value = 'yes';
+        }
+
+        $checked = '';
+        if(
+            isset($this->session->flash['fields'][$name]) 
+            && $value == $this->session->flash['fields'][$name]
+        ) {
+            $checked = 'checked ';
+        } elseif(
+            isset($this->res->fields[$name])
+            && $value == $this->res->fields[$name]
+        ) {
+            $checked = 'checked ';
+        }
+
+        $output = '';
+        $output .= '<input type="radio" name="' . _esc($name) . '" value="' . _esc($value) . '" ';
+        $output .= 'class="' . $class . '" ';
+        $output .= $checked;
+        // Be careful with $extra values - they are not escaped.
+        // Do not use untrusted data.
+        if($extra) {
+            $output .= $extra;
+        }
+        $output .= ' /> ';
+        $output .= "\n";
+
+        return $output;
+    }
+    public function radioRaw($name = '', $value = '', $class = '', $extra = '') {
+        $output = $this->_radioRaw($name, $value, $class, $extra);
+        echo $output;
+    }
 
     public function _radios($label, $name = '', $data = []) {
         $error = false;
@@ -226,7 +287,11 @@ class HTML {
         $output .= "\n";
 
         foreach($data as $item) {
-            $output .= $this->_radio($item['label'], $name, $item['value'] ?? '', $item['class'] ?? '', $item['extra'] ?? '');
+            if(isset($item['label'])) {
+                $output .= $this->_radio($item['label'], $name, $item['value'] ?? '', $item['class'] ?? '', $item['extra'] ?? '');
+            } else {
+                $output .= $this->_radio($item, $name, $item);
+            }
         }
 
         $output .= '</div>';
@@ -372,6 +437,39 @@ class HTML {
     }
     public function text($label, $name = '', $value = '', $class = '', $extra = '') {
         $output = $this->_text($label, $name, $value, $class, $extra);
+        echo $output;
+    }
+    public function _textRaw($label, $name = '', $value = '', $class = '', $extra = '') {
+        if(!$name) {
+            $name = underscorify($label);
+        }
+
+        if(isset($this->session->flash['fields'][$name])) {
+            $value = $this->session->flash['fields'][$name];
+        } elseif(isset($this->res->fields[$name])) {
+            $value = $this->res->fields[$name];
+        }
+
+        $error = false;
+        if(isset($this->session->flash['error'][$name])) {
+            $error = true;
+        }
+
+        $output = '';
+        $output .= '<input type="text" name="' . _esc($name) . '" value="' . _esc($value) . '" placeholder="' . _esc($label) . '" ';
+        $output .= 'class="' . $class . '" ';
+        // Be careful with $extra values - they are not escaped.
+        // Do not use untrusted data.
+        if($extra) {
+            $output .= $extra;
+        }
+        $output .= ' /> ';
+        $output .= "\n";
+
+        return $output;
+    }
+    public function textRaw($label, $name = '', $value = '', $class = '', $extra = '') {
+        $output = $this->_textRaw($label, $name, $value, $class, $extra);
         echo $output;
     }
 

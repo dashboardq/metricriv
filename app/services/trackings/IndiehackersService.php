@@ -22,7 +22,7 @@ class IndiehackersService {
             'username' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -78,7 +78,7 @@ class IndiehackersService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function totalFollowersParse($body) {
         $output = trim(strip_tags($body));
@@ -130,7 +130,7 @@ class IndiehackersService {
             'username' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -185,7 +185,7 @@ class IndiehackersService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function totalPointsParse($body) {
         $output = trim(strip_tags($body));

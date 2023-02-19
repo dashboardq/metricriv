@@ -17,7 +17,7 @@ class OAuthController {
                 'github',
         ];
         $val = $req->val('params', [
-            'category_slug' => ['required', ['in' => [$services]]],
+            'category_slug' => ['required', ['in' => $services]],
         ]);
 
         $val2 = $req->val('data', [

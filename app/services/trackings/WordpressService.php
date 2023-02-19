@@ -22,7 +22,7 @@ class WordpressService {
             'period' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         // If other, the other values are required
@@ -108,7 +108,7 @@ class WordpressService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function parseBody($body) {
         if(isset($body->value)) {

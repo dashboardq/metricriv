@@ -11,7 +11,7 @@ use app\models\Username;
 
 use mavoc\core\Email;
 
-class CollectionController {
+class TrackingsController {
     public function list($req, $res) {
         if(isset($req->params['username']) && isset($req->params['collection'])) {
             $slug = '/' . $req->params['username'] . '/' . $req->params['collection'];
@@ -36,7 +36,7 @@ class CollectionController {
         }
 
         if(!$pass) {
-            $res->error('The collection you are trying to access does not appear to exist or you do not have access.', '/numbers');
+            $res->error('The collection you are trying to access does not appear to exist or you do not have access.', ao()->env('APP_PRIVATE_HOME'));
         }
 
         $list = Tracking::where('collection_id', $collection->data['id']);
@@ -45,6 +45,6 @@ class CollectionController {
 
         //echo '<pre>'; print_r($list);die;
 
-        $res->view('collections/list', compact('list', 'title'));
+        $res->view('trackings/list', compact('list', 'title'));
     }
 }

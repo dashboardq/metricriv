@@ -82,7 +82,7 @@ class RequestController {
         ]);
 
         $val2 = $req->val('data', [
-            'direction' => ['required', ['in' => [['up', 'down']]]],
+            'direction' => ['required', ['in' => ['up', 'down']]],
         ]);
 
         Vote::delete(['request_id' => $val['id'], 'user_id' => $req->user_id]);

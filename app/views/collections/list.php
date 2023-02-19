@@ -6,37 +6,49 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title><?php esc($title); ?></title>
+        <title>Collections</title>
 
         <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
         <link href="/assets/css/normalize.css" rel="stylesheet">
 		<link href="/assets/css/base.css" rel="stylesheet">
         <link href="/assets/css/main.css" rel="stylesheet">
         <link href="/assets/css/page.css" rel="stylesheet">
-        <link href="/assets/css/numbers.css" rel="stylesheet">
     </head>
     <body>
-        <?php if($user): ?>
         <?php $res->partial('header_app'); ?>
-        <?php else: ?>
-        <?php $res->partial('header_button'); ?>
-        <?php endif; ?>
         <main>
-			<section class="numbers">
-                <?php foreach($list as $item): ?>
-                <?php if(isset($item->data['values']['type']) && $item->data['values']['type'] == 'hide'): ?>
-                <?php break; ?>
-                <?php elseif(isset($item->data['values']['type']) && $item->data['values']['type'] == 'header'): ?>
-                <h2><?php esc($item->data['values']['header']); ?></h2>
-                <?php elseif(isset($item->data['values']['type']) && $item->data['values']['type'] == 'newline'): ?>
-                <div class="newline"></div>
-                <?php else: ?>
-                <div class="number">
-                    <h2><?php esc($item->data['values']['number']); ?></h2>
-                    <label><?php esc($item->data['title']); ?></label>
-                </div>
-                <?php endif; ?>
-                <?php endforeach; ?>
+            <h1>Collections</h1>
+
+            <section class="page">
+                <?php ao()->hook('app_html_collections_page'); ?>
+                <?php $res->html->messages(); ?>
+                <p><a href="/collection/add" class="button button_invert">Add Collection</a></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th>Visibility</th>
+                            <th>Numbers</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($list as $item): ?>
+                        <tr>
+                            <td data-label="Name"><a href="<?php url('/collection/view/' . $item['id']); ?>"><?php esc($item['title']); ?></a></td>
+                            <td data-label="URL"><a href="<?php url($item['slug']); ?>"><?php url($item['slug']); ?></a></td>
+                            <td data-label="Visibility"><?php esc($item['private'] ? 'Private' : 'Public'); ?></td>
+                            <td data-label="Numbers"><?php esc($item['numbers']); ?></td>
+                            <td data-label="Actions">
+                                <?php $res->html->link('/number/add/' . $item['id'], 'Add Number', 'button button_invert'); ?>
+                                <?php $res->html->link('/collection/edit/' . $item['id'], 'Edit', 'button button_invert'); ?>
+                                <?php $res->html->delete('/collection/delete/' . $item['id'], 'Delete', 'button button_invert'); ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </section>
         </main>
 		<?php $res->partial('footer'); ?>

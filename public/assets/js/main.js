@@ -19,6 +19,15 @@
             e.target.closest('nav').classList.remove('active');
         } else if(e.target.closest('nav') && !e.target.closest('nav').classList.contains('active')) {
             e.target.closest('nav').classList.add('active');
+        } else if(e.target.classList.contains('sort_up') || e.target.closest('.sort_up')) {
+            console.log('clickDocument: sort_up');
+            console.log(e.target);
+            moveUp(e.target);
+        } else if(e.target.classList.contains('sort_down') || e.target.closest('.sort_down')) {
+            console.log('clickDocument: sort_down');
+            console.log(e.target);
+            moveDown(e.target);
+            prevent = true;
         } else if(e.target.classList.contains('scroll')) {
             el = document.querySelector(e.target.getAttribute('data-target'));
             window.scrollTo({
@@ -33,10 +42,66 @@
         }
     }
 
+    function droppedDocument(e) {
+        var $table = e.target;
+        orderChanged($table);
+    }
+
+    function moveDown($target) {
+        console.log('moveDown');
+        var $table = $target.closest('table');
+        var $tbody = $target.closest('tbody');
+        var $tr = $target.closest('tr');
+        var $next = $tr.nextElementSibling;
+        if($next) {
+            $tr.before($next);
+            orderChanged($table);
+        }
+    }
+
+    function moveUp($target) {
+        console.log('moveUp');
+        var $table = $target.closest('table');
+        var $tbody = $target.closest('tbody');
+        var $tr = $target.closest('tr');
+        var $prev = $tr.previousElementSibling;
+        if($prev) {
+            $tr.after($prev);
+            orderChanged($table);
+        }
+    }
+
+    function orderChanged($table) {
+        var ids;
+        var list;
+        var url;
+        $tr = $table.querySelectorAll('[data-id]');
+
+        url = $table.getAttribute('data-action');
+
+        list = [];
+        $tr.forEach(function($item) {
+            list.push($item.getAttribute('data-id'));
+        });
+
+        list.reverse();
+        ids = list.join(',');
+        console.log(ids);
+        args = {};
+        args.ids = ids;
+
+        console.log('url: ' + url);
+        ajax.post(url, args, function(err, data) {
+            console.log(data);
+        });
+    }
+
     function init() {
         document.addEventListener('click', clickDocument);
 
         document.addEventListener('change', changeDocument);
+
+        document.addEventListener('dropped', droppedDocument);
 
         // Fix Chrome not adding page_other_active on back button.
         setTimeout(function() {

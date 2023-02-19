@@ -74,11 +74,11 @@ class TrackingService {
         $tracking = Tracking::find($tracking_id);
 
         $proceed = false;
-        if($force && in_array($tracking->data['status'], ['active', 'failed'])) {
+        if($tracking && $force && in_array($tracking->data['status'], ['active', 'failed'])) {
             $proceed = true;
-        } elseif($tracking->data['status'] == 'initial') {
+        } elseif($tracking && $tracking->data['status'] == 'initial') {
             $proceed = true;
-        } elseif(in_array($tracking->data['status'], ['active', 'failed']) && $tracking->data['next_check_at'] <= now()) {
+        } elseif($tracking && in_array($tracking->data['status'], ['active', 'failed']) && $tracking->data['next_check_at'] <= now()) {
             $proceed = true;
         }
 

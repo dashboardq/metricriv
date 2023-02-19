@@ -20,7 +20,7 @@ class ScreenshotoneService {
 
         $val = $req->val('data', [
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -62,7 +62,7 @@ class ScreenshotoneService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function allottedScreenshotsParse($body) {
         if(isset($body->total)) {
@@ -97,7 +97,7 @@ class ScreenshotoneService {
 
         $val = $req->val('data', [
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -139,7 +139,7 @@ class ScreenshotoneService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function availableScreenshotsParse($body) {
         if(isset($body->available)) {
@@ -174,7 +174,7 @@ class ScreenshotoneService {
 
         $val = $req->val('data', [
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -217,7 +217,7 @@ class ScreenshotoneService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function usedScreenshotsParse($body) {
         if(isset($body->used)) {

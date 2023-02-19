@@ -34,7 +34,7 @@ class NumberController {
             ];
         }
 
-        $back = '/numbers';
+        $back = '/collections';
         $res->view('numbers/add', compact('back', 'collections'));
     }
     public function addPost($req, $res) {
@@ -261,6 +261,18 @@ class NumberController {
         TrackingService::handle($req, $res);
     }
 
+    public function edit($req, $res) {
+        $val = $req->val('params', [
+            'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+        ]);
+
+        $item = Tracking::find($req->params['id']);
+
+        $res->fields['name'] = $item->data['title'];
+
+        $res->view('numbers/edit', compact('item'));
+    }
+
     public function list($req, $res) {
         $usernames = Username::where('user_id', $req->user->data['id']);
 
@@ -284,6 +296,31 @@ class NumberController {
         Tracking::delete($val['id']);
 
         $res->success('Item successfully deleted.');
-
     }
+
+    public function update($req, $res) {
+        $params = $req->val('params', [
+            'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+        ]);
+
+
+        $val = $req->val('data', [
+            'name' => ['required'],
+        ]);
+
+        $tracking = Tracking::find($params['id']);
+
+
+        // Probably need to figure out a better way to do this. Because this is saving the name
+        // which should be encrypted, the other encrypted data needs to be saved too.
+        $tracking->data['data'] = $tracking->data['values'];
+        $tracking->data['method'] = $tracking->data['function'];
+
+        $tracking->data['name'] = $val['name'];
+        $tracking->data['encrypted'] = 0;
+        $tracking->save();
+
+        $res->success('Item successfully updated.', '/collection/view/' . $tracking->data['collection_id']);
+    }
+
 }

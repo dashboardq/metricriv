@@ -178,8 +178,8 @@ class Validators {
         $args = func_get_args();
         $input = $args[0];
         $field = $args[1];
-        $list = $args[2];
-        ////$list = array_slice($args, 2);
+        //$list = $args[2];
+        $list = array_slice($args, 2);
         $value = $input[$field];
 
         // Separating it out like this so hooks can be added later.

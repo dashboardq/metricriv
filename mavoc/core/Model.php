@@ -135,19 +135,34 @@ class Model {
                 $values = [];
                 foreach($key as $k => $v) {
                     if($first) {
-                        $sql .= $k . ' = ?';
-                        $values[] = $v;
+                        if(is_array($v) && count($v) == 2) {
+                            $sql .= $k . ' ' . $v[0] . ' ?';
+                            $values[] = $v[1];
+                        } else {
+                            $sql .= $k . ' = ?';
+                            $values[] = $v;
+                        }
                         $first = false;
                     } else {
-                        $sql .= ' AND ' . $k . ' = ?';
-                        $values[] = $v;
+                        if(is_array($v) && count($v) == 2) {
+                            $sql .= ' AND ' . $k . ' ' . $v[0] . ' ?';
+                            $values[] = $v[1];
+                        } else {
+                            $sql .= ' AND ' . $k . ' = ?';
+                            $values[] = $v;
+                        }
                     }
                 }
 
                 $data = ao()->db->query($sql, $values);
             } elseif($key) {
-                $sql = 'SELECT COUNT(id) as total FROM ' . $table . ' WHERE ' . $key . ' = ?';
-                $data = ao()->db->query($sql, $value);
+                if(is_array($value) && count($value) == 2) {
+                    $sql = 'SELECT COUNT(id) as total FROM ' . $table . ' WHERE ' . $key . ' ' . $value[0] . ' ?';
+                    $data = ao()->db->query($sql, $value[1]);
+                } else {
+                    $sql = 'SELECT COUNT(id) as total FROM ' . $table . ' WHERE ' . $key . ' = ?';
+                    $data = ao()->db->query($sql, $value);
+                }
             } else {
                 $sql = 'SELECT COUNT(id) as total FROM ' . $table;
                 $data = ao()->db->query($sql);
@@ -376,12 +391,22 @@ class Model {
                 $values = [];
                 foreach($key as $k => $v) {
                     if($first) {
-                        $sql .= $k . ' = ?';
-                        $values[] = $v;
+                        if(is_array($v) && count($v) == 2) {
+                            $sql .= $k . ' ' . $v[0] . ' ?';
+                            $values[] = $v[1];
+                        } else {
+                            $sql .= $k . ' = ?';
+                            $values[] = $v;
+                        }
                         $first = false;
                     } else {
-                        $sql .= ' AND ' . $k . ' = ?';
-                        $values[] = $v;
+                        if(is_array($v) && count($v) == 2) {
+                            $sql .= ' AND ' . $k . ' ' . $v[0] . ' ?';
+                            $values[] = $v[1];
+                        } else {
+                            $sql .= ' AND ' . $k . ' = ?';
+                            $values[] = $v;
+                        }
                     }
                 }
                 // TODO: This is dangerous and needs to be cleaned up - only pass trusted data.
@@ -404,7 +429,12 @@ class Model {
                 }
                 $data = ao()->db->query($sql, $values);
             } else {
-                $sql = 'SELECT * FROM ' . $table . ' WHERE ' . $key . ' = ?';
+                if(is_array($value) && count($value) == 2) {
+                    $sql = 'SELECT * FROM ' . $table . ' WHERE ' . $key . ' ' . $value[0] . ' ?';
+                } else {
+                    $sql = 'SELECT * FROM ' . $table . ' WHERE ' . $key . ' = ?';
+                }
+
                 // TODO: This is dangerous and needs to be cleaned up - only pass trusted data.
                 if(count($class::$order)) {
                     $sql .= ' ORDER BY';
@@ -423,7 +453,12 @@ class Model {
                 if(isset($class::$limit)) {
                     $sql .= ' LIMIT ' . $class::$limit;
                 }
-                $data = ao()->db->query($sql, $value);
+
+                if(is_array($value) && count($value) == 2) {
+                    $data = ao()->db->query($sql, $value[1]);
+                } else {
+                    $data = ao()->db->query($sql, $value);
+                }
             }
             foreach($data as $item) {
                 if($return_type == 'data') {

@@ -19,12 +19,12 @@ class GithubConnectionService {
         $val = $req->val('query', [
             'state' => ['required'],
             'code' => ['required'],
-        ], '/numbers');
+        ], ao()->env('APP_PRIVATE_HOME'));
 
         // Need to check the state against session data.
         $state = $req->query['state'];
         if(ao()->session->data[strtolower(self::$SERVICE) . '_state'] != $state) {
-            $res->error('There was a problem with the login. Please try again and if the problem happens again, please contact NumbersQ support.', '/numbers');
+            $res->error('There was a problem with the login. Please try again and if the problem happens again, please contact NumbersQ support.', ao()->env('APP_PRIVATE_HOME'));
         }
 
         $rest = new REST();
@@ -40,7 +40,7 @@ class GithubConnectionService {
         if(!isset($access) || isset($access->error)) {
             // TODO: Log error
 
-            $res->error('There was a problem completing the login. Please try again and if the problem happens again, please contact NumbersQ support.', '/numbers');
+            $res->error('There was a problem completing the login. Please try again and if the problem happens again, please contact NumbersQ support.', ao()->env('APP_PRIVATE_HOME'));
         }
 
         $category_id = ao()->session->data[strtolower(self::$SERVICE) . '_category_id'];

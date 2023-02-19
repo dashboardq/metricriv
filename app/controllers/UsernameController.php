@@ -136,6 +136,6 @@ class UsernameController {
             $tracking_3 = Tracking::create($args);
         }
 
-        $res->success('Your username has been created. Below are the numbers that are currently being tracked. You can add a new number by pressing the "Add Number" button at the bottom of the list.', '/numbers');
+        $res->success('Your username has been created. Below are the numbers that are currently being tracked. You can add a new number by pressing the "Add Number" button at the bottom of the list.', ao()->env('APP_PRIVATE_HOME'));
     }
 }

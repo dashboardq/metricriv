@@ -21,7 +21,7 @@ class GithubService {
 
         $val = $req->val('data', [
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -66,7 +66,7 @@ class GithubService {
 
         TrackingService::update($tracking->id, $total);
 
-        $res->success('You have successfully added a new number to track!', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function notificationsUpdate($tracking, $manual_result = null) {
         if($manual_result) {

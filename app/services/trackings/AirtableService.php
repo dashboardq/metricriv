@@ -24,7 +24,7 @@ class AirtableService {
             'view_name' => ['required'],
 
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -81,7 +81,7 @@ class AirtableService {
         // Only validating that the connection works for the initial add.
         //TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track. It could take a few minutes to start loading the data.', '/numbers');
+        $res->success('You have successfully added a new number to track. It could take a few minutes to start loading the data.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function rowCountParse($body, $validate = false) {
         if($validate) {

@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Collection;
+use app\models\Username;
+
 use mavoc\core\Email;
 
 class MainController {

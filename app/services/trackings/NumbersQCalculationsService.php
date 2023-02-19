@@ -45,6 +45,6 @@ class NumbersQCalculationsService {
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
 
-        $res->success('You have successfully added the item.', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
 }

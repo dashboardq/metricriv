@@ -22,7 +22,7 @@ class HackernewsService {
         $val = $req->val('data', [
             'username' => ['required'],
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -62,7 +62,7 @@ class HackernewsService {
 
         TrackingService::update($tracking->id, $result);
 
-        $res->success('You have successfully added a new number to track!', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
     public static function totalKarmaUpdate($tracking, $manual_result = null) {
         if($manual_result) {

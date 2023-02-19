@@ -150,6 +150,7 @@ window.ajax = {};
     window.ajax.el = el;
     window.ajax.ready = ready;
     window.ajax.offset = offset;
+    window.ajax.post = post;
     window.ajax.replaceWith = replaceWith;
 
     window.ajax.ready(init);

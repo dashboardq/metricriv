@@ -19,7 +19,7 @@ class LifespanService {
 
         $val = $req->val('data', [
             'name' => ['required'],
-            'interval' => ['required', ['in' => [$intervals]]],
+            'interval' => ['required', ['in' => $intervals]],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -41,6 +41,6 @@ class LifespanService {
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
 
-        $res->success('You have successfully added a new number to track!', '/numbers');
+        $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
 }
