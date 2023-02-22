@@ -14,7 +14,7 @@ class Restriction extends Model {
         $args['private_max'] = 1000;
         $args['username_max'] = 1;
         $args['allowed_intervals'] = 'static,1 hour,5 minutes';
-        $args['additional_users'] = 0;
+        $args['additional_users'] = 1000;
         $args['premium_level'] = 30;
         $restriction = new Restriction($args);
 

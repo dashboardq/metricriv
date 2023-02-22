@@ -12,6 +12,7 @@
                         <li><a href="/collections">Collections</a></li>
                         <li><a href="/number/add">Add Number</a></li>
                         <li><a href="/connections">Connections</a></li>
+                        <li><a href="/viewers">Viewers</a></li>
                         <li><a href="/settings">Settings</a></li>
                         <?php /*
                         <li class="fade"><a href="/users">Users</a></li>

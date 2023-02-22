@@ -29,8 +29,7 @@ class TrackingsController {
 
         // Check if collection is private and if user has access.
         if($pass && $collection->data['private']) {
-            $access = Access::where(['user_id' => $req->user_id, 'collection_id' => $collection->data['id']]);
-            if(count($access) == 0) {
+            if(!$collection->access($req->user_id)) {
                 $pass = false;
             }
         }

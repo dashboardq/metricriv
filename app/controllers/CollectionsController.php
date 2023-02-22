@@ -20,13 +20,11 @@ class CollectionsController {
             $res->redirect('/username/add');
         }
 
-        $list = Collection::where('user_id', $req->user_id, 'data');
+        $owns = Collection::owns($req->user_id, 'data');
+        $edits = Collection::edits($req->user_id, 'data');
+        $views = Collection::views($req->user_id, 'data');
 
-        foreach($list as $i => $item) {
-            $list[$i]['numbers'] = Tracking::count('collection_id', $item['id']);
-        }
-
-        return compact('list');
+        return compact('owns', 'edits', 'views');
     }
 
     public function add($req, $res) {
@@ -101,6 +99,7 @@ class CollectionsController {
     public function edit($req, $res) {
         $val = $req->val('params', [
             'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'id' => ['required', 'dbEditorCollection'],
         ]);
 
         $item = Collection::find($req->params['id']);
@@ -164,10 +163,12 @@ class CollectionsController {
 
     public function view($req, $res) {
         $params = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbExists' => ['collections', 'id']]],
+            'id' => ['required', 'dbEditorCollection'],
         ]);
 
         $collection = Collection::find($params['id']);
+
         $list = Tracking::where('collection_id', $collection->data['id'], 'data');
 
         return compact('collection', 'list');

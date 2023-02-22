@@ -12,7 +12,8 @@ use app\models\Username;
 class AjaxController {
     public function collectionSort($req, $res) {
         $params = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorCollection'],
         ]);
 
         $data = $req->val('data', [

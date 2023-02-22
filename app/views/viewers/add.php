@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Edit Connection</title>
+        <title>Add Viewer</title>
 
         <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
         <link href="/assets/css/normalize.css" rel="stylesheet">
@@ -18,16 +18,23 @@
     <body>
         <?php $res->partial('header_app'); ?>
         <main>
-            <h1>Edit Connection</h1>
+            <h1>Add Viewer</h1>
 
             <section class="page">
-                <p class="desc"><a href="<?php url('/connections'); ?>">&lt; Back</a></p>
+                <p class="desc"><a href="<?php url('/viewers'); ?>">&lt; Back</a></p>
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">
-					<?php $res->html->text('Connection Nickname (for easy selection in the future)', 'name', $item->data['values']['name']); ?>
+					<?php $res->html->text('Username', 'username'); ?>
 
-					<?php $res->html->submit('Save', 'button button_invert'); ?>
+                    <?php $res->html->radios('Collection', 'collection_id', $collections); ?>
+
+                    <?php $res->html->radios('Type', 'type', [
+                        ['label' => 'View', 'value' => 'viewer'],
+                        ['label' => 'View & Edit', 'value' => 'editor'],
+                    ]); ?>
+
+					<?php $res->html->submit('Add Viewer', 'button button_invert'); ?>
 				</form>
 
             </section>

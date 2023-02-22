@@ -6,6 +6,7 @@ use mavoc\core\Model;
 use mavoc\core\Secret;
 
 use DateTime;
+use DateTimeZone;
 
 class Tracking extends Model {
     public static $table = 'trackings';
@@ -73,6 +74,7 @@ class Tracking extends Model {
 
                 // title, values, and function are not saved to the database
                 $data['title'] = $data['name'];
+                $data['title_raw'] = $data['name'];
                 $data['values'] = $data['data'];
                 if(isset($data['method'])) {
                     $data['function'] = $data['method'];
@@ -102,7 +104,8 @@ class Tracking extends Model {
                 $json = $secret->decrypt($data['data']);
                 $json_data = json_decode($json, true);
 
-                $data['title'] = $json_data['name'];
+                $data['title'] = $this->parseTitle($json_data['name']);
+                $data['title_raw'] = $json_data['name'];
                 $data['values'] = $json_data['data'];
                 $data['function'] = $json_data['method'];
 
@@ -110,6 +113,9 @@ class Tracking extends Model {
                 // No data to encrypt/unencrypt
                 if(!isset($data['title'])) {
                     $data['title'] = '';
+                }
+                if(!isset($data['title_raw'])) {
+                    $data['title_raw'] = '';
                 }
                 if(!isset($data['values'])) {
                     $data['values'] = [];
@@ -121,7 +127,8 @@ class Tracking extends Model {
 
             $data['encrypted'] = 1;
         } else {
-            $data['title'] = $data['name'];
+            $data['title'] = $this->parseTitle($data['name']);
+            $data['title_raw'] = $data['name'];
             $data['values'] = $data['data'];
             $data['function'] = $data['method'];
 
@@ -147,10 +154,48 @@ class Tracking extends Model {
         $this->data['next_check_at'] = $dt;
 
         $this->data['data'] = $this->data['values'];
-        $this->data['name'] = $this->data['title'];
+        $this->data['name'] = $this->data['title_raw'];
         $this->data['method'] = $this->data['function'];
         $this->data['encrypted'] = 0;
         $this->save();
+    }
+
+    public function parseJSON($input) {
+        $data = json_decode($input, true);
+        if(is_array($data)) {
+            if($this->data['user_id'] && isset($data['ago']) && isset($data['format'])) {
+                $user_id = $this->data['user_id'];
+                $dates = ao()->app->getDates($user_id, '1d', $data['ago']);
+
+                $timezone = Setting::get($user_id, 'timezone');
+                $tz = new DateTimeZone($timezone);
+                $utc = new DateTimeZone('UTC');
+
+                $dt = new DateTime($dates['start'], $utc);
+                $dt->setTimezone($tz);
+                //echo $dt->format($data['format']);die;
+                return $dt->format($data['format']);
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    public function parseTitle($input) {
+        $parts = preg_split('/({[^}]*})/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+        $output = '';
+        foreach($parts as $part) {
+            if(preg_match('/^{[^}]*}$/', $part)) {
+                $output .= $this->parseJSON($part);
+            } else {
+                $output .= $part;
+            }
+        }
+
+        return $output;
     }
 
     public function updateData($values) {
@@ -172,7 +217,7 @@ class Tracking extends Model {
         }
 
         $this->data['data'] = $this->data['values'];
-        $this->data['name'] = $this->data['title'];
+        $this->data['name'] = $this->data['title_raw'];
         $this->data['method'] = $this->data['function'];
         $this->data['encrypted'] = 0;
         $this->save();

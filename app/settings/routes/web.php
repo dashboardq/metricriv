@@ -76,6 +76,13 @@ Route::get('username/add', ['UsernameController', 'add'], 'private');
 Route::post('username/create', ['UsernameController', 'create'], 'private');
 
 
+Route::get('viewers', ['ViewersController', 'list'], 'private');
+Route::get('viewer/add', ['ViewersController', 'add'], 'private');
+Route::post('viewer/add', ['ViewersController', 'create'], 'private');
+Route::get('viewer/edit/{id}', ['ViewersController', 'edit'], 'private');
+Route::post('viewer/edit/{id}', ['ViewersController', 'update'], 'private');
+
+
 // Handle 3rd Party OAuth
 Route::post('oauth/{category_slug}/start', ['OAuthController', 'start'], 'private');
 Route::get('oauth/{category_slug}/redirect', ['OAuthController', 'redirect'], 'private');

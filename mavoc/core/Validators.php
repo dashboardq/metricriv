@@ -4,6 +4,7 @@ namespace mavoc\core;
 
 class Validators {
     public function __construct() {
+		ao()->hook('ao_validator_init', $this);
     }
 
     // Dynamic rules: 

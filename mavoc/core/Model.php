@@ -386,6 +386,9 @@ class Model {
         $output = [];
         if($table) {
             if(is_array($key)) {
+                if($value == 'data') {
+                    $return_type = 'data';
+                }
                 $first = true;
                 $sql = 'SELECT * FROM ' . $table . ' WHERE ';
                 $values = [];
@@ -487,7 +490,7 @@ class Model {
             $sql = trim($sql, ',');
             $sql .= ')';
 
-            if(count($and)) {
+            if(is_array($and) && count($and)) {
                 foreach($and as $k => $v) {
                     $sql .= ' AND ' . $k . ' = ?';
                     $values[] = $v;
@@ -496,6 +499,10 @@ class Model {
 
             //$data = ao()->db->query($sql, $list);
             $data = ao()->db->query($sql, $values);
+
+            if(is_string($and) && in_array($and, ['all', 'data'])) {
+                $return_type = $and;
+            }
 
             foreach($data as $item) {
                 if($return_type == 'data') {

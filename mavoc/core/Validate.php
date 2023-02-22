@@ -30,6 +30,11 @@ class Validate {
             $_messages = array_merge($_messages, $list['_messages']);
         }
 
+        // _rules are messages for specific validations. 
+		// Meaning this would change the required message:
+        // $val = $req->val('data', [
+		// '_rules' => ['required' => 'The {title} field MUST BE REQUIRED!'],
+		// ]);
         $_rules = [];
         if(isset($list['_rules']) && is_array($list['_rules'])) {
             $_rules = array_merge($_rules, $list['_rules']);

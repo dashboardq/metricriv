@@ -31,6 +31,15 @@ if(!function_exists('dashify')) {
     }
 }
 
+if(!function_exists('dd')) {
+    function dd($input) {
+        echo '<pre>'; 
+        print_r($input); 
+        echo '</pre>'; 
+        die;
+    }
+}
+
 // From: https://stackoverflow.com/questions/1416697/converting-timestamp-to-time-ago-in-php-e-g-1-day-ago-2-days-ago
 // https://stackoverflow.com/a/18602474
 // Slightly modified to accept DateTime objects.

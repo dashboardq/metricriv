@@ -20,7 +20,13 @@ class NumberController {
     public function add($req, $res) {
         $collections = [];
 
-        $list = Collection::where('user_id', $req->user_id);
+        // Old method of getting collections that the user owns.
+        //$list = Collection::where('user_id', $req->user_id);
+
+        // Get collections that the user owns or can edit.
+        $owns = Collection::owns($req->user_id);
+        $edits = Collection::edits($req->user_id);
+        $list = array_merge($owns, $edits);
         foreach($list as $item) {
             $label = $item->data['slug'];
             if($item->data['private']) {
@@ -39,7 +45,8 @@ class NumberController {
     }
     public function addPost($req, $res) {
         $val = $req->val('data', [
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ]);
 
         $collection = Collection::find($val['collection_id']);
@@ -51,7 +58,8 @@ class NumberController {
 
     public function addCategory($req, $res) {
         $val = $req->val('params', [
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
         $list = Category::all('data');
@@ -69,7 +77,8 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
 
@@ -117,7 +126,8 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
         $val = $req->val('data', [
@@ -138,7 +148,8 @@ class NumberController {
 
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
         $restriction = Restriction::fullAccess($req->user_id, 'data');
@@ -154,7 +165,8 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
         // Validate user owns connection if there is a connection
@@ -245,7 +257,8 @@ class NumberController {
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],
             'number_slug' => ['required', ['dbAccessList' => ['numbers', 'slug', $req->user_id, 'user_ids']]],
-            'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'collection_id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'collection_id' => ['required', 'dbEditorCollection'],
         ], '/number/add');
 
         // Validate user owns connection if there is a connection
@@ -263,12 +276,13 @@ class NumberController {
 
     public function edit($req, $res) {
         $val = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorTracking'],
         ]);
 
         $item = Tracking::find($req->params['id']);
 
-        $res->fields['name'] = $item->data['title'];
+        $res->fields['name'] = $item->data['title_raw'];
 
         $res->view('numbers/edit', compact('item'));
     }
@@ -290,7 +304,8 @@ class NumberController {
 
     public function delete($req, $res) {
         $val = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorTracking'],
         ]);
 
         Tracking::delete($val['id']);
@@ -300,7 +315,8 @@ class NumberController {
 
     public function update($req, $res) {
         $params = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorTracking'],
         ]);
 
 

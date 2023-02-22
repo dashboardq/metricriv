@@ -37,6 +37,90 @@ class Collection extends Model {
         parent::__construct($args);
     }   
 
+    public static function owns($user_id, $return_type = 'all') {
+        $output = Collection::where('user_id', $user_id, $return_type);
+
+        foreach($output as $i => $item) {
+            if($return_type == 'data') {
+                $output[$i]['numbers'] = Tracking::count('collection_id', $item['id']);
+            } else {
+                $output[$i]->data['numbers'] = Tracking::count('collection_id', $item->data['id']);
+            }
+        }
+
+        return $output;
+    }
+
+    public static function edits($user_id, $return_type = 'all') {
+        $editors = Viewer::where(['viewer_id' => $user_id, 'type' => 'editor'], $return_type);
+
+        $ids = [];
+        foreach($editors as $editor) {
+            if($return_type == 'data') {
+                $ids[] = $editor['collection_id'];
+            } else {
+                $ids[] = $editor->data['collection_id'];
+            }
+        }
+
+        $output = Collection::whereIn('id', $ids, $return_type);
+
+        foreach($output as $i => $item) {
+            if($return_type == 'data') {
+                $output[$i]['numbers'] = Tracking::count('collection_id', $item['id']);
+            } else {
+                $output[$i]->data['numbers'] = Tracking::count('collection_id', $item->data['id']);
+            }
+        }
+
+        return $output;
+    }
+
+    public static function views($user_id, $return_type = 'all') {
+        $viewers = Viewer::where(['viewer_id' => $user_id, 'type' => 'viewer'], $return_type);
+
+        $ids = [];
+        foreach($viewers as $viewer) {
+            if($return_type == 'data') {
+                $ids[] = $viewer['collection_id'];
+            } else {
+                $ids[] = $viewer->data['collection_id'];
+            }
+        }
+
+        $output = Collection::whereIn('id', $ids, $return_type);
+
+        foreach($output as $i => $item) {
+            if($return_type == 'data') {
+                $output[$i]['numbers'] = Tracking::count('collection_id', $item['id']);
+            } else {
+                $output[$i]->data['numbers'] = Tracking::count('collection_id', $item->data['id']);
+            }
+        }
+
+        return $output;
+    }
+
+    public function access($user_id, $type = 'viewer') {
+        if($this->data['user_id'] == $user_id) {
+            return true;
+        }
+
+        if($type == 'viewer') {
+            $counts = Viewer::count(['collection_id' => $this->data['id'], 'viewer_id' => $user_id]);
+            if($counts) {
+                return true;
+            }
+        } elseif($type == 'editor') {
+            $counts = Viewer::count(['collection_id' => $this->data['id'], 'viewer_id' => $user_id, 'type' => 'editor']);
+            if($counts) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function process($data) {
         $username = Username::find($data['username_id']);
         $data['title'] = $username->data['name'] . ' - ' . $data['name'];

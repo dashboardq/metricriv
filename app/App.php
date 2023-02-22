@@ -2,8 +2,10 @@
 
 namespace app;
 
+use app\models\Collection;
 use app\models\Follow;
 use app\models\Setting;
+use app\models\Tracking;
 use app\models\User;
 
 use DateTime;
@@ -22,6 +24,8 @@ class App {
         ao()->filter('ao_response_partial_args', [$this, 'cacheDate']);
 
         ao()->filter('ao_helpers_classify_words', [$this, 'classify']);
+
+        ao()->filter('ao_validator_init', [$this, 'validator']);
     }
 
     public function cacheDate($vars, $view) {
@@ -176,5 +180,58 @@ class App {
         $list[] = 'NUMBERS_1';
 
         return $list;
+    }
+
+    public function validator($validator) {
+        $validator->_add('dbEditorCollection', [$this, 'dbEditorCollection']);
+        $validator->_add('dbEditorCollectionMessage', [$this, 'dbEditorCollectionMessage']);
+
+        $validator->_add('dbEditorTracking', [$this, 'dbEditorTracking']);
+        $validator->_add('dbEditorTrackingMessage', [$this, 'dbEditorTrackingMessage']);
+    }
+
+    public function dbEditorCollection($input, $field) {
+        $value = $input[$field];
+
+        // Check if the user owns the collection.
+        $collection = Collection::find($value);
+        if($collection->data['user_id'] == ao()->request->user_id) {
+            return true;
+        }
+
+        $results = ao()->db->query('SELECT * FROM viewers WHERE type = "editor" AND viewer_id = ? AND collection_id = ? LIMIT 1', ao()->request->user_id, $value);
+
+        if(count($results)) {
+            return true;
+        } else {
+            return false;
+        }
+    }   
+    public function dbEditorCollectionMessage($input, $field) {
+        $output = 'Your account does not have the access needed to perform the requested action.';
+        return $output;
+    }
+
+    public function dbEditorTracking($input, $field) {
+        $value = $input[$field];
+
+        $tracking = Tracking::find($value);
+        $collection = Collection::find($tracking->data['collection_id']);
+        // Check if the user owns the collection where the tracking was created.
+        if($collection->data['user_id'] == ao()->request->user_id) {
+            return true;
+        }
+
+        $results = ao()->db->query('SELECT * FROM viewers WHERE type = "editor" AND viewer_id = ? AND collection_id = ? LIMIT 1', ao()->request->user_id, $collection->id);
+
+        if(count($results)) {
+            return true;
+        } else {
+            return false;
+        }
+    }   
+    public function dbEditorTrackingMessage($input, $field) {
+        $output = 'Your account does not have the access needed to perform the requested action.';
+        return $output;
     }
 }
