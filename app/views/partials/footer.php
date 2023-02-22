@@ -9,8 +9,8 @@
                 </nav>
             </div>
         </footer>
-        <script src="/assets/js/ajax.js"></script>
-        <script src="/assets/js/main.js"></script>
+        <script src="/assets/js/ajax.js?cache-date=<?php esc($cache_date); ?>"></script>
+        <script src="/assets/js/main.js?cache-date=<?php esc($cache_date); ?>"></script>
         <?php if($user): ?>
         <form id="logout" action="/logout" method="POST" class="hidden">
         </form>
