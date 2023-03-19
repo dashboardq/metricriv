@@ -5,6 +5,7 @@ namespace app\services\trackings;
 use app\services\TrackingService;
 
 use app\models\Category;
+use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
 use app\models\Tracking;
@@ -25,6 +26,7 @@ class AirtableService {
 
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -72,10 +74,14 @@ class AirtableService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\AirtableService', 'rowCountUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         // Do not try to update for this one. The Airtable call could take a long time.
         // Only validating that the connection works for the initial add.

@@ -174,4 +174,45 @@ class CollectionsController {
         return compact('collection', 'list');
     }
 
+    public function sortOrder($req, $res) {
+        $params = $req->val('params', [
+            //'id' => ['required', ['dbExists' => ['collections', 'id']]],
+            'id' => ['required', 'dbEditorCollection'],
+        ]);
+
+        $collection = Collection::find($params['id']);
+
+        $list = Tracking::where('collection_id', $collection->data['id'], 'data');
+
+        return compact('collection', 'list');
+    }
+
+    public function sortOrderPost($req, $res) {
+        $params = $req->val('params', [
+            'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+        ]);
+
+        $data = $req->val('data', [
+            'ids' => ['required'],
+            'sort_orders' => ['required'],
+        ]);
+
+        $ids = $data['ids'];
+        $sort_orders = $data['sort_orders'];
+
+        foreach($sort_orders as $i => $sort_order) {
+            $id = $ids[$i];
+            $tracking = Tracking::find($id);
+            // Make sure each of the tracking ids passed in are part of the collection.
+            if($tracking->data['collection_id'] == $params['id']) {
+                $tracking->data['priority'] = intval($sort_order);
+                $tracking->save();
+            }
+        }
+
+        $collection = Collection::find($params['id']);
+        $collection->resort();
+
+        $res->success('Sort order successfully updated.', '/collection/view/' . $params['id']);
+    }
 }

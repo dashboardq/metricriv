@@ -39,6 +39,7 @@ If your JSON response looked like this: <strong><br>{ <br>&nbsp;&nbsp;&nbsp;&nbs
 					<?php $res->html->text('Number Display Name', 'name', $number->data['short_name']); ?>
 
 					<?php $res->html->radios('Update Number Interval', 'interval', $intervals); ?>
+					<?php $res->html->hidden('priority', 0); ?>
 
 					<?php $res->html->submit('Start Tracking', 'button button_invert'); ?>
 				</form>

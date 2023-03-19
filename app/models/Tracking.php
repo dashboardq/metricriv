@@ -31,6 +31,7 @@ class Tracking extends Model {
         'next_check_at',
         'created_at',
         'updated_at',
+        'target_interval',
     ];
 
     public static $hooked = false;
@@ -57,8 +58,23 @@ class Tracking extends Model {
         if(isset($data['connection_id']) && $data['connection_id']) {
             $data['connection'] = Connection::find($data['connection_id'])->data;
         }
+
         $updated_at = new DateTime($data['updated_at'] ?? '');
-        $data['updated'] = $updated_at->format('M j, Y H:i');
+        if(ao()->type == 'web') {
+            $user_id = ao()->request->user_id;
+        } else {
+            $user_id = 0;
+        }
+        if($updated_at && $user_id) {
+            $timezone = Setting::get($user_id, 'timezone');
+            $tz = new DateTimeZone($timezone);
+            $updated_at->setTimezone($tz);
+            $data['updated'] = $updated_at->format('M j, Y g:i a');
+        } elseif($updated_at) {
+            $data['updated'] = $updated_at->format('M j, Y g:i a');
+        } else {
+            $data['updated'] = '';
+        }
 
         if(!isset($data['encrypted'])) {
             $data['encrypted'] = 0;
@@ -164,7 +180,9 @@ class Tracking extends Model {
         $data = json_decode($input, true);
         if(is_array($data)) {
             if($this->data['user_id'] && isset($data['ago']) && isset($data['format'])) {
-                $user_id = $this->data['user_id'];
+                // The $this->data['collection'] may not be available yet.
+                $collection = Collection::find($this->data['collection_id']);
+                $user_id = $collection->data['user_id'];
                 $dates = ao()->app->getDates($user_id, '1d', $data['ago']);
 
                 $timezone = Setting::get($user_id, 'timezone');
@@ -204,6 +222,11 @@ class Tracking extends Model {
             $dt->modify('+5 minutes');
         } else {
             $dt->modify('+1 hour');
+        }
+
+        if($this->data['target_interval'] != 'auto') {
+            // Set the minutes for the next check
+            $dt->setTime($dt->format('G'), $this->data['target_interval']);
         }
 
         $this->data['status'] = 'active';

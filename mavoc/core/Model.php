@@ -280,7 +280,11 @@ class Model {
 
             // If item exists, run update otherwise run insert.
             if($item) {
-                $this->update($this->data);
+                $data = $this->data;
+                // The old updated_at value needs to be overwritten so unsetting it here.
+                // If the updated_at value needs to change then the update() method should be called directly.
+                unset($data['updated_at']);
+                $this->update($data);
             } else {
                 $this->insert($this->data);
             }

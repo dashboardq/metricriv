@@ -280,11 +280,50 @@ class NumberController {
             'id' => ['required', 'dbEditorTracking'],
         ]);
 
-        $item = Tracking::find($req->params['id']);
+        $tracking = Tracking::find($req->params['id']);
 
-        $res->fields['name'] = $item->data['title_raw'];
+        $res->fields['name'] = $tracking->data['title_raw'];
+        $res->fields['check_interval'] = $tracking->data['check_interval'];
+        $res->fields['target_interval'] = $tracking->data['target_interval'];
 
-        $res->view('numbers/edit', compact('item'));
+        $restriction = Restriction::fullAccess($req->user_id, 'data');
+        $restriction = ao()->hook('app_add_restriction', $restriction, $req, $res);
+
+        $available_intervals = ['1 hour' => true, '5 minutes' => true];
+        $checks = [];
+        $list = explode(',', $restriction['allowed_intervals']);
+        foreach($list as $item) {
+            if($item == 'static') {
+                continue;
+            }
+            $checks[] = [
+                'label' => $item,
+                'name' => 'check_interval',
+                'value' => $item,
+            ];
+            unset($available_intervals[$item]);
+        }
+        foreach($available_intervals as $item => $temp) {
+            $checks[] = [
+                'label' => $item . ' (upgrade service plan to enable)',
+                'name' => 'check_interval',
+                'value' => $item,
+                'extra' => 'disabled',
+            ];
+        }
+
+        $target_interval = [];
+        $targets = [];
+        $targets[] = [
+            'label' => 'Auto',
+            'name' => 'target_interval',
+            'value' => 'auto',
+        ];
+        for($i = 0; $i < 60; $i++) {
+            $targets[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+        }
+
+        $res->view('numbers/edit', compact('checks', 'tracking', 'targets'));
     }
 
     public function list($req, $res) {
@@ -300,6 +339,57 @@ class NumberController {
         $list = Tracking::where('user_id', $req->user->data['id'], 'data');
 
         $res->view('numbers/list', compact('collections', 'list'));
+    }
+
+    public function copy($req, $res) {
+        $params = $req->val('params', [
+            //'id' => ['required', ['dbOwner' => ['trackings', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorTracking'],
+        ]);
+
+        $tracking = Tracking::find($params['id']);
+
+        // /number/add/COLLECTION_ID/CATEGORY_SLUG/NUMBER_SLUG/CONNECTION_ID
+        $url = '';
+        $url .= '/number/add/';
+        $url .= $tracking->data['collection_id'];
+        $url .= '/';
+        $url .= $tracking->data['category']['slug'];
+        $url .= '/';
+        $url .= $tracking->data['number']['slug'];
+        $url .= '/';
+        $url .= $tracking->data['connection_id'];
+
+        // Set up the fields to pass
+        $res->session->next_flash['fields'] = [];
+        $res->session->next_flash['fields']['name'] = $tracking->data['title_raw'];
+        $res->session->next_flash['fields']['interval'] = $tracking->data['check_interval'];
+        $res->session->next_flash['fields']['priority'] = $tracking->data['priority'] - 5;
+
+        if(isset($tracking->data['values']['range']) && isset($tracking->data['values']['ago'])) {
+            if($tracking->data['values']['range'] == 'all' && $tracking->data['values']['ago'] == 'now') {
+                $res->session->next_flash['fields']['period'] = 'all';
+            } elseif(preg_match('/.*y.*m.*w.*d/', $tracking->data['values']['range'])) {
+                $res->session->next_flash['fields']['period'] = 'other';
+
+                $ago = preg_split('/([0-9]+[alymwdhsin]+)/', strtolower($tracking->data['values']['ago']), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                $range = preg_split('/([0-9]+[alymwdhsin]+)/', strtolower($tracking->data['values']['range']), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+                $res->session->next_flash['fields']['years_ago'] = intval($ago[0]);
+                $res->session->next_flash['fields']['months_ago'] = intval($ago[1]);
+                $res->session->next_flash['fields']['weeks_ago'] = intval($ago[2]);
+                $res->session->next_flash['fields']['days_ago'] = intval($ago[3]);
+
+                $res->session->next_flash['fields']['years_range'] = intval($range[0]);
+                $res->session->next_flash['fields']['months_range'] = intval($range[1]);
+                $res->session->next_flash['fields']['weeks_range'] = intval($range[2]);
+                $res->session->next_flash['fields']['days_range'] = intval($range[3]);
+            } else {
+                $res->session->next_flash['fields']['period'] = $tracking->data['values']['range'] . '_' . $tracking->data['values']['ago'];
+            }
+        }
+
+        $res->success('Update the info below as needed and then submit to create a new number.', $url);
     }
 
     public function delete($req, $res) {
@@ -319,10 +409,19 @@ class NumberController {
             'id' => ['required', 'dbEditorTracking'],
         ]);
 
-
-        $val = $req->val('data', [
+        $data = $req->val('data', [
             'name' => ['required'],
         ]);
+
+        if(isset($req->data['check_interval'])) {
+            $intervals = ['1 hour', '5 minutes', 'static'];
+            $intervals = ao()->hook('app_intervals', $intervals);
+
+            $data2 = $req->val('data', [
+                'check_interval' => ['required', ['in' => $intervals]],
+                'target_interval' => ['required', ['match' => '/^auto$|^[0-5][0-9]$/']],
+            ]);
+        }
 
         $tracking = Tracking::find($params['id']);
 
@@ -332,7 +431,13 @@ class NumberController {
         $tracking->data['data'] = $tracking->data['values'];
         $tracking->data['method'] = $tracking->data['function'];
 
-        $tracking->data['name'] = $val['name'];
+        $tracking->data['name'] = $data['name'];
+
+        if(isset($req->data['check_interval'])) {
+            $tracking->data['check_interval'] = $data2['check_interval'];
+            $tracking->data['target_interval'] = $data2['target_interval'];
+        }
+
         $tracking->data['encrypted'] = 0;
         $tracking->save();
 

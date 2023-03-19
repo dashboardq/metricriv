@@ -26,6 +26,7 @@
 
 				<form method="POST">
 					<?php $res->html->text('Header Text', 'header', $number->data['short_name']); ?>
+					<?php $res->html->hidden('priority', 0); ?>
 
 					<?php $res->html->submit('Add Header', 'button button_invert'); ?>
 				</form>

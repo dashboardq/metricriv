@@ -27,6 +27,7 @@
 				<form method="POST">
                     <label>Every number after the Hide Output block will be hidden on the numbers page.</label>
                     <p>This is useful if you need a number to be used in a calculation but don't want the number displayed.</p>
+					<?php $res->html->hidden('priority', 0); ?>
 					<?php $res->html->submit('Add Hide Output', 'button button_invert'); ?>
 				</form>
 

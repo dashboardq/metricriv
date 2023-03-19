@@ -131,4 +131,14 @@ class Collection extends Model {
 
         return $data;
     }
+
+    public function resort() {
+        $trackings = Tracking::where('collection_id', $this->id);
+
+        $count = count($trackings);
+        foreach($trackings as $i => $tracking) {
+            $tracking->data['priority'] = ($count - $i) * 10;
+            $tracking->save();
+        }
+    }
 }

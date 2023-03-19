@@ -21,11 +21,16 @@
             <h1>Edit Number</h1>
 
             <section class="page">
-                <p class="desc"><a href="<?php url('/collection/view/' . $item->data['collection_id']); ?>">&lt; Back</a></p>
+                <p class="desc"><a href="<?php url('/collection/view/' . $tracking->data['collection_id']); ?>">&lt; Back</a></p>
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">
 					<?php $res->html->text('Name', 'name'); ?>
+
+					<?php if(in_array($res->fields['check_interval'], ['5 minutes', '1 hour'])): ?>
+                        <?php $res->html->radios('Update Number Interval', 'check_interval', $checks); ?>
+                        <?php $res->html->select('Hourly Update Target Minute', 'target_interval', $targets); ?>
+					<?php endif; ?>
 
 					<?php $res->html->submit('Save', 'button button_invert'); ?>
 				</form>

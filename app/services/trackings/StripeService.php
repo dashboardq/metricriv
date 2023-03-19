@@ -5,6 +5,7 @@ namespace app\services\trackings;
 use app\services\TrackingService;
 
 use app\models\Category;
+use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
 use app\models\Tracking;
@@ -21,6 +22,7 @@ class StripeService {
         $val = $req->val('data', [
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -59,10 +61,14 @@ class StripeService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\StripeService', 'monthlyRevenueUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         TrackingService::update($tracking->id, $result);
 

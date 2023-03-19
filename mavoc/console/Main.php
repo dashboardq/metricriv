@@ -72,6 +72,8 @@ class Main {
     public $plugins;
     public $router;
 
+    public $type = 'console';
+
     public function __construct() {
         // Load environment variables.
         $this->envs = require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'.env.php';

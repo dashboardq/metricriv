@@ -24,9 +24,15 @@ class AjaxController {
 
         foreach($ids as $i => $id) {
             $tracking = Tracking::find($id);
-            $tracking->data['priority'] = $i;
-            $tracking->save();
+            // Make sure each of the tracking ids passed in are part of the collection.
+            if($tracking->data['collection_id'] == $params['id']) {
+                $tracking->data['priority'] = $i;
+                $tracking->save();
+            }
         }
+
+        $collection = Collection::find($params['id']);
+        $collection->resort();
 
         return ['status' => 'success'];
     }

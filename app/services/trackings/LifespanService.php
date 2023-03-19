@@ -3,6 +3,7 @@
 namespace app\services\trackings;
 
 use app\models\Category;
+use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
 use app\models\Restriction;
@@ -20,6 +21,7 @@ class LifespanService {
         $val = $req->val('data', [
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -37,9 +39,13 @@ class LifespanService {
         $args['status'] = 'active';
         $args['method'] = '';
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['data'] = ['number' => $number->data['data']];
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }

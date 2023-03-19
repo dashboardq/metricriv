@@ -86,13 +86,11 @@
 
         list.reverse();
         ids = list.join(',');
-        console.log(ids);
         args = {};
         args.ids = ids;
 
-        console.log('url: ' + url);
         ajax.post(url, args, function(err, data) {
-            console.log(data);
+            //console.log(data);
         });
     }
 

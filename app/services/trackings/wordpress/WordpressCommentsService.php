@@ -6,6 +6,7 @@ use app\services\TrackingService;
 use app\services\trackings\WordpressService; 
 
 use app\models\Category;
+use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
 use app\models\Tracking;
@@ -24,6 +25,7 @@ class WordpressCommentsService {
 
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         // If other, the other values are required
@@ -72,9 +74,10 @@ class WordpressCommentsService {
         // Advanced connection
         $type = 'wp_comments';
         $connection = Connection::find($req->params['connection_id']);
+        $collection = Collection::find($req->params['collection_id']);
 
         $api_key = $connection->data['values']['api_key'];
-        $url = WordpressService::parseURL(ao()->request->user_id, $api_key, $type, $range, $ago);
+        $url = WordpressService::parseURL($collection->data['user_id'], $api_key, $type, $range, $ago);
         if($url === false) {
             $res->error('There appears to be a problem with the API key. Please confirm that the API key is entered correctly. If you continue to have issues, please contact support.');
         }
@@ -102,10 +105,13 @@ class WordpressCommentsService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\wordpress\WordpressCommentsService', 'commentsUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection->resort();
 
         TrackingService::update($tracking->id, $result);
 
@@ -125,7 +131,7 @@ class WordpressCommentsService {
             $connection = Connection::find($tracking->data['connection_id']);
 
             $api_key = $connection->data['values']['api_key'];
-            $url = WordpressService::parseURL($tracking->data['user_id'], $api_key, $tracking->data['values']['type'], $tracking->data['values']['range'], $tracking->data['values']['ago']);
+            $url = WordpressService::parseURL($tracking->data['collection']['user_id'], $api_key, $tracking->data['values']['type'], $tracking->data['values']['range'], $tracking->data['values']['ago']);
 
             $rest = new REST();
             $body = $rest->get($url);

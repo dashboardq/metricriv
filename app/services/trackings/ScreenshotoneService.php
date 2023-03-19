@@ -5,6 +5,7 @@ namespace app\services\trackings;
 use app\services\TrackingService;
 
 use app\models\Category;
+use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
 use app\models\Tracking;
@@ -21,6 +22,7 @@ class ScreenshotoneService {
         $val = $req->val('data', [
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -55,10 +57,14 @@ class ScreenshotoneService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\ScreenshotoneService', 'allottedScreenshotsUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         TrackingService::update($tracking->id, $result);
 
@@ -98,6 +104,7 @@ class ScreenshotoneService {
         $val = $req->val('data', [
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -132,10 +139,14 @@ class ScreenshotoneService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\ScreenshotoneService', 'availableScreenshotsUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         TrackingService::update($tracking->id, $result);
 
@@ -175,6 +186,7 @@ class ScreenshotoneService {
         $val = $req->val('data', [
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         $category = Category::by('slug', $req->params['category_slug']);
@@ -210,10 +222,14 @@ class ScreenshotoneService {
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\ScreenshotoneService', 'usedScreenshotsUpdate']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;
         $tracking = Tracking::create($args);
+
+        $collection = Collection::find($req->params['collection_id']);
+        $collection->resort();
 
         TrackingService::update($tracking->id, $result);
 

@@ -28,6 +28,7 @@
 					<?php $res->html->text('Number Display Name', 'name', $number->data['short_name']); ?>
 
 					<?php $res->html->radios('Update Number Interval', 'interval', $intervals); ?>
+					<?php $res->html->hidden('priority', 0); ?>
 
                     <hr>
 

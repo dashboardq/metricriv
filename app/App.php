@@ -55,6 +55,10 @@ class App {
         $timezone = Setting::get($user_id, 'timezone');
         $week_start = Setting::get($user_id, 'week_start');
 
+        // Modify times for timezones
+        $tz = new DateTimeZone($timezone);
+        $utc = new DateTimeZone('UTC');
+
         // Right now only accepting y, m, w, d (others included for future use)
         $types = [];
         $types['y'] = 'year';
@@ -67,7 +71,7 @@ class App {
 
         // Should be passed with the time lengths from largest to smallest.
         // all, 1y2m3w4d5h6min7s
-        // Right now only accepting y, m, d
+        // Right now only accepting y, m, w, d
         $range = preg_split('/([0-9]+[alymwdhsin]+)/', strtolower($range_string), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         if(!count($range)) {
             $range = ['all'];
@@ -75,13 +79,13 @@ class App {
 
         // Should be passed with the time lengths from largest to smallest.
         // now, 1y2m3w4d5h6min7s
-        // Right now only accepting y, m, d
+        // Right now only accepting y, m, w, d
         $ago = preg_split('/([0-9]+[nowymdhsi]+)/', strtolower($ago_string), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         if(!count($ago)) {
             $ago = ['now'];
         }
 
-        $dt = new DateTime();
+        $dt = new DateTime('now', $tz);
         // Right now only accepting y, m, w, d (others included for future use)
         $dt->setTime(0, 0);
         if($ago[0] != 'now') {
@@ -94,6 +98,15 @@ class App {
                 }   
             }   
         }   
+
+        // Strip out 0 values
+        foreach($range as $i => $item) {
+            if(in_array($item, ['0y', '0m', '0w', '0d'])) {
+                unset($range[$i]);
+            }
+
+        }
+        $range = array_values($range);
 
         $largest_range_type = preg_replace('/[0-9]+/', '', $range[0]);
 
@@ -113,6 +126,8 @@ class App {
             }   
         } elseif($largest_range_type == 'd') {
             $start = $dt->format('Y-m-d H:i:s');
+        } else {
+            $start = $dt->format('Y-m-d H:i:s');
         }  
 
         foreach($range as $item) {
@@ -127,11 +142,6 @@ class App {
         // Because the date search is inclusive, subtract one second
         $dt->modify('-1 second');
         $end = $dt->format('Y-m-d H:i:s');
-
-
-        // Modify times for timezones
-        $tz = new DateTimeZone($timezone);
-        $utc = new DateTimeZone('UTC');
 
         $start_dt = new DateTime($start, $tz);
         $start_dt->setTimezone($utc);

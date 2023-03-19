@@ -27,7 +27,7 @@
                 <a href="<?php esc(ao()->env('APP_SITE') . $collection->data['slug']); ?>"><?php esc(ao()->env('APP_SITE') . $collection->data['slug']); ?></a><br>
                 </p>
                 <?php $res->html->messages(); ?>
-                <p><a href="<?php url('/number/add/' . $collection->data['id']); ?>" class="button button_invert">Add Number</a></p>
+                <p><a href="<?php url('/number/add/' . $collection->data['id']); ?>" class="button button_invert">Add Number</a> <a href="<?php url('/collection/sort-order/' . $collection->data['id']); ?>" class="button button_invert">Edit Sort Order</a></p>
                 <table class="draggable" data-action="<?php url('/ajax/collection/sort/' . $collection->id); ?>">
                     <thead>
                         <tr>
@@ -51,10 +51,20 @@
                             <td data-label="Name"><a href="<?php url($collection->data['slug']); ?>"><?php esc($item['title']); ?></a></td>
                             <td data-label="Category"><?php esc($item['category']['name']); ?></td>
                             <td data-label="Connection"><?php esc($item['connection']['values']['name'] ?? ''); ?></td>
-                            <td data-label="Status"><?php esc($item['status']); ?></td>
-                            <td data-label="Last Updated"><?php esc($item['updated']); ?></td>
+                            <td data-label="Status">
+                                <?php if($item['check_interval'] != 'static'): ?>
+                                <?php esc($item['status']); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td data-label="Last Updated">
+                                <?php if($item['check_interval'] != 'static'): ?>
+                                <?php esc($item['updated']); ?>
+                                <?php endif; ?>
+                            </td>
                             <td data-label="Actions">
                                 <?php $res->html->link('/number/edit/' . $item['id'], 'Edit', 'button button_invert'); ?>
+                                
+                                <?php $res->html->post('/number/copy/' . $item['id'], 'Copy', 'button button_invert'); ?>
                                 <?php $res->html->delete('/number/delete/' . $item['id'], 'Delete', 'button button_invert'); ?>
 
 <?php /*

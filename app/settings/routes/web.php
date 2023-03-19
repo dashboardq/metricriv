@@ -50,6 +50,7 @@ Route::get('number/add', ['NumberController', 'add'], 'private');
 Route::post('number/add', ['NumberController', 'addPost'], 'private');
 Route::get('number/add/{collection_id}', ['NumberController', 'addCategory'], 'private');
 Route::get('number/add/{collection_id}/{category_slug}', ['NumberController', 'addNumber'], 'private');
+Route::post('number/copy/{id}', ['NumberController', 'copy'], 'private');
 
 Route::get('number/add/{collection_id}/{category_slug}/{number_slug}', ['NumberController', 'addConnection'], 'private');
 Route::post('number/add/{collection_id}/{category_slug}/{number_slug}', ['NumberController', 'addConnectionPost'], 'private');
@@ -66,6 +67,8 @@ Route::post('collection/add', ['CollectionsController', 'create'], 'private');
 Route::get('collection/edit/{id}', ['CollectionsController', 'edit'], 'private');
 Route::post('collection/edit/{id}', ['CollectionsController', 'update'], 'private');
 Route::post('collection/delete/{id}', ['CollectionsController', 'delete'], 'private');
+Route::get('collection/sort-order/{id}', ['CollectionsController', 'sortOrder'], 'private');
+Route::post('collection/sort-order/{id}', ['CollectionsController', 'sortOrderPost'], 'private');
 
 Route::get('settings', ['SettingController', 'index'], 'private');
 Route::post('settings', ['SettingController', 'update'], 'private');

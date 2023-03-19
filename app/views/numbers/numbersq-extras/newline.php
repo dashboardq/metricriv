@@ -26,6 +26,7 @@
 
 				<form method="POST">
                     <label>Add a line break to the collection.</label>
+					<?php $res->html->hidden('priority', 0); ?>
 					<?php $res->html->submit('Add Newline', 'button button_invert'); ?>
 				</form>
 

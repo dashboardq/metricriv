@@ -55,6 +55,12 @@ class HTML {
     }
 
     public function _hidden($name, $value) {
+        if(isset($this->session->flash['fields'][$name])) {
+            $value = $this->session->flash['fields'][$name];
+        } elseif(isset($this->res->fields[$name])) {
+            $value = $this->res->fields[$name];
+        }
+
         $output = '';
         $output .= '<input type="hidden" name="' . _esc($name) . '" value="' . _esc($value) . '" ';
         $output .= '/> ';
@@ -191,6 +197,30 @@ class HTML {
 
     public function password($label, $name = '') {
         $output = $this->_password($label, $name);
+        echo $output;
+    }
+
+    public function _post($action, $value = '', $class = '', $warning = '') {
+        if($value == '') {
+            $value = 'Update';
+        }
+
+        $output = '';
+        $output .= '<form action="' . _uri($action) . '" method="POST">';
+        $output .= "\n";
+        if($warning) {
+            $output .= $this->_submit($value, $class, 'onclick="return confirm(\'' . $warning . '\');"');
+        } else {
+            $output .= $this->_submit($value, $class);
+        }
+        $output .= "\n";
+        $output .= '</form>';
+        $output .= "\n";
+
+        return $output;
+    }
+    public function post($action, $value = '', $class = '', $warning = '') {
+        $output = $this->_post($action, $value, $class, $warning);
         echo $output;
     }
 

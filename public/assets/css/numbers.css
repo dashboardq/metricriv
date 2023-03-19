@@ -54,6 +54,10 @@ li.active:first-child a:after {
 }
 */
 
+.notice.error {
+    margin-bottom: 0;
+}
+
 @media(max-width: 960px) {
     header {
         padding-left: 12px;

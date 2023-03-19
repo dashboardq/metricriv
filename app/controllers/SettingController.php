@@ -19,7 +19,7 @@ class SettingController {
         $days[] = 'Friday';
         $days[] = 'Saturday';
 
-        $settings = Setting::get();
+        $settings = Setting::get($req->user_id);
         $res->fields = $settings;
 
         $res->view('settings/index', compact('days', 'timezones'));

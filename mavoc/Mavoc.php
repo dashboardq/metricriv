@@ -71,6 +71,8 @@ class Mavoc {
     public $router;
     public $session;
 
+    public $type = 'web';
+
     public function __construct($envs) {
         $this->envs = $envs;
     }
