@@ -49,7 +49,7 @@ class App {
         return $words;
     }
 
-    public function getDates($user_id, $range_string, $ago_string) {
+    public function getDates($user_id, $range_string, $ago_string, $format = 'Y-m-d H:i:s', $timezone_user_id = 0) {
         $output = []; 
 
         $timezone = Setting::get($user_id, 'timezone');
@@ -88,6 +88,28 @@ class App {
         $dt = new DateTime('now', $tz);
         // Right now only accepting y, m, w, d (others included for future use)
         $dt->setTime(0, 0);
+
+        // Strip out 0 values
+        foreach($range as $i => $item) {
+            if(in_array($item, ['0y', '0m', '0w', '0d'])) {
+                unset($range[$i]);
+            }
+        }
+        $range = array_values($range);
+
+        $largest_range_type = preg_replace('/[0-9]+/', '', $range[0]);
+
+        if($largest_range_type == 'y') {
+            // Set dt to the beginning
+            $dt->setDate($dt->format('Y'), 1, 1);
+        } elseif($largest_range_type == 'm') {
+            $dt->setDate($dt->format('Y'), $dt->format('m'), 1);
+        } elseif($largest_range_type == 'w') {
+            if($dt->format('l') != $week_start) {
+                $dt->modify('previous ' . $week_start);
+            }   
+        }  
+
         if($ago[0] != 'now') {
             foreach($ago as $item) {
                 $value = preg_replace('/[a-z]+/', '', $item);
@@ -99,17 +121,24 @@ class App {
             }   
         }   
 
-        // Strip out 0 values
-        foreach($range as $i => $item) {
-            if(in_array($item, ['0y', '0m', '0w', '0d'])) {
-                unset($range[$i]);
-            }
+        // Format based on range type
+        if($largest_range_type == 'y') {
+            $start = $dt->format('Y-m-d');
+        } elseif($largest_range_type == 'm') {
+            $start = $dt->format('Y-m-d');
+        } elseif($largest_range_type == 'w') {
+            if($dt->format('l') == $week_start) {
+                $start = $dt->format('Y-m-d');
+            } else {
+                $start = $dt->format('Y-m-d');
+            }   
+        } elseif($largest_range_type == 'd') {
+            $start = $dt->format('Y-m-d H:i:s');
+        } else {
+            $start = $dt->format('Y-m-d H:i:s');
+        }  
 
-        }
-        $range = array_values($range);
-
-        $largest_range_type = preg_replace('/[0-9]+/', '', $range[0]);
-
+        /* Original 
         if($largest_range_type == 'y') {
             // Set dt to the beginning
             $dt->setDate($dt->format('Y'), 1, 1);
@@ -129,6 +158,7 @@ class App {
         } else {
             $start = $dt->format('Y-m-d H:i:s');
         }  
+         */
 
         foreach($range as $item) {
             $value = preg_replace('/[a-z]+/', '', $item);
@@ -144,14 +174,22 @@ class App {
         $end = $dt->format('Y-m-d H:i:s');
 
         $start_dt = new DateTime($start, $tz);
-        $start_dt->setTimezone($utc);
+        // If the $timezone_user_id is the same as the $user_id, then use the user_id timezone.
+        if($timezone_user_id == 0 || $timezone_user_id != $user_id) {
+            $start_dt->setTimezone($utc);
+        }
         $timestamp_start = $start_dt->getTimestamp();
-        $start = $start_dt->format('Y-m-d H:i:s');
+        //$start = $start_dt->format('Y-m-d H:i:s');
+        $start = $start_dt->format($format);
 
         $end_dt = new DateTime($end, $tz);
-        $end_dt->setTimezone($utc);
+        // If the $timezone_user_id is the same as the $user_id, then use the user_id timezone.
+        if($timezone_user_id == 0 || $timezone_user_id != $user_id) {
+            $end_dt->setTimezone($utc);
+        }
         $timestamp_end = $end_dt->getTimestamp();
-        $end = $end_dt->format('Y-m-d H:i:s');
+        //$end = $end_dt->format('Y-m-d H:i:s');
+        $end = $end_dt->format($format);
 
         $output = compact('start', 'end');
         return $output;
@@ -209,6 +247,7 @@ class App {
             return true;
         }
 
+        // User does not own the collection so check to see if the user has access to the collection.
         $results = ao()->db->query('SELECT * FROM viewers WHERE type = "editor" AND viewer_id = ? AND collection_id = ? LIMIT 1', ao()->request->user_id, $value);
 
         if(count($results)) {

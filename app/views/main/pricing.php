@@ -14,7 +14,7 @@
                         <h2>Free</h2>
                         <h3>$0</h3>
                         <ul>
-                            <li>Up to <strong>100</strong> public numbers</li>
+                            <li>Up to <strong>5</strong> public numbers</li>
                             <li>Up to <strong>2</strong> private numbers</li>
                             <li>Unlimited public viewers</li>
                             <li>$5/mo for each private viewer</li>
@@ -25,7 +25,7 @@
                     </li>
                     <li class="card highlight">
                         <h2>Basic</h2>
-                        <h3>$5/mo</h3>
+                        <h3>$12/mo</h3>
                         <ul>
                             <li>Up to <strong>100</strong> public numbers</li>
                             <li>Up to <strong>100</strong> private numbers</li>
@@ -39,7 +39,7 @@
                     </li>
                     <li class="card">
                         <h2>Intermediate</h2>
-                        <h3>$12/mo</h3>
+                        <h3>$24/mo</h3>
                         <ul>
                             <li>Up to <strong>500</strong> public numbers</li>
                             <li>Up to <strong>500</strong> private numbers</li>
@@ -55,7 +55,7 @@
                     </li>
                     <li class="card">
                         <h2>Advanced</h2>
-                        <h3>$24/mo</h3>
+                        <h3>$32/mo</h3>
                         <ul>
                             <li>Up to <strong>1,000</strong> public numbers</li>
                             <li>Up to <strong>1,000</strong> private numbers</li>

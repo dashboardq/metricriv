@@ -7,6 +7,7 @@
 
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
+            'priority' => ['required', 'int'],
         ]);
 
         // If other, the other values are required
@@ -141,6 +142,8 @@
 
         $data = [];
         $data['###username'] = $val['###username'];
+        $data['range'] = $range;
+        $data['ago'] = $ago;
         $data['number'] = -1;
         $data['color'] = 'blue';
 
@@ -155,6 +158,7 @@
         $args['status'] = 'initial';
         $args['method'] = json_encode(['app\services\trackings\{{class}}Service', '{{method}}Update']);
         $args['check_interval'] = $val['interval'];
+        $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
         $args['data'] = $data;
         $args['encrypted'] = 0;

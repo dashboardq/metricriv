@@ -189,7 +189,8 @@ class CollectionsController {
 
     public function sortOrderPost($req, $res) {
         $params = $req->val('params', [
-            'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            //'id' => ['required', ['dbOwner' => ['collections', 'id', $req->user_id]]],
+            'id' => ['required', 'dbEditorCollection'],
         ]);
 
         $data = $req->val('data', [

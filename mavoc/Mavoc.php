@@ -2,6 +2,10 @@
 
 namespace mavoc;
 
+if(is_file('../vendor/autoload.php')) {
+    require '../vendor/autoload.php';
+} 
+
 use app\App;
 
 use mavoc\console\Main as ConsoleMain;

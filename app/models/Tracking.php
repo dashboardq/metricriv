@@ -183,7 +183,38 @@ class Tracking extends Model {
                 // The $this->data['collection'] may not be available yet.
                 $collection = Collection::find($this->data['collection_id']);
                 $user_id = $collection->data['user_id'];
-                $dates = ao()->app->getDates($user_id, '1d', $data['ago']);
+
+                //$dates = ao()->app->getDates($user_id, '1d', $data['ago']);
+                if(isset($data['range'])) {
+                    $dates = ao()->app->getDates($user_id, $data['range'], $data['ago']);
+                } else {
+                    // Should be passed with the time lengths from largest to smallest.
+                    // all, 1y2m3w4d5h6min7s
+                    // Right now only accepting y, m, w, d
+                    $range = preg_split('/([0-9]+[alymwdhsin]+)/', strtolower($data['ago']), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+                    if(!count($range)) {
+                        $range = ['1d'];
+                    }
+
+                    // Strip out 0 values
+                    foreach($range as $i => $item) {
+                        if(in_array($item, ['0y', '0m', '0w', '0d'])) {
+                            unset($range[$i]);
+                        }
+                    }
+                    $range = array_values($range);
+
+                    // If 0d passed in for ago, there will be no range values so set to 1d.
+                    if(count($range) == 0) {
+                        $range = ['1d'];
+                    }
+
+                    $largest_range_type = preg_replace('/[0-9]+/', '', $range[0]);
+                    $dates = ao()->app->getDates($user_id, '1' . $largest_range_type, $data['ago']);
+                }
+
+                //$dates = ao()->app->getDates($user_id, '1m', '4m');
+                //print_r($dates);die;
 
                 $timezone = Setting::get($user_id, 'timezone');
                 $tz = new DateTimeZone($timezone);

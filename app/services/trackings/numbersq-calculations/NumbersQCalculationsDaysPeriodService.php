@@ -14,6 +14,7 @@ use app\models\Tracking;
 use mavoc\core\REST;
 
 use DateTime;
+use DateTimeZone;
 
 class NumbersQCalculationsDaysPeriodService {
     public static function daysPeriod($req, $res) {
@@ -71,6 +72,7 @@ class NumbersQCalculationsDaysPeriodService {
 
         $timezone = Setting::get($user_id, 'timezone');
 
+        $tz = new DateTimeZone($timezone);
         $dt = new DateTime('now', $tz);
 
         if($period == 'month') {

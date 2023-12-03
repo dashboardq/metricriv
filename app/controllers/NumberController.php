@@ -172,6 +172,14 @@ class NumberController {
         // Validate user owns connection if there is a connection
         $connection = null;
         if($req->params['connection_id'] != 0) {
+            // I've debated back and forth on whether or not other editors should have access to a connection.
+            // Or if the owner of a collection should have access to the editor's connection.
+            // Ultimately I think each user should have their own connections that only they can access.
+            // If an owner wants to give access to a specific number to an editor or viewer, that editor
+            // or viewer should not be able to access all the restricted data from that connection.
+            // This should work vice versa too. An editor could give access to an owner for a specific number
+            // but may not want the owner to have full access to a connection.
+            // Need to hide the copy button when a user does not have access to the connection.
             $val2 = $req->val('params', [
                 'connection_id' => ['required', ['dbOwner' => ['connections', 'id', $req->user_id, 'user_id']]],
             ], '/number/add');
@@ -249,6 +257,7 @@ class NumberController {
             array_pop($parts);
         }
         $back = implode('/', $parts);
+
         $res->view('numbers/' . $category_slug . '/' . $number_slug, compact('back', 'extras', 'intervals', 'number', 'other'));
     }
 

@@ -84,7 +84,7 @@ class NumbersQCalculationsExtraService {
                 $output[] = $tracking['id'];
             } else {
                 $output[] = [
-                    'label' => $tracking['title'],
+                    'label' => $tracking['title'] . ' - ' . $tracking['category']['name'] . ' - ' . $tracking['number']['short_name'],
                     'value' => $tracking['id'],
                 ];
             }

@@ -45,7 +45,9 @@
                             <td data-label="Numbers"><?php esc($item['numbers']); ?></td>
                             <td data-label="Actions">
                                 <?php $res->html->link('/number/add/' . $item['id'], 'Add Number', 'button button_invert'); ?>
+                                <?php if($item['slug_suffix']): ?>
                                 <?php $res->html->link('/collection/edit/' . $item['id'], 'Edit', 'button button_invert'); ?>
+                                <?php endif; ?>
                                 <?php $res->html->delete('/collection/delete/' . $item['id'], 'Delete', 'button button_invert'); ?>
                             </td>
                         </tr>

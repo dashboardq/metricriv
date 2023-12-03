@@ -140,6 +140,12 @@ class Validate {
                             $messages[$field_key] = [];
                         }
 
+                        // Warning: Illegal offset type in isset or empty in Validate.php
+                        //echo '<pre>'; print_r($rule); echo '</pre>';
+                        //echo '<pre>'; print_r($_rules); echo '</pre>';
+                        //echo '<pre>'; print_r($field_key); echo '</pre>';
+                        //echo '<pre>'; print_r($_messages); echo '</pre>';
+                        /* $rule is an array so cannot be used here.
                         if(isset($_rules[$rule]) || isset($_messages[$field_key])) {
                             if(isset($_messages[$field_key][$rule])) {
                                 $messages[$field_key][] = str_replace('{title}', $field_title , $_messages[$field_key][$rule]);
@@ -149,6 +155,8 @@ class Validate {
                                 $messages[$field_key][] = str_replace('{title}', $field_title , $_rules[$rule]);
                             }
                         } elseif(in_array($key . 'Message', $methods)) {
+                         */
+                        if(in_array($key . 'Message', $methods)) {
                             $args[1] = $field_title;
                             $messages[$field_key][] = call_user_func_array([$this->rules, $key . 'Message'], $args);
                         } else {

@@ -95,5 +95,8 @@ return [
     // Other Services
     'SCREENSHOTONE_URL' => 'https://api.screenshotone.com',
     'SCREENSHOTONE_API_KEY' => 'PUT_YOUR_API_KEY_HERE',
+
+    'GOOGLE_ANALYTICS_CONFIG' => 'GOOGLE_APPLICATION_CREDENTIALS=/var/www/numbersq/.path-to-the-json-credentials-downloaded-from-google.json',
+    'GOOGLE_ANALYTICS_EMAIL' => 'email-provided-by-api@google.com',
 ];
 

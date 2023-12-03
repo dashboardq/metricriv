@@ -45,7 +45,7 @@ Required tools:
 * Git
 
 Not required:
-* There are no dependencies so composer is not needed for this install.
+* There are no dependencies so composer is not needed for this install. (2023-12-02: This is no longer the case. If you need the Google Analytics service integration, you will need to use composer to install the dependencies: `composer install` - at this time, using composer is outside the scope of this documentation)
 
 ```
 # Get started (put it anywhere on your system, I'm putting it in the home directory)

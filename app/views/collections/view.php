@@ -34,6 +34,7 @@
                             <th></th>
                             <th>Name</th>
                             <th>Category</th>
+                            <th>Type</th>
                             <th>Connection</th>
                             <th>Status</th>
                             <th>Last Updated</th>
@@ -50,6 +51,7 @@
                             </td>
                             <td data-label="Name"><a href="<?php url($collection->data['slug']); ?>"><?php esc($item['title']); ?></a></td>
                             <td data-label="Category"><?php esc($item['category']['name']); ?></td>
+                            <td data-label="Type"><?php esc($item['number']['short_name']); ?></td>
                             <td data-label="Connection"><?php esc($item['connection']['values']['name'] ?? ''); ?></td>
                             <td data-label="Status">
                                 <?php if($item['check_interval'] != 'static'): ?>
