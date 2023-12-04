@@ -144,7 +144,7 @@ class NumberController {
 
     public function addNumber($req, $res) {
         $category = Category::by('slug', $req->params['category_slug']);
-        $list = Number::where('category_id', $category->data['id'], 'data');
+        $list = Number::where(['category_id' => $category->data['id'], 'active' => 1], 'data');
 
         $val = $req->val('params', [
             'category_slug' => ['required', ['dbAccessList' => ['categories', 'slug', $req->user_id, 'user_ids']]],

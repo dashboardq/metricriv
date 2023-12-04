@@ -31,17 +31,19 @@
                     <?php foreach($list as $item): ?>
                     <?php if(
                         $item['user_ids'] 
+                        && $item['active'] 
                         && in_array($req->user_id, explode(',', $item['user_ids']))
                         && $item['premium_level'] <= $restriction['premium_level']
                     ): ?>
                     <li><a href="<?php esc($req->path . '/' . $item['slug']); ?>"><?php esc($item['name']); ?></a></li>
                     <?php elseif(
                         !$item['user_ids']
+                        && $item['active'] 
                         && $item['premium_level'] > $restriction['premium_level']
                     ): ?>
                     <?php $disabled_count++; ?>
                     <li class="disabled"><span><?php esc($item['name']); ?>*</span></li>
-                    <?php elseif(!$item['user_ids']): ?>
+                    <?php elseif(!$item['user_ids'] && $item['active']): ?>
                     <li><a href="<?php esc($req->path . '/' . $item['slug']); ?>"><?php esc($item['name']); ?></a></li>
                     <?php endif; ?>
                     <?php endforeach; ?>

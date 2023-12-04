@@ -77,12 +77,6 @@ class GoogleAnalyticsService {
             }
         }
 
-
-
-
-
-        ### BOF: CHOOSE ONE OF THE CONNECTION TYPES BELOW AND THEN DELETE THE REST
-
        
         // Advanced connection
         try {

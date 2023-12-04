@@ -15,7 +15,7 @@ use mavoc\core\REST;
 use DateTime;
 
 class StripeService {
-        public static function monthlyRevenue($req, $res) {
+    public static function monthlyRevenue($req, $res) {
         $intervals = ['1 hour', '5 minutes', 'static'];
         $intervals = ao()->hook('app_intervals', $intervals);
 
