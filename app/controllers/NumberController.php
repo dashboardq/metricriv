@@ -205,7 +205,10 @@ class NumberController {
         $category_slug = $category->data['slug'];
         $number_slug = $number->data['slug'];
 
-        if(in_array($category_slug, ['lifespan', 'plausible'])) {
+        if(in_array($category_slug, ['lifespan'])) {
+            $number_slug = 'main';
+        }
+        if($category_slug == 'plausible' && $number_slug == 'total-visitors') {
             $number_slug = 'main';
         }
 
