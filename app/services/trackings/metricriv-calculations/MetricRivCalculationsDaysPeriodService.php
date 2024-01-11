@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services\trackings;
+namespace app\services\trackings\metricriv_calculations;
 
 use app\services\TrackingService;
 
@@ -8,20 +8,23 @@ use app\models\Category;
 use app\models\Collection;
 use app\models\Connection;
 use app\models\Number;
-use app\models\Restriction;
+use app\models\Setting;
 use app\models\Tracking;
 
 use mavoc\core\REST;
 
 use DateTime;
+use DateTimeZone;
 
-class HackernewsService {
-    public static function totalKarma($req, $res) {
+class MetricRivCalculationsDaysPeriodService {
+    public static function daysPeriod($req, $res) {
         $intervals = ['1 hour', '5 minutes', 'static'];
         $intervals = ao()->hook('app_intervals', $intervals);
 
+        $periods = ['month', 'year'];
         $val = $req->val('data', [
-            'username' => ['required'],
+            'period' => ['required', ['in' => $periods]],
+
             'name' => ['required'],
             'interval' => ['required', ['in' => $intervals]],
             'priority' => ['required', 'int'],
@@ -33,17 +36,12 @@ class HackernewsService {
             'category_id' => $category->id,
         ]);
 
-        // Check that the connection is valid
-        $rest = new REST();
-        $url = 'https://hn.algolia.com/api/v1/users/' . $val['username'];
-        $result = $rest->get($url);
-
-        if(!isset($result->karma)) {
-            $res->error('There was a problem accessing the data. Please confirm all the information is entered correctly. If you continue to have issues, please contact ' . ao()->env('APP_NAME') . ' support.');
-        }
+        $result = self::parseCalculation($req->user_id, $val['period']);
 
         $data = [];
-        $data['username'] = $val['username'];
+        $data['period'] = $val['period'];
+        // Used because the directory has a dash which cannot be processed by the TrackingService::update() method
+        $data['file'] = 'app/services/trackings/metricriv-calculations/MetricRivCalculationsDaysPeriodService.php';
         $data['number'] = -1;
         $data['color'] = 'blue';
 
@@ -51,11 +49,10 @@ class HackernewsService {
         $args['user_id'] = $req->user_id;
         $args['number_id'] = $number->id;
         $args['collection_id'] = $req->params['collection_id'];
-        //$args['connection_id'] = $connection->id;
         $args['connection_id'] = 0;
         $args['name'] = $val['name'];
         $args['status'] = 'initial';
-        $args['method'] = json_encode(['app\services\trackings\HackernewsService', 'totalKarmaUpdate']);
+        $args['method'] = json_encode(['app\services\trackings\metricriv_calculations\MetricRivCalculationsDaysPeriodService', 'daysPeriodUpdate']);
         $args['check_interval'] = $val['interval'];
         $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();
@@ -70,19 +67,37 @@ class HackernewsService {
 
         $res->success('You have successfully added a new number to track.', '/collection/view/' . $req->params['collection_id']);
     }
-    public static function totalKarmaUpdate($tracking, $manual_result = null) {
+    public static function parseCalculation($user_id, $period) {
+        $output = -1;
+
+        $timezone = Setting::get($user_id, 'timezone');
+
+        $tz = new DateTimeZone($timezone);
+        $dt = new DateTime('now', $tz);
+
+        if($period == 'month') {
+            $output = $dt->format('t');
+        } elseif($period == 'year') {
+            if($dt->format('L')) {
+                $output = 366;
+            } else {
+                $output = 365;
+            }
+        }
+
+        return $output;
+    }
+    public static function daysPeriodUpdate($tracking, $manual_result = null) {
         if($manual_result) {
             $result = $manual_result;
         } else {
-            $rest = new REST();
-            $url = 'https://hn.algolia.com/api/v1/users/' . $tracking->data['values']['username'];
-            $result = $rest->get($url);
+            $result = self::parseCalculation($tracking->data['user_id'], $tracking->data['values']['period']);
         }
 
-        if(!isset($result->karma)) {
+        if($result == -1) {
             $tracking->failData();
         } else {
-            $tracking->updateData($result->karma);
+            $tracking->updateData($result);
         }
     }
 }

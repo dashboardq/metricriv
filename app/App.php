@@ -41,6 +41,8 @@ class App {
         foreach($parts as $i => $word) {
             if($word == 'Numbersq') {
                 $parts[$i] = 'NumbersQ';
+            } elseif($word == 'Metricriv') {
+                $parts[$i] = 'MetricRiv';
             }
         }
 

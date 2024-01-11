@@ -1,10 +1,11 @@
         <footer>
             <div class="container">
-                <p>&copy; <?php echo date('Y'); ?> NumbersQ</p>
+                <p>&copy; <?php echo date('Y'); ?> <?php esc(ao()->env('APP_NAME')) ?></p>
                 <nav>
                     <ul>
                         <li><a href="/terms">Terms of Service</a></li>
                         <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="https://github.com/dashboardq/metricriv">Open Source Code</a></li>
                     </ul>
                 </nav>
             </div>

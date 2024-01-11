@@ -23,8 +23,8 @@
             <section class="page">
                 <p>Please choose a username. The username will be used to access your numbers. For example:</p>
                 <ul>
-                    <li>https://www.numbersq.com/<strong>Your_Username_Here</strong> (Your public numbers)</li>
-                    <li>https://www.numbersq.com/<strong>Your_Username_Here</strong>/private (Your private numbers)</li>
+                    <li><?php esc(ao()->env('APP_SITE')) ?><strong>Your_Username_Here</strong> (Your public numbers)</li>
+                    <li><?php esc(ao()->env('APP_SITE')) ?><strong>Your_Username_Here</strong>/private (Your private numbers)</li>
                 </ul>
 
                 <?php $res->html->messages(); ?>

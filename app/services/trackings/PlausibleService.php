@@ -41,9 +41,9 @@ class PlausibleService {
         $result = $rest->get($url);
         if(isset($result->error)) {
             // The error does not branch out based on API Key or incorrect site. It is the same error returned by Plausible.
-            $res->error('There was a problem accessing the Plausible API. Please confirm that your API Key and Site name were entered correctly. If you continue to have issues, please contact NumbersQ support.');
+            $res->error('There was a problem accessing the Plausible API. Please confirm that your API Key and Site name were entered correctly. If you continue to have issues, please contact ' . ao()->env('APP_NAME') . ' support.');
         } elseif(!isset($result->results->visitors->value)) {
-            $res->error('There was a problem accessing the Plausible API. Please confirm that your API Key and Site name were entered correctly. If you continue to have issues, please contact NumbersQ support.');
+            $res->error('There was a problem accessing the Plausible API. Please confirm that your API Key and Site name were entered correctly. If you continue to have issues, please contact ' . ao()->env('APP_NAME') . ' support.');
         }
 
 

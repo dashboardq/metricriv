@@ -1,6 +1,6 @@
         <header class="app">
             <div class="container">
-                <h1><a href="/">NumbersQ</a></h1>
+                <h1><a href="/"><?php esc(ao()->env('APP_NAME')) ?></a></h1>
                 <nav>
                     <ul>
                         <?php foreach($follows as $follow): ?>
@@ -10,7 +10,7 @@
                     <ul>
                         <?php ao()->hook('app_header_app_nav_first_child'); ?>
                         <li><a href="/collections">Collections</a></li>
-                        <li><a href="/number/add">Add Number</a></li>
+                        <li><a href="/number/add">Add Metric</a></li>
                         <li><a href="/connections">Connections</a></li>
                         <li><a href="/viewers">Viewers</a></li>
                         <li><a href="/settings">Settings</a></li>

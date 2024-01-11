@@ -6,26 +6,26 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>NumbersQ.com - Fast Dashboard For Your Most Important Business Numbers</title>
+        <title>MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers</title>
 
                 <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
                 <link href="/assets/css/normalize.css" rel="stylesheet">
                 <link href="/assets/css/base.css" rel="stylesheet">
                 <link href="/assets/css/main.css" rel="stylesheet">
         
-                <meta property="og:title" content="NumbersQ.com - Fast Dashboard For Your Most Important Business Numbers" />
-                <meta property="og:description" content="Be able to get a quick overview of your important data at any moment. NumbersQ pulls in data from your online services and displays the most important information." />
+                <meta property="og:title" content="MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers" />
+                <meta property="og:description" content="Be able to get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services and displays the most important information." />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://www.numbersq.com" />
-                <meta property="og:image" itemprop="image" content="https://www.numbersq.com/assets/images/share_1200x630.png" />
-                <meta property="og:image:secure_url" itemprop="image" content="https://www.numbersq.com/assets/images/share_1200x630.png" />
+                <meta property="og:url" content="https://www.metricriv.com" />
+                <meta property="og:image" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png" />
+                <meta property="og:image:secure_url" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
         
-                <link itemprop="thumbnailUrl" href="https://www.numbersq.com/assets/images/share_1200x630.png"> 
+                <link itemprop="thumbnailUrl" href="https://www.metricriv.com/assets/images/share_1200x630.png"> 
         
                 <meta name="twitter:card" content="summary_large_image">
-                <meta name="twitter:image" content="https://www.numbersq.com/assets/images/share_1200x600.png">
+                <meta name="twitter:image" content="https://www.metricriv.com/assets/images/share_1200x600.png">
         <link href="/assets/css/home.css" rel="stylesheet">
     </head>
     <body class="<?php $res->pathClass(); ?>">
@@ -35,13 +35,13 @@
             <section class="welcome">
                 <div class="container">
                     <div>
-                        <h1>Do you know your business &amp; marketing numbers? Can you find them in less than 30 seconds?</h1>
+                        <h1>Do you know your business &amp; marketing metrics? Can you find them in less than 30 seconds?</h1>
 <?php /*
                         <h1>Track Important Numbers<br>
                             With a fast dashboard!
                         </h1>
 */ ?>
-                        <p>Be able to get a quick overview of your important data at any moment. NumbersQ pulls in data from your online services and displays the most important information. </p>
+                        <p>Be able to get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services and displays the most important information. </p>
                         <p>
                         <a href="/login" class="button -emphasize">Get Started</a>
                         <a href="/agraddy" class="button">View Live Example</a>
@@ -50,7 +50,7 @@
                     <div class="preview_box">
                         <div class="preview">
                             <img class="phone" src="/assets/images/phone.svg" alt="Phone Outline" />
-                            <img class="screenshot" src="/assets/images/screenshot.png" alt="Screenshot" />
+                            <img class="screenshot" src="/assets/images/screenshot2.png" alt="Screenshot" />
                         </div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                     <div class="questions">
                         <div class="question advertising">
                             <h3>Do you know how much you spent in advertising this month?</h3>
-                            <p>You will probably need to login to an account and pull the numbers. If you have multiple advertising accounts, you would need to login to multiple accounts. NumbersQ can get you a total of all your advertising numbers.</p>
+                            <p>You will probably need to login to an account and pull the numbers. If you have multiple advertising accounts, you would need to login to multiple accounts. MetricRiv can get you a total of all your advertising numbers.</p>
                         </div>
                         <div class="question revenue">
                             <h3>Are revenues up or down this year?</h3>
@@ -216,19 +216,19 @@
                         </div>
                         <div class="question shipping">
                             <h3>How much are you spending in total on shipping costs?</h3>
-                            <p>Shipping costs are a variable expense that can be difficult to track. NumbersQ can track your shipping numbers to make sure there are no surprises.</p>
+                            <p>Shipping costs are a variable expense that can be difficult to track. MetricRiv can track your shipping numbers to make sure there are no surprises.</p>
                         </div>
                         <div class="question churn">
                             <h3>Do you know your churn rate?</h3>
-                            <p>There are all kinds of metrics that can be tracked for your business. Use NumbersQ to make sure your customers are happy and satisfied with your services.</p>
+                            <p>There are all kinds of metrics that can be tracked for your business. Use MetricRiv to make sure your customers are happy and satisfied with your services.</p>
                         </div>
                         <div class="question visitors">
                             <h3>Do you know how many visitors your site had in the last 24 hours?</h3>
-                            <p>There are usually a few numbers that are really important to you but can be difficult to load in a slow app. NumbersQ can pull that number for you so that you can load it quickly at any time.</p>
+                            <p>There are usually a few numbers that are really important to you but can be difficult to load in a slow app. MetricRiv can pull that number for you so that you can load it quickly at any time.</p>
                         </div>
                         <div class="question communication">
                             <h3>Are valuable prospects falling through the cracks?</h3>
-                            <p>There are more and more ways to communicate: email, phone, chat, social media, message board forums, blog comments, etc. NumbersQ can give you the numbers to help track interactions.</p>
+                            <p>There are more and more ways to communicate: email, phone, chat, social media, message board forums, blog comments, etc. MetricRiv can give you the numbers to help track interactions.</p>
                         </div>
                         <div class="question problems">
                             <h3>If your site had errors, how long would it take for you to know?</h3>
@@ -236,11 +236,11 @@
                         </div>
                         <div class="question reports">
                             <h3>Are you tired of looking through emailed PDF reports?</h3>
-                            <p>Email is important but depending how organized you are, it is really easy to miss important information. Instead of having the information emailed in a PDF, have the numbers loaded into NumberQ.</p>
+                            <p>Email is important but depending how organized you are, it is really easy to miss important information. Instead of having the information emailed in a PDF, have the numbers loaded into MetricRiv.</p>
                         </div>
                         <div class="question speed">
                             <h3>Is your site slowing down over time?</h3>
-                            <p>How quickly your website loads is a very important factor in your success. Tracking these numbers can be difficult but NumbersQ makes it easy to pull out even the most complex numbers.</p>
+                            <p>How quickly your website loads is a very important factor in your success. Tracking these numbers can be difficult but MetricRiv makes it easy to pull out even the most complex numbers.</p>
                         </div>
                         <div class="question conversions">
                             <h3>Are your landing pages successful? What is your conversion rate?</h3>
@@ -248,7 +248,7 @@
                         </div>
                         <div class="question overtime">
                             <h3>Are you spending more than you need to for overtime?</h3>
-                            <p>Paying for overtime can get expensive. Have NumbersQ get your overtime numbers to make sure your employee schedules are being managed efficiently.</p>
+                            <p>Paying for overtime can get expensive. Have MetricRiv get your overtime numbers to make sure your employee schedules are being managed efficiently.</p>
                         </div>
                         <div class="question idea">
                             <h3>Have an idea for a number you want to track but don't see it here?</h3>
@@ -262,14 +262,14 @@
                 <p>While running a marketing campaign, I needed to know daily advertising costs. Most business dashboards were too complex. I just wanted something simple that loaded fast. I couldn't find a service that did what I wanted so I decided to build it myself. I hope you find it useful too!</p>
                 <div class="bio">
                     <img src="/assets/images/profile_medium_scaled.jpg" alt="Profile Image of Anthony Graddy" />
-                    <cite><strong>Anthony Graddy</strong><br>Founder of NumbersQ</cite>
+                    <cite><strong>Anthony Graddy</strong><br>Founder of MetricRiv</cite>
                 </div>
             </section>
             <!--
             <section class="testimonials">
                 <img src="/assets/images/profile_medium_scaled.jpg" alt="Profile Image of Anthony Graddy" />
                 <p>While running a marketing campaign, I needed to know daily advertising costs. Most business dashboards were too complex. I just wanted something simple that loaded fast. I couldn't find a service that did what I wanted so I decided to build it myself. I hope you find it useful too!</p>
-                <cite><strong>Anthony Graddy</strong>, Founder of <strong>NumbersQ</strong></cite>
+                <cite><strong>Anthony Graddy</strong>, Founder of <strong>MetricRiv</strong></cite>
             </section>
             -->
             <section class="services">
@@ -282,7 +282,9 @@
                     <li class="logo facebook">Facebook Ads</li>
                     <li class="logo github">Github</li>
                     <li class="logo gmail">Gmail</li>
+                    <?php /*
                     <li class="logo google_ads">Google Ads</li>
+                     */ ?>
                     <li class="logo google_analytics">Google Analytics</li>
                     <li class="logo google_calendar">Google Calendar</li>
                     <li class="logo google_forms">Google Forms</li>
@@ -299,16 +301,18 @@
                     <li class="logo slack">Slack</li>
                     <li class="logo stripe">Stripe</li>
                     <li class="logo twilio">Twilio</li>
+                    <?php /*
                     <li class="logo twitter">Twitter</li>
+                     */ ?>
                     <li class="logo woocommerce">WooCommerce</li>
                     <li class="logo wordpress">WordPress</li>
                     <li class="logo youtube">YouTube</li>
                 </ul>
-                <h2>This is a small list of what is possible. Don't see your service, have a custom service, or have a number in mind but don't know where to pull the data? Just <a href="/contact">get in touch</a>.</h2>
+                <h2>This is a small list of what is possible. Some of these services may require manual set up. Don't see your service, have a custom service, or have a number in mind but don't know where to pull the data? Just <a href="/contact">get in touch</a>.</h2>
             </section>
             <section class="ready">
-                <h2>Have A Number You Want To Track?</h2>
-                <p>Get started tracking your numbers and bring greater clarity to your daily decisions.</p>
+                <h2>Have A Metric You Want To Track?</h2>
+                <p>Get started tracking your metrics and bring greater clarity to your daily decisions.</p>
                 <p><a href="/login" class="button button_invert">Get Started</a>
             </section>
         </main>

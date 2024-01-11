@@ -1,6 +1,6 @@
         <header>
             <div class="container">
-                <h1><a href="/">NumbersQ</a></h1>
+                <h1><a href="/"><?php esc(ao()->env('APP_NAME')) ?></a></h1>
                 <nav>
                     <ul>
                         <li><a href="/">Home</a></li>

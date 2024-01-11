@@ -13,7 +13,7 @@ if(is_file(__DIR__ . DIRECTORY_SEPARATOR . '.keys.php')) {
 // No closing slash on the directories or urls.
 return [
     // App
-    'APP_NAME' => 'NumbersQ', 
+    'APP_NAME' => 'MetricRiv', 
     'APP_ENV' => 'dev',
     'APP_HOST' => 'www.example.com',
     'APP_SITE' => 'https://www.example.com',
@@ -96,7 +96,7 @@ return [
     'SCREENSHOTONE_URL' => 'https://api.screenshotone.com',
     'SCREENSHOTONE_API_KEY' => 'PUT_YOUR_API_KEY_HERE',
 
-    'GOOGLE_ANALYTICS_CONFIG' => 'GOOGLE_APPLICATION_CREDENTIALS=/var/www/numbersq/.path-to-the-json-credentials-downloaded-from-google.json',
+    'GOOGLE_ANALYTICS_CONFIG' => 'GOOGLE_APPLICATION_CREDENTIALS=/var/www/metricriv/.path-to-the-json-credentials-downloaded-from-google.json',
     'GOOGLE_ANALYTICS_EMAIL' => 'email-provided-by-api@google.com',
 ];
 

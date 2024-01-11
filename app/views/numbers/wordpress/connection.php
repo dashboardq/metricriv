@@ -22,7 +22,7 @@
 
             <section class="page">
                 <p class="desc"><a href="<?php esc($back); ?>">&lt; Back</a></p>
-                <p>Please connect your account with WordPress below by entering your API key (you will need to install the WordPress NumbersQ plugin).</p>
+                <p>Please connect your account with WordPress below by entering your API key (you will need to install the WordPress NumbersQ plugin) (MetricRiv used to be called NumbersQ).</p>
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">

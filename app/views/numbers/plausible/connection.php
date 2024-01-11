@@ -22,7 +22,7 @@
 
             <section class="page">
                 <p class="desc"><a href="<?php esc($back); ?>">&lt; Back</a></p>
-                <p>On the <a href="https://plausible.io/settings">Plausible settings</a> page, create a new API key (you can name it "NumbersQ") and then submit it below.</p>
+                <p>On the <a href="https://plausible.io/settings">Plausible settings</a> page, create a new API key (you can name it "<?php esc(ao()->env('APP_NAME')) ?>") and then submit it below.</p>
                 <?php $res->html->messages(); ?>
 
 				<form method="POST">

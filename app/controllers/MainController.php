@@ -10,7 +10,7 @@ use mavoc\core\Email;
 class MainController {
     public function home($req, $res) {
         //$res->view('home');
-        return ['title' => 'NumbersQ.com - Fast Dashboard For Your Most Important Business Numbers'];
+        return ['title' => 'MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers'];
     }
 
     public function pricing($req, $res) {
@@ -46,6 +46,6 @@ class MainController {
         $email->message($val['message']);
         $email->send();
 
-        $res->success('Thank you, NumbersQ is ran by one person and I do my best to respond to all legitimate messages within 24-48 hours. Thanks, Anthony Graddy');
+        $res->success('Thank you, MetricRiv is ran by one person and I do my best to respond to all legitimate messages within 24-48 hours. Thanks, Anthony Graddy');
     }
 }

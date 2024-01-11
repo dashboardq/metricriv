@@ -42,7 +42,7 @@ class GithubService {
         $url = 'https://api.github.com/notifications?per_page=1';
         list($headers, $result) = $rest->get($url, [], 'headers,array');
         if(isset($result->error)) {
-            $res->error('There was a problem accessing the API. If you continue to have issues, please contact NumbersQ support.');
+            $res->error('There was a problem accessing the API. If you continue to have issues, please contact ' . ao()->env('APP_NAME') . ' support.');
         }
 
         $total = self::parseTotal($headers['link'] ?? '', $result);

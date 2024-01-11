@@ -24,7 +24,7 @@ class {{class}}ConnectionService {
         // Need to check the state against session data.
         $state = $req->query['state'];
         if(ao()->session->data[strtolower(self::$SERVICE) . '_state'] != $state) {
-            $res->error('There was a problem with the login. Please try again and if the problem happens again, please contact NumbersQ support.', ao()->env('APP_PRIVATE_HOME'));
+            $res->error('There was a problem with the login. Please try again and if the problem happens again, please contact ' . ao()->env('APP_NAME') . ' support.', ao()->env('APP_PRIVATE_HOME'));
         }
 
         $rest = new REST();

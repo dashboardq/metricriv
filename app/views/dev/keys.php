@@ -4,7 +4,7 @@ $content = <<<PHP
 <?php
 
 // This is a key file generation page. Keys are used for encrypting data in the database. If you are setting up 
-// NumbersQ, please follow the instructions below.
+// MetricRiv, please follow the instructions below.
 //
 // Instructions For Set Up: 
 //   1. Save this file as .keys.php to the main directory of the project.
@@ -19,7 +19,7 @@ $content = <<<PHP
 //      some systems will hide those files in a normal file browser. If you are not seeing your saved file on 
 //      your system, you may need to turn on a setting in your directory viewer called something like 
 //      "Show hidden files" to actually see the file.
-//   4. Once you have NumbersQ set up on your system, do not change these values, otherwise all your data will be 
+//   4. Once you have MetricRiv set up on your system, do not change these values, otherwise all your data will be 
 //      lost. Changing the key values is outside the scope of these instructions, but the basic steps are to add 
 //      new values below (not replace, add - something like: CONNECTIONS_2). Once the new values are in place, you 
 //      then want to update the data in your database to use the new values.
