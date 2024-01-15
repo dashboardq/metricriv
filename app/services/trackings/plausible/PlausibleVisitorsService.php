@@ -108,6 +108,7 @@ class PlausibleVisitorsService {
     }
 
     public static function callVisitors($site, $connection, $user_id, $range, $ago) {
+        // Use the UTC timezone for plausible
         $dates = ao()->app->getDates($user_id, $range, $ago, 'Y-m-d', $user_id);
 
         $rest = new REST($connection->data['values']['api_key']);

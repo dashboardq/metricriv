@@ -110,6 +110,8 @@ class App {
             if($dt->format('l') != $week_start) {
                 $dt->modify('previous ' . $week_start);
             }   
+        } elseif($range[0] == 'all') {
+            $dt->setDate(2000, 1, 1);
         }  
 
         if($ago[0] != 'now') {
@@ -171,8 +173,14 @@ class App {
             }   
         }   
 
-        // Because the date search is inclusive, subtract one second
-        $dt->modify('-1 second');
+        if($range[0] == 'all') {
+            $dt = new DateTime('now', $tz);
+            // Right now only accepting y, m, w, d (others included for future use)
+            $dt->setTime(23, 59, 59);
+        } else {
+            // Because the date search is inclusive, subtract one second
+            $dt->modify('-1 second');
+        }
         $end = $dt->format('Y-m-d H:i:s');
 
         $start_dt = new DateTime($start, $tz);
