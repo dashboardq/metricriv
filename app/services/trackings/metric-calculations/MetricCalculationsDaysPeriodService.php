@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services\trackings\metricriv_calculations;
+namespace app\services\trackings\metric_calculations;
 
 use app\services\TrackingService;
 
@@ -16,7 +16,7 @@ use mavoc\core\REST;
 use DateTime;
 use DateTimeZone;
 
-class MetricRivCalculationsDaysPeriodService {
+class MetricCalculationsDaysPeriodService {
     public static function daysPeriod($req, $res) {
         $intervals = ['1 hour', '5 minutes', 'static'];
         $intervals = ao()->hook('app_intervals', $intervals);
@@ -41,7 +41,7 @@ class MetricRivCalculationsDaysPeriodService {
         $data = [];
         $data['period'] = $val['period'];
         // Used because the directory has a dash which cannot be processed by the TrackingService::update() method
-        $data['file'] = 'app/services/trackings/metricriv-calculations/MetricRivCalculationsDaysPeriodService.php';
+        $data['file'] = 'app/services/trackings/metric-calculations/MetricCalculationsDaysPeriodService.php';
         $data['number'] = -1;
         $data['color'] = 'blue';
 
@@ -52,7 +52,7 @@ class MetricRivCalculationsDaysPeriodService {
         $args['connection_id'] = 0;
         $args['name'] = $val['name'];
         $args['status'] = 'initial';
-        $args['method'] = json_encode(['app\services\trackings\metricriv_calculations\MetricRivCalculationsDaysPeriodService', 'daysPeriodUpdate']);
+        $args['method'] = json_encode(['app\services\trackings\metric_calculations\MetricCalculationsDaysPeriodService', 'daysPeriodUpdate']);
         $args['check_interval'] = $val['interval'];
         $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();

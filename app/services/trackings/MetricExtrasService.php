@@ -14,7 +14,7 @@ use mavoc\core\REST;
 
 use DateTime;
 
-class MetricRivExtrasService {
+class MetricExtrasService {
     public static function header($req, $res) {
         $val = $req->val('data', [
             'header' => ['required'],

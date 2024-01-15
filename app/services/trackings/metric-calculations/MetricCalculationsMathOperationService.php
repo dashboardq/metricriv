@@ -1,6 +1,6 @@
 <?php
 
-namespace app\services\trackings\metricriv_calculations;
+namespace app\services\trackings\metric_calculations;
 
 use app\services\TrackingService;
 
@@ -10,21 +10,21 @@ use app\models\Connection;
 use app\models\Number;
 use app\models\Tracking;
 
-use app\services\extras\MetricRivCalculationsExtraService;
+use app\services\extras\MetricCalculationsExtraService;
 
 use mavoc\core\REST;
 
 use DateTime;
 
-class MetricRivCalculationsMathOperationService {
+class MetricCalculationsMathOperationService {
     public static function mathOperation($req, $res) {
         $intervals = ['1 hour', '5 minutes', 'static'];
         $intervals = ao()->hook('app_intervals', $intervals);
 
-        $trackings = MetricRivCalculationsExtraService::trackings($req->params['collection_id'], 'id');
-        $operations = MetricRivCalculationsExtraService::operations();
-        $decimals = MetricRivCalculationsExtraService::decimals();
-        $formats = MetricRivCalculationsExtraService::formats();
+        $trackings = MetricCalculationsExtraService::trackings($req->params['collection_id'], 'id');
+        $operations = MetricCalculationsExtraService::operations();
+        $decimals = MetricCalculationsExtraService::decimals();
+        $formats = MetricCalculationsExtraService::formats();
 
         $val = $req->val('data', [
             'number_1' => ['required', ['in' => $trackings]],
@@ -56,7 +56,7 @@ class MetricRivCalculationsMathOperationService {
         $data['decimal'] = $val['decimal'];
         $data['format'] = $val['format'];
         // Used because the directory has a dash which cannot be processed by the TrackingService::update() method
-        $data['file'] = 'app/services/trackings/metricriv-calculations/MetricRivCalculationsMathOperationService.php';
+        $data['file'] = 'app/services/trackings/metric-calculations/MetricCalculationsMathOperationService.php';
         $data['number'] = -1;
         $data['color'] = 'blue';
 
@@ -67,7 +67,7 @@ class MetricRivCalculationsMathOperationService {
         $args['connection_id'] = 0;
         $args['name'] = $val['name'];
         $args['status'] = 'initial';
-        $args['method'] = json_encode(['app\services\trackings\metricriv_calculations\MetricRivCalculationsMathOperationService', 'mathOperationUpdate']);
+        $args['method'] = json_encode(['app\services\trackings\metric_calculations\MetricCalculationsMathOperationService', 'mathOperationUpdate']);
         $args['check_interval'] = $val['interval'];
         $args['priority'] = $val['priority'];
         $args['next_check_at'] = new \DateTime();

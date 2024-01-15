@@ -14,7 +14,7 @@ use mavoc\core\REST;
 
 use DateTime;
 
-class MetricRivCalculationsService {
+class MetricCalculationsService {
     public static function fixed($req, $res) {
         $val = $req->val('data', [
             'name' => ['required'],

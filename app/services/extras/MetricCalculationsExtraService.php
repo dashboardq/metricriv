@@ -4,7 +4,7 @@ namespace app\services\extras;
 
 use app\models\Tracking;
 
-class MetricRivCalculationsExtraService {
+class MetricCalculationsExtraService {
     public static function main($req, $res, $category, $number, $connection) {
         $decimals = self::decimals();
         $formats = self::formats();
