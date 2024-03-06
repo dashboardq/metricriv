@@ -4,7 +4,7 @@
 
 An open source, MIT licensed number tracking tool built with a custom PHP MVC backend framework and [TACE](https://www.agraddy.com/introducing-tace) for front end development. It allows you to track your important business, marketing, professional, and personal  numbers in one place. If you would like to use the hosted version, it is available at [MetricRiv - Number Tracker](https://www.metricriv.com).
 
-![MetricRiv Screenshot](https://raw.githubusercontent.com/dashboardq/numbersq/main/public/assets/images/share_1200x630.png)
+![MetricRiv Screenshot](https://raw.githubusercontent.com/dashboardq/metricriv/main/public/assets/images/share_1200x630.png)
 
 ## Who
 MetricRiv is created by [Anthony Graddy](https://www.agraddy.com) as a part of the [12 Startups in 12 Months (Open Source Edition) challenge](https://www.agraddy.com/12-startups-in-12-months-open-source-edition). This is the 1st startup of the challenge. You can find all the details on how to install this tool on your own server below in the [How](#how) section.
@@ -54,7 +54,7 @@ Not required:
 cd ~
 
 # Clone the repo
-git clone https://github.com/dashboardq/numbersq.git metricriv
+git clone https://github.com/dashboardq/metricriv.git metricriv
 cd metricriv
 
 # Set up MySQL database
@@ -171,9 +171,9 @@ The main points are in bold. The other text is additional context if the bold te
     * **Password**
 
 7\. **Download the source code for MetricRiv**
-  * Go to this link, it should automatically start the download process: [MetricRiv Zip](https://github.com/dashboardq/numbersq/archive/refs/heads/main.zip).
+  * Go to this link, it should automatically start the download process: [MetricRiv Zip](https://github.com/dashboardq/metricriv/archive/refs/heads/main.zip).
 
-8\. **Unzip the numbersq-main.zip file you just downloaded**
+8\. **Unzip the metricriv-main.zip file you just downloaded**
   * If you are not sure how to unzip a file, try right clicking the file and look for an option to unzip. If that is not available, try searching for instructions to unzip a file online. Different computer operating systems have different ways to unzip a file.
 
 9\. **Create and open the setting file**
@@ -219,7 +219,7 @@ The main points are in bold. The other text is additional context if the bold te
   * You should be in the public_html directory.
   * **Make sure you can see hidden files**, if you are using FileZilla turn on this option: Server > Force showing hidden files
   * If your SFTP program has a left side and right side pane (using other types of SFTP programs will be slightly different):
-    * On the left side, navigate to the directory where you unzipped the numbersq-main.zip file containing the MetricRiv code including the `.env.php` file you edited in step 10.
+    * On the left side, navigate to the directory where you unzipped the metricriv-main.zip file containing the MetricRiv code including the `.env.php` file you edited in step 10.
     * On the right side, you should be in the Cloudways public_html directory.
   * Upload all the files from the left side to the right side by selecting them all and dragging them to the right side.
 
@@ -237,7 +237,7 @@ The main points are in bold. The other text is additional context if the bold te
 18\. **Create an account on the login page** 
   * Visit the URL again in your browser for the new MetricRiv site.
   * Go to the login page and register a new user. 
-  * Congratulations! You should now have MetricRiv fully installed on your server. [MetricRiv.com](https://www.metricriv.com) has a generous free plan so you can compare the functionality of the free plan with the functionailty on the installation on your Cloudways server.
+  * Congratulations! You should now have MetricRiv fully installed on your server. [MetricRiv.com](https://www.metricriv.com) has a generous free plan so you can compare the functionality of the free plan with the functionality on the installation on your Cloudways server.
 
 
 ## FAQ
@@ -295,7 +295,7 @@ You can easily get an API key for ScreenshotOne by [signing up](https://app.scre
 
 ### What if I run into any bugs, how do I report them?
 
-For now, if you run into any bugs please either add them to the [Github Issue Tracker](https://github.com/dashboardq/numbersq/issues) or to the [DashboardQ Support System](https://www.dashboardq.com/support).
+For now, if you run into any bugs please either add them to the [Github Issue Tracker](https://github.com/dashboardq/metricriv/issues) or to the [DashboardQ Support System](https://www.dashboardq.com/support).
 
 At some point, I may move to a different issue tracker, but for now, either of those should work.
 

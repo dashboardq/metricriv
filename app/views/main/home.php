@@ -6,14 +6,14 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers</title>
+        <title>MetricRiv.com - Fast Dashboard For Your Most Important Business Metrics</title>
 
                 <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
                 <link href="/assets/css/normalize.css" rel="stylesheet">
                 <link href="/assets/css/base.css" rel="stylesheet">
                 <link href="/assets/css/main.css" rel="stylesheet">
         
-                <meta property="og:title" content="MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers" />
+                <meta property="og:title" content="MetricRiv.com - Fast Dashboard For Your Most Important Business Metrics" />
                 <meta property="og:description" content="Be able to get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services and displays the most important information." />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://www.metricriv.com" />
@@ -286,19 +286,25 @@
                     <li class="logo google_ads">Google Ads</li>
                      */ ?>
                     <li class="logo google_analytics">Google Analytics</li>
+                    <?php /*
                     <li class="logo google_calendar">Google Calendar</li>
                     <li class="logo google_forms">Google Forms</li>
                     <li class="logo google_sheets">Google Sheets</li>
                     <li class="logo gravity_forms">Gravity Forms</li>
+                     */ ?>
                     <li class="logo mailchimp">Mailchimp</li>
                     <li class="logo mailgun">Mailgun</li>
+                    <?php /*
                     <li class="logo mysql">MySQL</li>
                     <li class="logo ninja_forms">Ninja Forms</li>
+                     */ ?>
                     <li class="logo paypal">PayPal</li>
                     <li class="logo quick_books">Quick Books</li>
                     <li class="logo sendgrid">Sendgrid</li>
                     <li class="logo shopify">Shopify</li>
+                    <?php /*
                     <li class="logo slack">Slack</li>
+                     */ ?>
                     <li class="logo stripe">Stripe</li>
                     <li class="logo twilio">Twilio</li>
                     <?php /*
@@ -306,7 +312,9 @@
                      */ ?>
                     <li class="logo woocommerce">WooCommerce</li>
                     <li class="logo wordpress">WordPress</li>
+                    <?php /*
                     <li class="logo youtube">YouTube</li>
+                     */ ?>
                 </ul>
                 <h2>This is a small list of what is possible. Some of these services may require manual set up. Don't see your service, have a custom service, or have a number in mind but don't know where to pull the data? Just <a href="/contact">get in touch</a>.</h2>
             </section>

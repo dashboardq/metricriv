@@ -172,7 +172,7 @@ class WordpressService {
 
         $url = $scheme . '://' . $host . '/' . $path . '.php';
 
-        $url .= '?action=' . 'numbersq_data';
+        $url .= '?action=' . 'metricriv_data';
         $url .= '&key=' . urlencode($api_key);
         $url .= '&type=' . urlencode($type);
         if($range != 'all') {
@@ -185,6 +185,8 @@ class WordpressService {
             $url .= '&start=';
             $url .= '&end=';
         }
+
+        $url = ao()->hook('app_wp_parse_url', $url, $user_id);
 
         return $url;
     }

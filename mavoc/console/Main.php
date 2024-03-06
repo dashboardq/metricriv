@@ -4,7 +4,7 @@ namespace mavoc\console;
 
 if(is_file('vendor/autoload.php')) {
     require 'vendor/autoload.php';
-} 
+}
 
 use app\App;
 
