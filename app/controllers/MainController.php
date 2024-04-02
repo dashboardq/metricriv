@@ -10,7 +10,7 @@ use mavoc\core\Email;
 class MainController {
     public function home($req, $res) {
         //$res->view('home');
-        return ['title' => 'MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers'];
+        return ['title' => 'MetricRiv.com - Fast Dashboard For Your Most Important Business Numbers', 'cache_date' => '2024-04-02'];
     }
 
     public function pricing($req, $res) {

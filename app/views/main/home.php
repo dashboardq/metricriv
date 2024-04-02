@@ -6,27 +6,27 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>MetricRiv.com - Fast Dashboard For Your Most Important Business Metrics</title>
+        <title>MetricRiv.com - All your business metrics on one page</title>
 
                 <link rel="preload" href="/assets/fonts/feather.woff2" as="font" crossorigin="anonymous" />
-                <link href="/assets/css/normalize.css" rel="stylesheet">
-                <link href="/assets/css/base.css" rel="stylesheet">
-                <link href="/assets/css/main.css" rel="stylesheet">
+                <link href="/assets/css/normalize.css?cache-date=<?php esc($cache_date); ?>" rel="stylesheet">
+                <link href="/assets/css/base.css?cache-date=<?php esc($cache_date); ?>" rel="stylesheet">
+                <link href="/assets/css/main.css?cache-date=<?php esc($cache_date); ?>" rel="stylesheet">
         
-                <meta property="og:title" content="MetricRiv.com - Fast Dashboard For Your Most Important Business Metrics" />
-                <meta property="og:description" content="Be able to get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services and displays the most important information." />
+                <meta property="og:title" content="MetricRiv.com - All your business metrics on one page" />
+                <meta property="og:description" content="Get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services, business info, and other public data so you can get quickly see your most important information." />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://www.metricriv.com" />
-                <meta property="og:image" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png" />
-                <meta property="og:image:secure_url" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png" />
+                <meta property="og:image" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png?cache-date=<?php esc($cache_date); ?>" />
+                <meta property="og:image:secure_url" itemprop="image" content="https://www.metricriv.com/assets/images/share_1200x630.png?cache-date=<?php esc($cache_date); ?>" />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
         
-                <link itemprop="thumbnailUrl" href="https://www.metricriv.com/assets/images/share_1200x630.png"> 
+                <link itemprop="thumbnailUrl" href="https://www.metricriv.com/assets/images/share_1200x630.png?cache-date=<?php esc($cache_date); ?>"> 
         
                 <meta name="twitter:card" content="summary_large_image">
-                <meta name="twitter:image" content="https://www.metricriv.com/assets/images/share_1200x600.png">
-        <link href="/assets/css/home.css" rel="stylesheet">
+                <meta name="twitter:image" content="https://www.metricriv.com/assets/images/share_1200x600.png?cache-date=<?php esc($cache_date); ?>">
+        <link href="/assets/css/home.css?cache-date=<?php esc($cache_date); ?>" rel="stylesheet">
     </head>
     <body class="<?php $res->pathClass(); ?>">
         <?php $res->partial('header'); ?>
@@ -35,13 +35,14 @@
             <section class="welcome">
                 <div class="container">
                     <div>
-                        <h1>Do you know your business &amp; marketing metrics? Can you find them in less than 30 seconds?</h1>
 <?php /*
+                        <h1>Do you know your business &amp; marketing metrics? Can you find them in less than 30 seconds?</h1>
                         <h1>Track Important Numbers<br>
                             With a fast dashboard!
                         </h1>
 */ ?>
-                        <p>Be able to get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services and displays the most important information. </p>
+                        <h1>All your important business metrics on one page.</h1>
+                        <p>Get a quick overview of your important data at any moment. MetricRiv pulls in data from your online services, business info, and other public data so you can quickly see your most important information. </p>
                         <p>
                         <a href="/login" class="button -emphasize">Get Started</a>
                         <a href="/agraddy" class="button">View Live Example</a>
@@ -57,7 +58,7 @@
             </section>
             <section class="details">
                         <h2>Always have answers to your most important questions.
-                            <br>You choose the numbers that you want to see.</h2>
+                            <br>You choose the metrics that you want to see.</h2>
                 <div class="container">
                     <div class="numbers">
                         <div class="number">
@@ -275,6 +276,14 @@
             <section class="services">
                 <h2>If you use a service or an app that has an API or sends email reports, we can pull out your numbers. </h2>
                 <ul>
+                    <li class="logo github">Github</li>
+                    <li class="logo google_analytics">Google Analytics</li>
+                    <li class="logo mailchimp">Mailchimp</li>
+                    <li class="logo mysql">MySQL</li>
+                    <li class="logo stripe">Stripe</li>
+                    <li class="logo woocommerce">WooCommerce</li>
+                    <li class="logo wordpress">WordPress</li>
+<!--
                     <li class="logo amazon">Amazon</li>
                     <li class="logo braintree">Braintree</li>
                     <li class="logo constant_contact">Constant Contact</li>
@@ -315,8 +324,9 @@
                     <?php /*
                     <li class="logo youtube">YouTube</li>
                      */ ?>
+-->
                 </ul>
-                <h2>This is a small list of what is possible. Some of these services may require manual set up. Don't see your service, have a custom service, or have a number in mind but don't know where to pull the data? Just <a href="/contact">get in touch</a>.</h2>
+                <h2>This is a small list of what is possible. Don't see your service, have a custom service, or have a metric in mind but don't know where to pull the data? Just <a href="/contact">get in touch</a>.</h2>
             </section>
             <section class="ready">
                 <h2>Have A Metric You Want To Track?</h2>
