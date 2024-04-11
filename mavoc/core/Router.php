@@ -2,6 +2,7 @@
 
 namespace mavoc\core;
 
+use mavoc\core\Exception;
 use mavoc\core\Route;
 
 class Router {
@@ -12,6 +13,10 @@ class Router {
                 $path = $dir . DIRECTORY_SEPARATOR . $file;
                 $path = ao()->hook('ao_router_plugin_path', $path);
                 if(is_file($path)) {
+                    $parts = explode('/', $path);
+                    $last = array_pop($parts);
+                    $type = substr($last, 0, -4);
+                    Route::$type = $type;
                     require_once $path;
                 }
             }
@@ -24,6 +29,10 @@ class Router {
             $path = $dir . DIRECTORY_SEPARATOR . $file;
             $path = ao()->hook('ao_router_app_path', $path);
             if(is_file($path)) {
+                $parts = explode('/', $path);
+                $last = array_pop($parts);
+                $type = substr($last, 0, -4);
+                Route::$type = $type;
                 require_once $path;
             }
         }
@@ -70,12 +79,20 @@ class Router {
 
             if($req->method == 'GET') {
                 $routes = Route::$gets;
-                $restrictions = Route::$restrictions['GET'];
+                if(isset(Route::$restrictions['GET'])) {
+                    $restrictions = Route::$restrictions['GET'];
+                } else {
+                    $restrictions = [];
+                }
             } elseif($req->method == 'PATCH') {
                 $routes = Route::$patches;
             } elseif($req->method == 'POST') {
                 $routes = Route::$posts;
-                $restrictions = Route::$restrictions['POST'];
+                if(isset(Route::$restrictions['POST'])) {
+                    $restrictions = Route::$restrictions['POST'];
+                } else {
+                    $restrictions = [];
+                }
             } elseif($req->method == 'PUT') {
                 $routes = Route::$puts;
             } elseif($req->method == 'DELETE') {
@@ -103,20 +120,39 @@ class Router {
                 if(!$match && strpos($route, '{') !== false) {
                     //echo preg_replace('|{[^}/]*}|', '[a-zA-Z0-9]*', $trimmed_route);die;
                     // This is a bit complicated. Turning the route into a regex then checking against the path.
-                    $match = preg_match('|^' . preg_replace('|{[^}/]*}|', '[a-zA-Z0-9_-]*', $trimmed_route) . '$|', $trimmed_path);
+                    $match = preg_match('|^' . preg_replace('|{[^}/]*}|', '[a-zA-Z0-9_.-]*', $trimmed_route) . '$|', $trimmed_path);
                     if($match) {
                         $req->params = $this->parseParams($trimmed_route, $trimmed_path);
                     }
                 }
 
                 if($match) {
+                    $req->type = Route::$types[$route];
+                    $res->type = Route::$types[$route];
+                    if($req->session->type == 'api' && $req->type != $req->session->type) {
+                        throw new Exception('Attempting to use an API key on a non-API endpoint is not allowed. Only API endpoints can be called with an API key.', '', 401, 'json');
+                    }
+
                     // TODO: I don't like this current public/private set up but it works for now.
+                    // Probably need to change it to be more array based so different levels of 
+                    // private can be used ['admin', 'editor']
                     if($logged_in && isset($restrictions['public'][$route])) {
                         $res->redirect(ao()->env('APP_PRIVATE_HOME'));
                     }
                     if(!$logged_in && isset($restrictions['private'][$route])) {
-                        $req->session->data['login_redirect'] = $req->uri;
-                        $res->redirect(ao()->env('APP_PUBLIC_HOME'));
+                        if($req->type == 'api') {
+                            $res->error('The requested endpoint requires a valid API key.');
+                        } elseif($req->ajax) {
+                            $res->error('The request requires you to be logged in. Please reload the page and login at the top right.');
+                        } else {
+                            $req->session->data['login_redirect'] = $req->uri;
+                            $res->redirect(ao()->env('APP_PUBLIC_HOME'));
+                        }
+                    }
+                    if($logged_in && isset($restrictions['private'][$route])) {
+                        // This hook can be used to check if the user has the appropriate permission level.
+                        // $logged_in is the user_id
+                        ao()->hook('ao_router_logged_in_private', $logged_in, $req, $res);
                     }
 
                     $method = ao()->hook('ao_router_route_method', $method, $req, $res, $route);
@@ -163,15 +199,19 @@ class Router {
 
                         // Call the method on the controller
                         if(ao()->hook('ao_router_route_controller_call', true, $req, $res, $controller, $method_name)) {
-                            $vars = call_user_func([$controller, $method_name], $req, $res);
-                            $found = true;
+                            if(is_callable([$controller, $method_name])) {
+                                //$req->type = Route::$types[$route];
+                                //$res->type = Route::$types[$route];
+                                $vars = call_user_func([$controller, $method_name], $req, $res);
+                                $found = true;
 
-                            // Dynamically pick the view file.
-                            if($vars || is_array($vars)) {
-                                $view_dir = underscorify(str_replace('Controller', '', $class_name));
-                                $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
-                                if(!$view_found) {
-                                    $res->json($vars);
+                                // Dynamically pick the view file.
+                                if($vars || is_array($vars)) {
+                                    $view_dir = dashify(str_replace('Controller', '', $class_name));
+                                    $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
+                                    if(!$view_found) {
+                                        $res->json($vars);
+                                    }
                                 }
                             }
                         }
@@ -235,19 +275,23 @@ class Router {
 
                             // Call the method on the controller
                             if(ao()->hook('ao_router_route_controller_call_controller', true)) {
-                                if($use_generic) {
-                                    $vars = call_user_func([$controller, $method_name], $req, $res, $view);
-                                } else {
-                                    $vars = call_user_func([$controller, $method_name], $req, $res);
-                                }
-                                $found = true;
+                                if(is_callable([$controller, $method_name])) {
+                                    //$req->type = Route::$types[$route];
+                                    //$res->type = Route::$types[$route];
+                                    if($use_generic) {
+                                        $vars = call_user_func([$controller, $method_name], $req, $res, $view);
+                                    } else {
+                                        $vars = call_user_func([$controller, $method_name], $req, $res);
+                                    }
+                                    $found = true;
 
-                                // Dynamically pick the view file.
-                                if($vars || is_array($vars)) {
-                                    $view_dir = underscorify(str_replace('Controller', '', $class_name));
-                                    $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
-                                    if(!$view_found) {
-                                        $res->json($vars);
+                                    // Dynamically pick the view file.
+                                    if($vars || is_array($vars)) {
+                                        $view_dir = underscorify(str_replace('Controller', '', $class_name));
+                                        $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
+                                        if(!$view_found) {
+                                            $res->json($vars);
+                                        }
                                     }
                                 }
                             }
@@ -303,19 +347,23 @@ class Router {
 
                             // Call the method on the controller
                             if(ao()->hook('ao_router_route_controller_call_missing', true)) {
-                                if($use_generic) {
-                                    $vars = call_user_func([$controller, $method_name], $req, $res, $view);
-                                } else {
-                                    $vars = call_user_func([$controller, $method_name], $req, $res);
-                                }
-                                $found = true;
+                                if(is_callable([$controller, $method_name])) {
+                                    //$req->type = Route::$types[$route];
+                                    //$res->type = Route::$types[$route];
+                                    if($use_generic) {
+                                        $vars = call_user_func([$controller, $method_name], $req, $res, $view);
+                                    } else {
+                                        $vars = call_user_func([$controller, $method_name], $req, $res);
+                                    }
+                                    $found = true;
 
-                                // Dynamically pick the view file.
-                                if($vars || is_array($vars)) {
-                                    $view_dir = underscorify(str_replace('Controller', '', $class_name));
-                                    $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
-                                    if(!$view_found) {
-                                        $res->json($vars);
+                                    // Dynamically pick the view file.
+                                    if($vars || is_array($vars)) {
+                                        $view_dir = underscorify(str_replace('Controller', '', $class_name));
+                                        $view_found = $res->view($view_dir . '/' . dashify($method_name), $vars);
+                                        if(!$view_found) {
+                                            $res->json($vars);
+                                        }
                                     }
                                 }
                             }

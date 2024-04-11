@@ -179,7 +179,7 @@ class Tracking extends Model {
     public function parseJSON($input) {
         $data = json_decode($input, true);
         if(is_array($data)) {
-            if($this->data['user_id'] && isset($data['ago']) && isset($data['format'])) {
+            if(isset($this->data['user_id']) && $this->data['user_id'] && isset($data['ago']) && isset($data['format'])) {
                 // The $this->data['collection'] may not be available yet.
                 $collection = Collection::find($this->data['collection_id']);
                 $user_id = $collection->data['user_id'];

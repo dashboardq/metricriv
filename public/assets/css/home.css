@@ -293,6 +293,7 @@
     margin: 12px auto;
 }
 
+.logo.airtable:before { background: url(/assets/images/logos/airtable.svg) no-repeat; background-size: 55px 55px; }
 .logo.amazon:before { background: url(/assets/images/logos/amazon.png) no-repeat; background-size: 55px 55px; }
 .logo.braintree:before { background: url(/assets/images/logos/braintree.png) no-repeat; background-size: 55px 55px; }
 .logo.constant_contact:before { background: url(/assets/images/logos/constant_contact.png) no-repeat; background-size: 55px 55px; }

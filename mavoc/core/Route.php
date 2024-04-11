@@ -8,44 +8,48 @@ class Route {
     public static $puts = [];
     public static $patches = [];
     public static $deletes = [];
+    public static $types = [];
+    public static $type = 'web';
 
     // TODO: Don't really like the way I have restrictions set up but it will do for now.
     public static $restrictions = [];
 
-    public static function get($uri, $method = null, $type = '') {
+    public static function get($uri, $method = null, $restrict = '') {
         if(ao()->hook('ao_route_get_enabled', true)) {
             $uri = ao()->hook('ao_router_get_uri', $uri);
             $method = ao()->hook('ao_router_get_method', $method);
 
             Route::$gets[$uri] = $method;
+            Route::$types[$uri] = Route::$type;
 
-            if($type) {
+            if($restrict) {
                 if(!isset(Route::$restrictions['GET'])) {
                     Route::$restrictions['GET'] = [];
                 }
-                if(!isset(Route::$restrictions['GET'][$type])) {
-                    Route::$restrictions['GET'][$type] = [];
+                if(!isset(Route::$restrictions['GET'][$restrict])) {
+                    Route::$restrictions['GET'][$restrict] = [];
                 }
-                Route::$restrictions['GET'][$type][$uri] = true;
+                Route::$restrictions['GET'][$restrict][$uri] = true;
             }
         }
     }
 
-    public static function post($uri, $method = null, $type = '') {
+    public static function post($uri, $method = null, $restrict = '') {
         if(ao()->hook('ao_route_post_enabled', true)) {
             $uri = ao()->hook('ao_router_post_uri', $uri);
             $method = ao()->hook('ao_router_post_method', $method);
 
             Route::$posts[$uri] = $method;
+            Route::$types[$uri] = Route::$type;
 
-            if($type) {
+            if($restrict) {
                 if(!isset(Route::$restrictions['POST'])) {
                     Route::$restrictions['POST'] = [];
                 }
-                if(!isset(Route::$restrictions['POST'][$type])) {
-                    Route::$restrictions['POST'][$type] = [];
+                if(!isset(Route::$restrictions['POST'][$restrict])) {
+                    Route::$restrictions['POST'][$restrict] = [];
                 }
-                Route::$restrictions['POST'][$type][$uri] = true;
+                Route::$restrictions['POST'][$restrict][$uri] = true;
             }
         }
     }

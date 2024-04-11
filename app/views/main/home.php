@@ -276,6 +276,7 @@
             <section class="services">
                 <h2>If you use a service or an app that has an API or sends email reports, we can pull out your numbers. </h2>
                 <ul>
+                    <li class="logo airtable">Airtable</li>
                     <li class="logo github">Github</li>
                     <li class="logo google_analytics">Google Analytics</li>
                     <li class="logo mailchimp">Mailchimp</li>

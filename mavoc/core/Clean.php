@@ -41,6 +41,9 @@ class Clean {
     }
 
     public function processActions($item, $actions) {
+        if(!is_array($actions)) {
+            $actions = [$actions];
+        }
         foreach($actions as $action) {
             if(is_array($action)) {
                 $keys = array_keys($action);
@@ -53,18 +56,30 @@ class Clean {
             // and realize you should have added more details - like this note - I'm not sure what needs
             // to be fixed) (another follow up, I think the problem is that is_callable will always return
             // true when checking against a class with __call() set up).
-            if(function_exists($action)) {
-                $result = $action($this->fields[$item]);
+            if(is_string($action) && function_exists($action)) {
+                if(isset($this->fields[$item])) {
+                    $result = $action($this->fields[$item]);
+                } else {
+                    $result = $action(null);
+                }
                 $this->fields[$item] = $result;
             } elseif(is_callable([$this->cleaners, $action])) {
-                $result = call_user_func([$this->cleaners, $action], $this->fields[$item]);
+                if(isset($this->fields[$item])) {
+                    $result = call_user_func([$this->cleaners, $action], $this->fields[$item]);
+                } else {
+                    $result = call_user_func([$this->cleaners, $action], null);
+                }
                 $this->fields[$item] = $result;
             } elseif(is_array($action) && in_array($key, $methods)) {
                 $args = $action[$key];
                 if(!is_array($args)) {
                     $args = [$args];
                 }
-                $args = array_merge([$this->fields[$item]], $args);
+                if(isset($this->fields[$item])) {
+                    $args = array_merge([$this->fields[$item]], $args);
+                } else {
+                    $args = array_merge([null], $args);
+                }
                 $result = call_user_func_array([$this->cleaners, $key], $args);
                 $this->fields[$item] = $result;
             }

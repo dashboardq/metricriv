@@ -4,6 +4,11 @@ namespace mavoc\console\controllers;
 
 class GenController {
 
+    public function key($in, $out) {
+        $key = sodium_bin2hex(random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES));
+        out($key);
+    }
+
     public function keys($in, $out) {
         $dir = ao()->env('AO_BASE_DIR');
         if(!is_dir($dir)) {

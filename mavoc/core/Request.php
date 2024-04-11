@@ -2,10 +2,10 @@
 
 namespace mavoc\core;
 
-use mavoc\core\Modify;
-use mavoc\core\Validate;
-
 class Request {
+    public $ajax = false;
+    public $type = 'web';
+    public $canonical = '';
     public $data = [];
     public $ip = ''; 
     public $method = '';
@@ -17,8 +17,8 @@ class Request {
     // The header is misspelled so include both versions so you never have to remember which spelling to use.
     // https://en.wikipedia.org/wiki/HTTP_referer
     public $referrer = '';
-    public $referer = ''; 
-    public $uri = ''; 
+    public $referer = '';
+    public $uri = '';
 
     public $res; 
     public $session; 
@@ -54,6 +54,13 @@ class Request {
 
         $this->data = $_POST;
         $this->query = $_GET;
+
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+            $this->ajax = true;
+        }
+
+        $this->canonical = _uri($this->path);
+        $this->canonical = ao()->hook('ao_request_canonical', $this->canonical);
     }
 
     public function clean($input = '', $list = []) {

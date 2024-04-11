@@ -10,6 +10,7 @@ class Validate {
     // If response is empty, don't auto respond on error
     public function __construct($input, $list = [], $req = null, $res = null, $redirect = null) {
         $this->rules = new Validators();
+        $this->rules = ao()->hook('ao_validate_rules', $this->rules, $input, $list);
 
         $this->fields = [];
 
@@ -24,6 +25,7 @@ class Validate {
         if(isset($list['_settings']) && is_array($list['_settings'])) {
             $_settings = array_merge($_settings, $list['_settings']);
         }
+        $_settings = ao()->hook('ao_validate_settings', $_settings, $input, $list);
 
         $_messages = [];
         if(isset($list['_messages']) && is_array($list['_messages'])) {
@@ -31,10 +33,10 @@ class Validate {
         }
 
         // _rules are messages for specific validations. 
-		// Meaning this would change the required message:
+        // Meaning this would change the required message:
         // $val = $req->val('data', [
-		// '_rules' => ['required' => 'The {title} field MUST BE REQUIRED!'],
-		// ]);
+        // '_rules' => ['required' => 'The {title} field MUST BE REQUIRED!'],
+        // ]);
         $_rules = [];
         if(isset($list['_rules']) && is_array($list['_rules'])) {
             $_rules = array_merge($_rules, $list['_rules']);
@@ -47,7 +49,7 @@ class Validate {
         }
 
         // Instead of using nonces, checking the referrer.
-        if($_settings['check_referrer'] && $req && $req->referrer != ao()->env('APP_HOST')) {
+        if($req->type != 'api' && $_settings['check_referrer'] && $req && $req->referrer != ao()->env('APP_HOST')) {
             $pass = false;
             $req->res->error('The submission appears to have come from an improper form or your browser is blocking the referrer information. Please try submitting the form again. If this issue persists, please contact support.', $redirect);
         }
@@ -75,10 +77,28 @@ class Validate {
             }
 
             // The $checks are the array of actual rules, $rule is each individual rule.
+            if(!is_array($checks)) {
+                $checks = [$checks];
+            }
+            $last_rule = '';
             foreach($checks as $rule) {
-                if($_settings['stop'] == 'field' && !$field_pass) {
+                // The $input is the entire data array.
+                if(isset($input[$field_key])) {
+                    $value = $input[$field_key];
+                } else {
+                    $value = '';
+                }
+
+                // If the should only be one error per field
+                // Or if the last rule was optional/sometimes and the value is empty
+                if(
+                    $_settings['stop'] == 'field' && !$field_pass
+                    || in_array($last_rule, ['optional', 'sometimes']) && !$value
+                ) {
                     break;
                 }
+                $last_rule = $rule;
+
                 if(is_array($rule)) {
                     $keys = array_keys($rule);
                     $key = $keys[0];
@@ -118,11 +138,10 @@ class Validate {
                             $messages[$field_key][] = $this->rules->message($rule, $input, $field_title);
                         }
                     } else {
-                        // The $input is the entire data array.
-                        if(isset($input[$field_key])) {
-                            $this->fields[$field_key] = $input[$field_key];
-                        } else {
-                            $this->fields[$field_key] = '';
+                        // Don't add optional/sometimes empty values to the array.
+                        if(!in_array($rule, ['optional', 'sometimes']) || $value) {
+                            // The $input is the entire data array.
+                            $this->fields[$field_key] = $value;
                         }
                     }
                 } elseif(is_array($rule) && in_array($key, $methods)) {
@@ -145,7 +164,7 @@ class Validate {
                         //echo '<pre>'; print_r($_rules); echo '</pre>';
                         //echo '<pre>'; print_r($field_key); echo '</pre>';
                         //echo '<pre>'; print_r($_messages); echo '</pre>';
-                        /* $rule is an array so cannot be used here.
+                        /* $rule is an array so cannot be used here.  
                         if(isset($_rules[$rule]) || isset($_messages[$field_key])) {
                             if(isset($_messages[$field_key][$rule])) {
                                 $messages[$field_key][] = str_replace('{title}', $field_title , $_messages[$field_key][$rule]);
@@ -164,8 +183,11 @@ class Validate {
                             $messages[$field_key][] = $this->rules->message($rule, $input, $field_title);
                         }
                     } else {
-                        // The $input is the entire data array.
-                        $this->fields[$field_key] = $input[$field_key];
+                        // Don't add optional/sometimes empty values to the array.
+                        if(!in_array($rule, ['optional', 'sometimes']) || $value) {
+                            // The $input is the entire data array.
+                            $this->fields[$field_key] = $value;
+                        }
                     }
                 } else {
                     if(!isset($messages[$field_key])) {

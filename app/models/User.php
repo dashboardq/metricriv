@@ -151,5 +151,8 @@ class User extends Model {
     public function session() {
         ao()->session->user = $this;
         ao()->session->user_id = $this->data['id'];
+
+        // Create a refresh    
+        RefreshLogin::create(['user_id' => $this->data['id']]);
     }
 }

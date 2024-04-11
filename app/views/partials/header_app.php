@@ -1,6 +1,6 @@
         <header class="app">
             <div class="container">
-                <h1><a href="/"><?php esc(ao()->env('APP_NAME')) ?></a></h1>
+                <h2><a href="/"><?php esc(ao()->env('APP_NAME')) ?></a></h2>
                 <nav>
                     <ul>
                         <?php foreach($follows as $follow): ?>

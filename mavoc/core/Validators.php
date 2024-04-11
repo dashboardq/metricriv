@@ -4,7 +4,7 @@ namespace mavoc\core;
 
 class Validators {
     public function __construct() {
-		ao()->hook('ao_validator_init', $this);
+        ao()->hook('ao_validator_init', $this);
     }
 
     // Dynamic rules: 
@@ -15,6 +15,43 @@ class Validators {
 
     public function _add($name, $method) {
         $this->{$name} = $method;
+    }
+
+    public function array($input, $field) {
+        if(
+            !isset($input[$field]) 
+            || $input[$field] == ''
+            || is_array($input[$field])
+        ) {
+            return true;
+        }   
+
+        return false;
+    }   
+    public function arrayMessage($input, $field) {
+        $output = 'The ' . $field . ' field needs to be set to true or false.';
+        return $output;
+    }
+
+    public function boolean($input, $field) {
+        if(
+            !isset($input[$field]) 
+            || $input[$field] == ''
+            || $input[$field] == 1
+            || $input[$field] == 0
+            || $input[$field] == 'yes'
+            || $input[$field] == 'no'
+            || $input[$field] == 'true'
+            || $input[$field] == 'false'
+        ) {
+            return true;
+        }   
+
+        return false;
+    }   
+    public function booleanMessage($input, $field) {
+        $output = 'The ' . $field . ' field needs to be set to true or false.';
+        return $output;
     }
 
     public function dbAccessList() {
@@ -138,10 +175,18 @@ class Validators {
         $current_field = $args[3] ?? '';
         $current_value = $args[4] ?? '';
 
+        $filter_field = $args[5] ?? '';
+        $filter_value = $args[6] ?? '';
+
         $value = $input[$field];
 
         // UNSAFE: Be careful
-        if($current_field && $current_value) {
+        // When current_field and current_value is passed in, it ignores the passed in value and item which should be the current item (meaning it will not throw an error because the item exists).
+        if($filter_field && $filter_value && $current_field && $current_value) {
+            $results = ao()->db->query('SELECT * FROM ' . $table . ' WHERE ' . $field . ' = ? AND ' . $current_field . ' != ? AND ' . $filter_field . ' = ? LIMIT 1', $value, $current_value, $filter_value);
+        } elseif($filter_field && $filter_value) {
+            $results = ao()->db->query('SELECT * FROM ' . $table . ' WHERE ' . $field . ' = ? AND ' . $filter_field . ' = ? LIMIT 1', $value, $filter_value);
+        } elseif($current_field && $current_value) {
             $results = ao()->db->query('SELECT * FROM ' . $table . ' WHERE ' . $field . ' = ? AND ' . $current_field . ' != ? LIMIT 1', $value, $current_value);
         } else {
             $results = ao()->db->query('SELECT * FROM ' . $table . ' WHERE ' . $field . ' = ? LIMIT 1', $value);
@@ -169,6 +214,52 @@ class Validators {
     }   
     public function emailMessage($input, $field) {
         $output = 'The ' . $field . ' field must be a valid email address.';
+        return $output;
+    }
+
+    public function equalLength($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $equal = $args[2];
+        $value = $input[$field] ?? '';
+
+        if(strlen($value) != $equal) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function equalLengthMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $equal = $args[2];
+
+        $output = 'The ' . $field . ' field must be ' . pluralize($equal, 'character') . ' long.';
+        return $output;
+    }
+
+    public function equalValue($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $equal = $args[2];
+        $value = $input[$field] ?? 0;
+
+        if($value != $equal) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function equalValueMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $equal = $args[2];
+
+        $output = 'The ' . $field . ' field must equal ' . $equal . '.';
         return $output;
     }
 
@@ -204,9 +295,15 @@ class Validators {
 
         return true;                                                                                               
     }   
+    public function integer($input, $field) {
+        return $this->int($input, $field);
+    }
     public function intMessage($input, $field) {
         $output = 'The ' . $field . ' field must be a whole number.';
         return $output;
+    }
+    public function integerMessage($input, $field) {
+        return $this->intMessage($input, $field);
     }
 
     public function match() {
@@ -224,6 +321,98 @@ class Validators {
     }   
     public function matchMessage($input, $field) {
         $output = 'The ' . $field . ' field uses characters that are not allowed.';
+        return $output;
+    }
+
+    public function maxLength($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $length = $args[2];
+        $value = $input[$field] ?? '';
+
+        if(strlen($value) > $length) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function maxLengthMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $length = $args[2];
+
+        $output = 'The ' . $field . ' field cannot be longer than ' . pluralize($length, 'character') . '.';
+        return $output;
+    }
+
+    public function maxValue($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $max = $args[2];
+        $value = $input[$field] ?? 0;
+
+        if($value > $max) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function maxValueMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $max = $args[2];
+
+        $output = 'The ' . $field . ' field cannot be greater than ' . $max . '.';
+        return $output;
+    }
+
+    public function minLength($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $length = $args[2];
+        $value = $input[$field] ?? '';
+
+        if(strlen($value) < $length) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function minLengthMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $length = $args[2];
+
+        $output = 'The ' . $field . ' field cannot be shorter than ' . pluralize($length, 'character') . '.';
+        return $output;
+    }
+
+    public function minValue($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $min = $args[2];
+        $value = $input[$field] ?? 0;
+
+        if($value < $min) {
+            return false;
+        }
+
+        return true;                                                                                               
+    }   
+    public function minValueMessage($input, $field) {
+        $args = func_get_args();
+        $input = $args[0];
+        $field = $args[1];
+        $min = $args[2];
+
+        $output = 'The ' . $field . ' field cannot be less than ' . $min . '.';
         return $output;
     }
 
@@ -255,9 +444,36 @@ class Validators {
         return $output;
     }
 
+    public function numeric($input, $field) {
+        $field = $input[$field] ?? '';
+
+        if($field == '') {
+            $field = 0;
+        }
+
+        if(is_numeric($field)) {
+            return true;
+        }
+
+        return false;                                                                                               
+    }   
+    public function numericMessage($input, $field) {
+        $output = 'The ' . $field . ' field must be a number.';
+        return $output;
+    }
+
+    public function optional($input, $field) {
+        return true;
+    }   
 
     public function password($input, $field) {
-        if(!isset($input[$field]) || strlen($input[$field]) < 8) {
+        // Only use this for testing when you want to register users without any password limitations.
+        if(ao()->env('PASSWORD_SKIP_VALIDATION')) {
+            return true;
+        }
+
+        $length = ao()->hook('ao_validator_password_length', 8);
+        if(!isset($input[$field]) || strlen($input[$field]) < $length) {
             return false;
         }   
 

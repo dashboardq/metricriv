@@ -67,7 +67,13 @@ footer .container {
 }
 
 
-header h1:before {
+header h1,
+header h2 {
+    font-size: 2em;
+}
+
+header h1:before,
+header h2:before {
     content: '#';
     display: inline-block;
     text-align: center;
